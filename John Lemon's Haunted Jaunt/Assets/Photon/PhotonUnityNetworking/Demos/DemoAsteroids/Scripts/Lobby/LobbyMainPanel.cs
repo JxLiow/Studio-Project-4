@@ -37,6 +37,19 @@ namespace Photon.Pun.Demo.Asteroids
         public Button StartGameButton;
         public GameObject PlayerListEntryPrefab;
 
+        [Header("Options Panel")]
+        public GameObject OptionsPanel;
+
+        public Toggle SFXToggle;
+        //public Slider SFXSlider;
+        public Toggle musicToggle;
+        //public Slider musicSlider;
+        //public GameObject OptionsPanelPrefab;
+
+        [Header("How To Play Panel")]
+        public GameObject H2PPanel;
+        //public GameObject H2PPrefab;
+
         private Dictionary<string, RoomInfo> cachedRoomList;
         private Dictionary<string, GameObject> roomListEntries;
         private Dictionary<int, GameObject> playerListEntries;
@@ -275,6 +288,22 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.LoadLevel("MainScene");
         }
 
+        public void OnOptionsButtonClicked()
+        {
+            SetActivePanel(OptionsPanel.name);
+        }
+
+        public void OnH2PButtonClicked()
+        {
+            SetActivePanel(H2PPanel.name);
+        }
+
+        public void OnSaveButtonClicked()
+        {
+            // save options or whatever
+            SetActivePanel(SelectionPanel.name);
+        }
+
         #endregion
 
         private bool CheckPlayersReady()
@@ -326,6 +355,8 @@ namespace Photon.Pun.Demo.Asteroids
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
             RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
             InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+            OptionsPanel.SetActive(activePanel.Equals(OptionsPanel.name));
+            H2PPanel.SetActive(activePanel.Equals(H2PPanel.name));
         }
 
         private void UpdateCachedRoomList(List<RoomInfo> roomList)
