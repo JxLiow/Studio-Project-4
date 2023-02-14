@@ -17,6 +17,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public GameObject enemies;
     public GameEnding endingScript;
     public CinemachineVirtualCamera virtualCam;
+    public CinemachineFreeLook freeCamera;
 
     public void Awake()
     {
@@ -144,8 +145,8 @@ public class JLGameManager : MonoBehaviourPunCallbacks
 
         if (player.GetComponent<PhotonView>().IsMine)
         {
-            virtualCam.Follow = player.transform;
-            virtualCam.LookAt = player.transform;
+            freeCamera.Follow = player.transform;
+            freeCamera.LookAt = player.transform;
         }
 
         //if (PhotonNetwork.IsMasterClient)
