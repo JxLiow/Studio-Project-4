@@ -270,7 +270,7 @@ namespace Photon.Pun.Demo.Asteroids
             }
         }
 
-        public void OnRoomListButtonClicked()
+        public void OnJoinRoomButtonClicked()
         {
             if (!PhotonNetwork.InLobby)
             {
