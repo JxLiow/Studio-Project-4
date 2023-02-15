@@ -15,7 +15,7 @@ public class PlayerAction : MonoBehaviour
 
     bool isGrounded;
     Vector3 Up;
-    public float jumpforce = 2f;
+    public float jumpforce = 1f;
 
     // Start is called before the first frame update
     void Awake()
@@ -51,4 +51,6 @@ public class PlayerAction : MonoBehaviour
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
+
+ 
 }

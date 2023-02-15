@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         if (!photonView.IsMine)
             return;
 
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * 4);
         m_Rigidbody.MoveRotation (m_Rotation);
     }
 }
