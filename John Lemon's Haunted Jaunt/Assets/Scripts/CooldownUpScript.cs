@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinScript : MonoBehaviour
+public class CooldownUpScript : MonoBehaviour
 {
     public float timeRemaining = 2;
     bool runTimer = false;

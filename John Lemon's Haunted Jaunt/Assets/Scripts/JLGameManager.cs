@@ -148,12 +148,11 @@ public class JLGameManager : MonoBehaviourPunCallbacks
             virtualCam.Follow = player.transform;
             virtualCam.LookAt = player.transform;
         }
-
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    SpawnGhosts();
-        //}
-    }
+    //if (PhotonNetwork.IsMasterClient)
+    //{
+    //    SpawnGhosts();
+    //}
+}
 
     private void SpawnGhosts()
     {
@@ -194,6 +193,6 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 }
