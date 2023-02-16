@@ -13,11 +13,16 @@ public class JLGameManager : MonoBehaviourPunCallbacks
 {
     public static JLGameManager Instance = null;
     public Text InfoText;
+    public Text TimerText;
     public GameObject wayPoints;
     public GameObject enemies;
     public GameEnding endingScript;
     public CinemachineVirtualCamera virtualCam;
     public CinemachineFreeLook freeCamera;
+
+    [SerializeField] public float _maxHealth = 1;
+    public float _currentHealth;
+    [SerializeField] private HealthBar _healthbar;
 
     public void Awake()
     {
@@ -47,6 +52,20 @@ public class JLGameManager : MonoBehaviourPunCallbacks
 
         CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
     }
+
+    //void OnMouseDown()
+    //{
+    //    _currentHealth -= Random.Range(0.1f, 0.5f);
+
+    //    if (_currentHealth <= 0.0f)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //    {
+    //        _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
+    //    }
+    //}
 
     #region PUN CALLBACKS
 
@@ -148,6 +167,9 @@ public class JLGameManager : MonoBehaviourPunCallbacks
             virtualCam.Follow = player.transform;
             virtualCam.LookAt = player.transform;
         }
+
+        _currentHealth = _maxHealth;
+        _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
 
         //if (PhotonNetwork.IsMasterClient)
         //{
