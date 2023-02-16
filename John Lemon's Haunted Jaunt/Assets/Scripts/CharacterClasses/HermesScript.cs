@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HermesScript : CharacterScript
 {
-    public void HermesClass()
+    public HermesScript()
     {
         CharacterName = "Hermes";
         CharacterDescription = "God of Speed";

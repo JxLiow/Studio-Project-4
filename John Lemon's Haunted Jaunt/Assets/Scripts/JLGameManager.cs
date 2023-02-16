@@ -18,6 +18,11 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public GameEnding endingScript;
     public CinemachineVirtualCamera virtualCam;
     public CinemachineFreeLook freeCamera;
+    public BasePlayerScript newPlayer;
+    public string playerGodName;
+    public float playerDamage;
+    public float playerFireRate;
+    public float playerSpeed;
 
     public void Awake()
     {
@@ -27,7 +32,10 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
-
+        playerGodName = PlayerPrefs.GetString("godname");
+        playerDamage = PlayerPrefs.GetFloat("damage");
+        playerSpeed = PlayerPrefs.GetFloat("speed");
+        playerFireRate = PlayerPrefs.GetFloat("firerate");
         CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
     }
 
@@ -194,6 +202,9 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log("player class: " + playerGodName);
+        Debug.Log("player damage: " + playerDamage);
+        Debug.Log("player fire rate: " + playerFireRate);
+        Debug.Log("player speed: " + playerSpeed);
     }
 }

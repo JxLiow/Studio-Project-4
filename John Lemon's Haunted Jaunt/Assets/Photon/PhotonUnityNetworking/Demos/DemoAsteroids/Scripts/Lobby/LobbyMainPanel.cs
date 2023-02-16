@@ -285,7 +285,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("MainScene");
+            PhotonNetwork.LoadLevel("CharacterSelect");
         }
 
         public void OnOptionsButtonClicked()

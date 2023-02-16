@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArtemisScript : CharacterScript
 {
-    public void ArtemisClass()
+    public ArtemisScript()
     {
         CharacterName = "Artemis";
         CharacterDescription = "Goddess of the Hunt";

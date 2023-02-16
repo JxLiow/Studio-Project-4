@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class changeGodImage : MonoBehaviour
 {
-    CharacterScript characterScript;
+     BasePlayerScript newPlayer;
     ZeusScript zeusScript = new ZeusScript();
     AphroditeScript aphroditeScript = new AphroditeScript();
     HadesScript hadesScript = new HadesScript();
@@ -30,20 +31,31 @@ public class changeGodImage : MonoBehaviour
     public TMP_Text GodFireRate;
     public TMP_Text GodDamage;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(transform.gameObject);
+    }
     // Start is called before the first frame update
     void Start()
-    { 
-        zeusScript.ZeusClass();
-        aphroditeScript.AphroditeClass();
-        hadesScript.HadesClass();
-        artemisScript.ArtemisClass();
-        hermesScript.HermesClass();
-        poseidonScript.PoseidonClass();
-        aresScript.AresClass();
-        athenaScript.AthenaClass();
+    {
+        DontDestroyOnLoad(gameObject);
+        newPlayer = new BasePlayerScript();
+        newPlayer.PlayerClass = zeusScript;
     }
 
-   
+    public void Update()
+    {
+        newPlayer.PlayerGodName = newPlayer.PlayerClass.CharacterName;
+        newPlayer.PlayerDamage = newPlayer.PlayerClass.CharacterDamage;
+        newPlayer.PlayerHealth = newPlayer.PlayerClass.CharacterHealth;
+        newPlayer.PlayerFireRate = newPlayer.PlayerClass.CharacterFireRate;
+        newPlayer.PlayerSpeed = newPlayer.PlayerClass.CharacterSpeed;
+        //Debug.Log("Player class: " + newPlayer.PlayerClass);
+        ////Debug.Log("Player damage: " + newPlayer.PlayerDamage);
+        ////Debug.Log("Player speed: " + newPlayer.PlayerSpeed);
+        ////Debug.Log("Player fire rate: " + newPlayer.PlayerFireRate);
+
+    }
     public void changeImageZeus()
     {
         Zeus.SetActive(true);
@@ -60,6 +72,8 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + zeusScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + zeusScript.CharacterFireRate;
         GodDamage.text = "Damage: " + zeusScript.CharacterDamage;
+        newPlayer.PlayerClass = zeusScript;
+        
     }
     public void changeImageAphrodite()
     {
@@ -77,6 +91,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + aphroditeScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + aphroditeScript.CharacterFireRate;
         GodDamage.text = "Damage: " + aphroditeScript.CharacterDamage;
+        newPlayer.PlayerClass = aphroditeScript;
     }
     public void changeImageHades()
     {
@@ -94,6 +109,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + hadesScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + hadesScript.CharacterFireRate;
         GodDamage.text = "Damage: " + hadesScript.CharacterDamage;
+        newPlayer.PlayerClass = hadesScript;
     }
     public void changeImageArtemis()
     {
@@ -111,6 +127,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + artemisScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + artemisScript.CharacterFireRate;
         GodDamage.text = "Damage: " + artemisScript.CharacterDamage;
+        newPlayer.PlayerClass = artemisScript;
     }
     public void changeImageHermes()
     {
@@ -128,6 +145,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + hermesScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + hermesScript.CharacterFireRate;
         GodDamage.text = "Damage: " + hermesScript.CharacterDamage;
+        newPlayer.PlayerClass = hermesScript;
     }
     public void changeImagePoseidon()
     {
@@ -145,6 +163,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + poseidonScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + poseidonScript.CharacterFireRate;
         GodDamage.text = "Damage: " + poseidonScript.CharacterDamage;
+        newPlayer.PlayerClass = poseidonScript;
     }
     public void changeImageAres()
     {
@@ -162,6 +181,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + aresScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + aresScript.CharacterFireRate;
         GodDamage.text = "Damage: " + aresScript.CharacterDamage;
+        newPlayer.PlayerClass = aresScript;
     }
     public void changeImageAthena()
     {
@@ -179,5 +199,14 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + athenaScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + athenaScript.CharacterFireRate;
         GodDamage.text = "Damage: " + athenaScript.CharacterDamage;
+        newPlayer.PlayerClass = athenaScript;
+    }
+    public void startGameButtonClicked()
+    {
+        PlayerPrefs.SetString("godname", newPlayer.PlayerGodName);
+        PlayerPrefs.SetFloat("damage", newPlayer.PlayerDamage);
+        PlayerPrefs.SetFloat("firerate", newPlayer.PlayerFireRate);
+        PlayerPrefs.SetFloat("speed", newPlayer.PlayerSpeed);
+        PhotonNetwork.LoadLevel("MainScene");
     }
 }
