@@ -23,7 +23,7 @@ public class PlayerAction : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         rigidbody = GetComponent<Rigidbody>();
 
-        Up = new Vector3(0, 1, 0);    
+        Up = new Vector3(0, 1, 0);
     }
 
     // Update is called once per frame
