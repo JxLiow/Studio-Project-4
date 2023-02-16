@@ -338,7 +338,6 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 Destroy(entry.gameObject);
             }
-
             roomListEntries.Clear();
         }
 

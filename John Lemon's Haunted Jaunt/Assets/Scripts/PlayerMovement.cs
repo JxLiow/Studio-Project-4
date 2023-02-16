@@ -51,8 +51,14 @@ public class PlayerMovement : MonoBehaviour
             m_AudioSource.Stop ();
         }
 
-        Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
-        m_Rotation = Quaternion.LookRotation (desiredForward);
+        RaycastHit _hit;
+        Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(_ray, out _hit))
+            transform.LookAt(new Vector3(_hit.point.x, m_Movement.y, _hit.point.z));
+
+        //Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
+        //m_Rotation = Quaternion.LookRotation (desiredForward);
     }
 
     void OnAnimatorMove ()
@@ -61,6 +67,6 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * 4);
-        m_Rigidbody.MoveRotation (m_Rotation);
+        //m_Rigidbody.MoveRotation (m_Rotation);
     }
 }

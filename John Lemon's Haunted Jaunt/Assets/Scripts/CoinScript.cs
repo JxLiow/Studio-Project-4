@@ -4,33 +4,15 @@ using UnityEngine;
 
 public class CoinScript : MonoBehaviour
 {
-    public float timeRemaining = 2;
-    bool runTimer = false;
+    public float _maxHealth = 1;
+    public float _currentHealth;
+    private HealthBar _healthbar;
 
     private void OnTriggerEnter(Collider other)
     {
-        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-
-        runTimer = true;
+         //collect coin
+        gameObject.SetActive(false);
+        _currentHealth -= Random.Range(0.1f, 0.5f);
+        _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
     }
-
-    void Update()
-    {
-
-        if (runTimer == true)
-        {
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-            }
-            else if (timeRemaining <= 0)
-            {
-                transform.position = new Vector3(0.0f, 6.0f, 0.0f);
-                runTimer = false;
-                timeRemaining = 2;
-            }
-        }
-
-    }
-
 }
