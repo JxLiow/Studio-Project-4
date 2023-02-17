@@ -7,6 +7,7 @@ using Photon.Pun.UtilityScripts;
 
 public class BulletScript : MonoBehaviour
 {
+    public PlayerAction PlayerAction;
     public float life = 3;
 
     // Start is called before the first frame update
@@ -17,12 +18,15 @@ public class BulletScript : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy")
-            FindObjectOfType<EntityHPScript>().reduceHP(10);
-        if (collision.gameObject.tag == "Player")
+        //if (collision.gameObject.tag == "Player")
+        //{
+        var enemyHealth = collision.gameObject.GetComponent<PlayerHealth>();
+        if (enemyHealth)
         {
-            FindObjectOfType<EntityHPScript>().reduceHP(10);
+            enemyHealth.TakeDamage(10);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+        
+        
     }
 }

@@ -8,7 +8,6 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Cinemachine;
-using System.Collections.Generic;
 
 public class JLGameManager : MonoBehaviourPunCallbacks
 {
@@ -19,13 +18,8 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public GameEnding endingScript;
     public CinemachineVirtualCamera virtualCam;
     public CinemachineFreeLook freeCamera;
-    public BasePlayerScript newPlayer;
-    public string playerGodName;
-    public float playerDamage;
-    public float playerFireRate;
-    public float playerSpeed;
-    public GameObject spawnPoints;
-    public static List<Vector3> spawnPositions = new List<Vector3>();
+    public Timer timer;
+
     public void Awake()
     {
         Instance = this;
@@ -34,10 +28,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
-        playerGodName = PlayerPrefs.GetString("godname");
-        playerDamage = PlayerPrefs.GetFloat("damage");
-        playerSpeed = PlayerPrefs.GetFloat("speed");
-        playerFireRate = PlayerPrefs.GetFloat("firerate");
+
         CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
     }
 
@@ -49,13 +40,6 @@ public class JLGameManager : MonoBehaviourPunCallbacks
                 {JLGame.PLAYER_LOADED_LEVEL, true}
             };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        spawnPoints = GameObject.FindGameObjectWithTag("SpawnPoint");
-
-        for (int i = 0; i < spawnPoints.transform.childCount; i++)
-        {
-            spawnPositions.Add(spawnPoints.transform.GetChild(i).transform.position);
-            Debug.Log("spawn pos:" + spawnPositions[i]);
-        }
     }
 
     public override void OnDisable()
@@ -152,24 +136,24 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("StartGame!");
 
-        Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 position = new Vector3(16.0f, 2.0f, 16.0f);
         //Vector3 position = new Vector3(-9.8f, 1.0f, 3.0f);
         //Vector3 position = new Vector3(19.0f, 19.0f, 16.0f);
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
-        GameObject player = PhotonNetwork.Instantiate("JohnLemon", position, rotation, 0);
+        
+        GameObject player = PhotonNetwork.Instantiate("HumanMale_Character_FREE", position, rotation, 0);
 
         if (player.GetComponent<PhotonView>().IsMine)
         {
             virtualCam.Follow = player.transform;
             virtualCam.LookAt = player.transform;
         }
-
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    SpawnGhosts();
-        //}
-    }
+    //if (PhotonNetwork.IsMasterClient)
+    //{
+    //    SpawnGhosts();
+    //}
+}
 
     private void SpawnGhosts()
     {
@@ -205,15 +189,12 @@ public class JLGameManager : MonoBehaviourPunCallbacks
 
     private void OnCountdownTimerIsExpired()
     {
+        timer.isCountdownTimerExpired = true;
         StartGame();
     }
     // Update is called once per frame
     void Update()
     {
-       
-        //Debug.Log("player class: " + playerGodName);
-        //Debug.Log("player damage: " + playerDamage);
-        //Debug.Log("player fire rate: " + playerFireRate);
-        //Debug.Log("player speed: " + playerSpeed);
+        
     }
 }

@@ -6,26 +6,39 @@ using UnityEngine.UI;
 public class EntityHPScript : MonoBehaviour
 {
 
-    public float health;
-    public float maxHealth;
+    float health;
+    float maxHealth;
 
-    public Slider slider;
+    PlayerHealth pHealth;
+
+    [SerializeField]
+    public Image image;
 
     void Start()
     {
-        health = maxHealth;
-        slider.value = CalculateHealth();
+        //pHealth = GameObject.Find("JohnLemon").GetComponent<PlayerHealth>();
     }
 
     void Update()
-    {        
-        slider.value = CalculateHealth();
+    {
+        if (!GameObject.FindGameObjectWithTag("Player"))
+        {
+            return;
+        }
+        else
+        {
+            pHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+            health = pHealth.getHealth();
+            maxHealth = pHealth.getMaxHealth();
 
-        if(health <= 0)
-            Destroy(gameObject);
+            image.fillAmount = CalculateHealth();
 
-        if(health > maxHealth)
-            health = maxHealth;
+            if (health <= 0)
+                Destroy(gameObject);
+
+            if (health > maxHealth)
+                health = maxHealth;
+        }
     }
 
     float CalculateHealth()
