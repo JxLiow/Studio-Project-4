@@ -141,7 +141,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         
-        GameObject player = PhotonNetwork.Instantiate("JohnLemon", position, rotation, 0);
+        GameObject player = PhotonNetwork.Instantiate("HumanMale_Character_FREE", position, rotation, 0);
 
         if (player.GetComponent<PhotonView>().IsMine)
         {

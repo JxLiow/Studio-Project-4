@@ -7,6 +7,9 @@ using Photon.Pun.UtilityScripts;
 
 public class PlayerAction : MonoBehaviour
 {
+    Animator m_Animator;
+    bool isAttacking = false;
+
     private Rigidbody rigidbody;
     private PhotonView photonView;
 
@@ -33,6 +36,7 @@ public class PlayerAction : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         rigidbody = GetComponent<Rigidbody>();
+        m_Animator = GetComponent<Animator>();
 
         Up = new Vector3(0, 1, 0);
     }
@@ -52,7 +56,6 @@ public class PlayerAction : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) && photonView.IsMine)
         {
-           
             if(temp == 1)
             {
                 photonView.RPC("shootBullet1", RpcTarget.AllViaServer, rigidbody.position);
@@ -73,6 +76,8 @@ public class PlayerAction : MonoBehaviour
                 photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
             }
 
+            m_Animator.SetInteger("condition", 2);
+           
         }
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
@@ -83,6 +88,9 @@ public class PlayerAction : MonoBehaviour
             rigidbody.AddForce(Up * jumpforce, ForceMode.Impulse);
             isGrounded = false;
         }
+
+        
+        
     }
 
     void OnCollisionStay()

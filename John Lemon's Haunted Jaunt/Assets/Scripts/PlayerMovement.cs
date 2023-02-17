@@ -38,8 +38,9 @@ public class PlayerMovement : MonoBehaviour
         bool hasHorizontalInput = !Mathf.Approximately (horizontal, 0f);
         bool hasVerticalInput = !Mathf.Approximately (vertical, 0f);
         bool isWalking = hasHorizontalInput || hasVerticalInput;
+
         m_Animator.SetBool ("IsWalking", isWalking);
-        
+
         if (isWalking)
         {
             if (!m_AudioSource.isPlaying)
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         {
             m_AudioSource.Stop ();
         }
+
 
         RaycastHit _hit;
         Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -66,8 +68,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!photonView.IsMine)
             return;
-
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * speedModifier);
+        
+        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * Time.deltaTime * 8);
+        //m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * speedModifier);
         //m_Rigidbody.MoveRotation (m_Rotation);
     }
 }
