@@ -21,6 +21,7 @@ public class PlayerAction : MonoBehaviour
     public GameObject lightningPrefab;
     public GameObject skullPrefab;
     public GameObject featherPrefab;
+    public int playerID;
 
     bool isGrounded;
     Vector3 Up;
@@ -33,13 +34,14 @@ public class PlayerAction : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         rigidbody = GetComponent<Rigidbody>();
-
+        playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.P) && photonView.IsMine)
         {
             temp += 1;
@@ -96,6 +98,16 @@ public class PlayerAction : MonoBehaviour
     {
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+
+        //Ray ray = new Ray(bulletPrefab.position, bulletSpawnPoint.forward);
+        //if(Physics.Raycast(ray, out RaycastHit hit, 100f))
+        //{
+        //    var enemyHealth = hit.collider.GetComponent<PlayerHealth>();
+        //    if(enemyHealth)
+        //    {
+        //        enemyHealth.TakeDamage(10);
+        //    }
+        //}
     }
 
     [PunRPC]
@@ -126,5 +138,15 @@ public class PlayerAction : MonoBehaviour
     {
         var ability = Instantiate(abilityPrefab, abilitySpawnPoint.position, abilitySpawnPoint.rotation);
         ability.GetComponent<Rigidbody>().velocity = abilitySpawnPoint.forward * abilitySpeed;
+    }
+
+    public PhotonView getView()
+    {
+        return photonView;
+    }
+
+    public int getID()
+    {
+        return playerID;
     }
 }
