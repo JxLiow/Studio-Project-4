@@ -1021,6 +1021,7 @@ GameObject:
   - component: {fileID: 5381338168532323753}
   - component: {fileID: 5433084195543563201}
   - component: {fileID: 4106906426770643332}
+  - component: {fileID: 5093171127039457392}
   - component: {fileID: 3476636681162554429}
   - component: {fileID: 2217104822867126335}
   - component: {fileID: 8615342550433255614}
@@ -1114,6 +1115,7 @@ MonoBehaviour:
     type: 3}
   featherPrefab: {fileID: 4696935024985980897, guid: 9cc1c407ff9ab4549b29b22b38aacb2d,
     type: 3}
+  playerID: 0
   jumpforce: 1
 --- !u!114 &4106906426770643332
 MonoBehaviour:
@@ -1129,6 +1131,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnSpeed: 20
   speedModifier: 4
+--- !u!114 &5093171127039457392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d39c587fefcdbf45b491c206db77fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxhealth: 100
+  health: 100
 --- !u!82 &3476636681162554429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1268,6 +1284,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 5093171127039457392}
   - {fileID: 8615342550433255614}
   sceneViewId: 0
   InstantiationId: 0
