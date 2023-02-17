@@ -18,6 +18,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public GameEnding endingScript;
     public CinemachineVirtualCamera virtualCam;
     public CinemachineFreeLook freeCamera;
+    public Timer timer;
 
     public void Awake()
     {
@@ -188,6 +189,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
 
     private void OnCountdownTimerIsExpired()
     {
+        timer.isCountdownTimerExpired = true;
         StartGame();
     }
     // Update is called once per frame

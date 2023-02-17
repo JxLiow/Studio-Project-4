@@ -12,7 +12,8 @@ public class Timer : MonoBehaviour
     [Header("Timer settings")]
     public float currentTime;
     public bool countDown;
-    // Start is called before the first frame update
+    public bool isCountdownTimerExpired = false;
+
     void Start()
     {
         float minutes = Mathf.FloorToInt(currentTime / 60);
@@ -21,12 +22,20 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime = countDown ? currentTime -= Time.deltaTime : currentTime += Time.deltaTime;
+        if (isCountdownTimerExpired == true)
+        {
+            StartCountdown();   
+        }
         SetTimerText();
     }
 
     private void SetTimerText()
     {
         timerText.text = currentTime.ToString("0.00");
+    }
+
+    public void StartCountdown()
+    {
+        currentTime = countDown ? currentTime -= Time.deltaTime : currentTime += Time.deltaTime;
     }
 }

@@ -54,6 +54,8 @@ namespace Photon.Pun.Demo.Asteroids
         private Dictionary<string, GameObject> roomListEntries;
         private Dictionary<int, GameObject> playerListEntries;
 
+        string playerName;
+
         #region UNITY
 
         public void Awake()
@@ -257,7 +259,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void OnLoginButtonClicked()
         {
-            string playerName = PlayerNameInput.text;
+            playerName = PlayerNameInput.text;
 
             if (!playerName.Equals(""))
             {
@@ -269,6 +271,13 @@ namespace Photon.Pun.Demo.Asteroids
                 Debug.LogError("Player Name is invalid.");
             }
         }
+
+        public string GetPlayerName()
+        {
+            return playerName;
+        }
+
+
 
         public void OnJoinRoomButtonClicked()
         {
