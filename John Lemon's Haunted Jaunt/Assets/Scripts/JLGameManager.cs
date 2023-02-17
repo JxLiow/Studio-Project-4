@@ -18,7 +18,6 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public GameObject enemies;
     public GameEnding endingScript;
     public CinemachineVirtualCamera virtualCam;
-    public CinemachineFreeLook freeCamera;
 
     [SerializeField] public float _maxHealth = 1;
     public float _currentHealth;
@@ -168,8 +167,8 @@ public class JLGameManager : MonoBehaviourPunCallbacks
             virtualCam.LookAt = player.transform;
         }
 
-        _currentHealth = _maxHealth;
-        _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
+        //_currentHealth = _maxHealth;
+        //_healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
 
         //if (PhotonNetwork.IsMasterClient)
         //{
