@@ -21,9 +21,9 @@ public class PlayerMovement : MonoBehaviour
         m_Animator = GetComponent<Animator> ();
         m_Rigidbody = GetComponent<Rigidbody> ();
         m_AudioSource = GetComponent<AudioSource> ();
-
         if (photonView.IsMine)
             GetComponent<AudioListener>().enabled = true;
+        transform.position = JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
     }
 
     void FixedUpdate ()
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         if (!photonView.IsMine)
             return;
 
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * 4);
+        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * PlayerPrefs.GetFloat("speed"));
         //m_Rigidbody.MoveRotation (m_Rotation);
     }
 }

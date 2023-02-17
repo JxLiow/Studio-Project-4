@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class changeGodImage : MonoBehaviour
 {
+    public TimerScript _TimerScript;
      BasePlayerScript newPlayer;
     ZeusScript zeusScript = new ZeusScript();
     AphroditeScript aphroditeScript = new AphroditeScript();
@@ -54,7 +55,15 @@ public class changeGodImage : MonoBehaviour
         ////Debug.Log("Player damage: " + newPlayer.PlayerDamage);
         ////Debug.Log("Player speed: " + newPlayer.PlayerSpeed);
         ////Debug.Log("Player fire rate: " + newPlayer.PlayerFireRate);
-
+        if (_TimerScript.TimeLeft < 0)
+        {
+            PlayerPrefs.SetString("godname", newPlayer.PlayerGodName);
+            PlayerPrefs.SetFloat("damage", newPlayer.PlayerDamage);
+            PlayerPrefs.SetFloat("firerate", newPlayer.PlayerFireRate);
+            PlayerPrefs.SetFloat("speed", newPlayer.PlayerSpeed);
+            PhotonNetwork.LoadLevel("MainScene");
+            
+        }
     }
     public void changeImageZeus()
     {
@@ -203,10 +212,6 @@ public class changeGodImage : MonoBehaviour
     }
     public void startGameButtonClicked()
     {
-        PlayerPrefs.SetString("godname", newPlayer.PlayerGodName);
-        PlayerPrefs.SetFloat("damage", newPlayer.PlayerDamage);
-        PlayerPrefs.SetFloat("firerate", newPlayer.PlayerFireRate);
-        PlayerPrefs.SetFloat("speed", newPlayer.PlayerSpeed);
-        PhotonNetwork.LoadLevel("MainScene");
+       
     }
 }
