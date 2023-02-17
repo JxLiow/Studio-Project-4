@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(_ray, out _hit))
-            transform.LookAt(new Vector3(_hit.point.x, m_Movement.y, _hit.point.z));
+           transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
 
         //Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         //m_Rotation = Quaternion.LookRotation (desiredForward);
