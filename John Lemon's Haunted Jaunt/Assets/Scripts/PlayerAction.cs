@@ -29,7 +29,7 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && photonView.IsMine)
+        if (Input.GetMouseButtonDown(0) && photonView.IsMine)
         {
             photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
         }
