@@ -135,7 +135,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("StartGame!");
 
-        Vector3 position = new Vector3(16.0f, 0.0f, 16.0f);
+        Vector3 position = new Vector3(16.0f, 2.0f, 16.0f);
         //Vector3 position = new Vector3(-9.8f, 1.0f, 3.0f);
         //Vector3 position = new Vector3(19.0f, 19.0f, 16.0f);
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
@@ -193,6 +193,6 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-       
+        
     }
 }

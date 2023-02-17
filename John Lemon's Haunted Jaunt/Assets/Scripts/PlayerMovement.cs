@@ -7,6 +7,7 @@ using Photon.Pun;
 public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 20f;
+    public int speedModifier = 4;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -66,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         if (!photonView.IsMine)
             return;
 
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * 4);
+        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * speedModifier);
         //m_Rigidbody.MoveRotation (m_Rotation);
     }
 }

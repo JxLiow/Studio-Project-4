@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class HealthUpScript : MonoBehaviour
 {
-    public float timeRemaining = 2;
+    public float timeRemaining = 30;
     bool runTimer = false;
+
+    void Start()
+    {
+        transform.position = new Vector3(3.0f, 6.0f, -3.0f);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-
-        runTimer = true;
+        if (other.gameObject.tag == "Player")
+        {
+            transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+            runTimer = true;
+        }
     }
 
     void Update()
@@ -25,9 +32,9 @@ public class HealthUpScript : MonoBehaviour
             }
             else if (timeRemaining <= 0)
             {
-                transform.position = new Vector3(0.0f, 6.0f, 0.0f);
+                transform.position = new Vector3(3.0f, 6.0f, -3.0f);
                 runTimer = false;
-                timeRemaining = 2;
+                timeRemaining = 30;
             }
         }
 
