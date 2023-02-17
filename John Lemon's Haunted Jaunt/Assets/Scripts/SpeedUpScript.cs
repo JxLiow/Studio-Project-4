@@ -8,7 +8,6 @@ public class SpeedUpScript : MonoBehaviour
     public float powerupDuration = 5; //timer for duration of powerup when player pick it ups
     bool runTimer = false;
     public bool hasPowerUp = false;
-    //public PlayerMovement playerMovement;
 
     void Start()
     {
@@ -22,7 +21,6 @@ public class SpeedUpScript : MonoBehaviour
             transform.position = new Vector3(0.0f, 0.0f, 0.0f);
             runTimer = true;
             hasPowerUp = true;
-            //playerMovement.speedModifier = 10;
         }
 
     }
@@ -52,7 +50,6 @@ public class SpeedUpScript : MonoBehaviour
                 else if (powerupDuration <= 0)
                 {
                     hasPowerUp = false;
-                    //playerMovement.speedModifier = 4;
                     powerupDuration = 5;
                 }
             }

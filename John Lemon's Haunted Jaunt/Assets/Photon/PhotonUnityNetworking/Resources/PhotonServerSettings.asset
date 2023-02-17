@@ -45,6 +45,10 @@ MonoBehaviour:
   - shootBullet
   - reduceHP
   - Jump
+  - useAbility1
+  - shootBullet1
+  - shootBullet2
+  - shootBullet3
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

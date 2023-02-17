@@ -309,7 +309,7 @@ RectTransform:
   m_Children:
   - {fileID: 3005859049963871041}
   m_Father: {fileID: 2008973354732098957}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -471,6 +471,37 @@ Transform:
   - {fileID: 7579946599890410729}
   m_Father: {fileID: 1833520175783876300}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1632596688742567516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5953651102780521765}
+  m_Layer: 0
+  m_Name: abilitySpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5953651102780521765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632596688742567516}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.012000084, y: 0.4, z: 0.0119999945}
+  m_LocalScale: {x: 0.2844236, y: 0.26954904, z: 0.27493525}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2008973354732098957}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2134563579383330603
 GameObject:
@@ -1267,6 +1298,7 @@ Transform:
   - {fileID: 4425383467037466535}
   - {fileID: 8162670608754209990}
   - {fileID: 1298697383319821063}
+  - {fileID: 5953651102780521765}
   - {fileID: 3358226918956121919}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1281,7 +1313,7 @@ Animator:
   m_GameObject: {fileID: 6077229646317852079}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b44f3940c4940544a8c2c6aee5fa086f, type: 3}
-  m_Controller: {fileID: 9100000, guid: 125d3f71c2e7faf4cb375103b484d93e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 49b22ef26a932564085b748bdce89bd5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
   m_ApplyRootMotion: 1
@@ -1334,6 +1366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 20
+  speedModifier: 4
 --- !u!82 &355967702596757054
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1493,6 +1526,16 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1810989591824762341, guid: eafaeaed93cc8b443bbd49c7e05e4573,
     type: 3}
   bulletSpeed: 10
+  abilitySpawnPoint: {fileID: 5953651102780521765}
+  abilityPrefab: {fileID: 1810989591824762341, guid: 455e6bad9d3911340a751935f7e1cfc1,
+    type: 3}
+  abilitySpeed: 0.1
+  lightningPrefab: {fileID: 3506170369924269827, guid: adb5321db2fef094a995697a6beea77a,
+    type: 3}
+  skullPrefab: {fileID: 800784558702670677, guid: 48e116c141ebceb48a2a1a74b78f6662,
+    type: 3}
+  featherPrefab: {fileID: 4696935024985980897, guid: 9cc1c407ff9ab4549b29b22b38aacb2d,
+    type: 3}
   jumpforce: 10
 --- !u!1 &6688054016217764409
 GameObject:
