@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +11,6 @@ public class Abilities : MonoBehaviour
     bool isCooldown = false;
     public KeyCode ability;
     public AudioSource abilityAudio;
-
-    public Score score;
 
     void Start()
     {
@@ -30,7 +30,6 @@ public class Abilities : MonoBehaviour
             isCooldown = true;
             abilityImage.fillAmount = 1;
             PlayAbilitySound();
-            score.UpdateScore();
         }
 
         if (isCooldown)

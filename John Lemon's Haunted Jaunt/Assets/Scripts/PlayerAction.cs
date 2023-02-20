@@ -8,6 +8,7 @@ using Photon.Pun.UtilityScripts;
 public class PlayerAction : MonoBehaviour
 {
     Animator m_Animator;
+
     private Rigidbody rigidbody;
     private PhotonView photonView;
 
@@ -34,6 +35,9 @@ public class PlayerAction : MonoBehaviour
     Vector3 Up;
     public float jumpforce = 1f;
 
+    public float dashCooldown;
+    Vector3 m_Movement;
+
     int temp = 1;
 
     // Start is called before the first frame update
@@ -41,7 +45,8 @@ public class PlayerAction : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         rigidbody = GetComponent<Rigidbody>();
-
+        m_Animator = GetComponent<Animator>();
+        playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
 
     }
@@ -49,6 +54,7 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.P) && photonView.IsMine)
         {
             temp += 1;
@@ -119,17 +125,25 @@ public class PlayerAction : MonoBehaviour
    
 
         }
+
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
             photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && photonView.IsMine)
+        if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
         {
-            rigidbody.AddForce(Up * jumpforce, ForceMode.Impulse);
-            isGrounded = false;
+            Dashing();
+            dashCooldown = 1.5f;
         }
+
+
+
+        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded && photonView.IsMine)
+        //{
+        //    rigidbody.AddForce(Up * jumpforce, ForceMode.Impulse);
+        //    isGrounded = false;
+        //}
     }
 
     void OnCollisionStay()
@@ -143,6 +157,16 @@ public class PlayerAction : MonoBehaviour
     {
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+
+        //Ray ray = new Ray(bulletPrefab.position, bulletSpawnPoint.forward);
+        //if(Physics.Raycast(ray, out RaycastHit hit, 100f))
+        //{
+        //    var enemyHealth = hit.collider.GetComponent<PlayerHealth>();
+        //    if(enemyHealth)
+        //    {
+        //        enemyHealth.TakeDamage(10);
+        //    }
+        //}
     }
 
     [PunRPC]
@@ -231,6 +255,24 @@ public class PlayerAction : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         m_Animator.SetBool("IsAttacking", false);
 
+    }
+
+    void Dashing()
+    {
+        StartCoroutine(DashAnimation());
+        Dash();
+    }
+
+    IEnumerator DashAnimation()
+    {
+        m_Animator.SetBool("IsDashing", true);
+        yield return new WaitForSeconds(1.25f);
+        m_Animator.SetBool("IsDashing", false);
+    }
+    void Dash()
+    {
+       // m_Rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
+        rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
     }
 
 

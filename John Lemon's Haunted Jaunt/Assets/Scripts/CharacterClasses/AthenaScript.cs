@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AthenaScript : CharacterScript
 {
-    public void AthenaClass()
+    public AthenaScript()
     {
         CharacterName = "Athena";
         CharacterDescription = "Goddess of Wisdom";

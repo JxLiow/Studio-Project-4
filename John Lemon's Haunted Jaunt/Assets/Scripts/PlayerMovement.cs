@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!photonView.IsMine)
             return;
-
+        
         m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * Time.deltaTime * 8);
         //m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * speedModifier);
         m_Rigidbody.MoveRotation (m_Rotation); 

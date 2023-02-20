@@ -264,6 +264,8 @@ namespace Photon.Pun.Demo.Asteroids
             if (!playerName.Equals(""))
             {
                 PhotonNetwork.LocalPlayer.NickName = playerName;
+                PlayerPrefs.SetString("name", playerName);
+                PlayerPrefs.Save();
                 PhotonNetwork.ConnectUsingSettings();
             }
             else
@@ -294,7 +296,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("MainScene");
+            PhotonNetwork.LoadLevel("CharacterSelect");
         }
 
         public void OnOptionsButtonClicked()

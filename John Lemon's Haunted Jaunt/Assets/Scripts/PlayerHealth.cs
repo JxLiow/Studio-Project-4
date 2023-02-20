@@ -6,8 +6,8 @@ using Photon.Pun;
 
 public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public int maxhealth = 100;
-    public int health = 100;
+    public float maxhealth = 100;
+    public float health = 100;
     Animator m_Animator;
 
     void Awake()
@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
     }
@@ -55,7 +55,16 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         {
             m_Animator.SetBool("Death", true);
             StartCoroutine(Respawn());
-           
         }
+    }
+
+    public float getHealth()
+    {
+        return health;
+    }
+
+    public float getMaxHealth()
+    {
+        return maxhealth;
     }
 }

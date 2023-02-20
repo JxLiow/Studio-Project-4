@@ -8,6 +8,7 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Cinemachine;
+using System.Collections.Generic;
 
 public class JLGameManager : MonoBehaviourPunCallbacks
 {
@@ -19,7 +20,8 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public CinemachineVirtualCamera virtualCam;
     public CinemachineFreeLook freeCamera;
     public Timer timer;
-
+    public GameObject spawnPoints;
+    public static List<Vector3> spawnPositions = new List<Vector3>();
     public void Awake()
     {
         Instance = this;
@@ -40,6 +42,11 @@ public class JLGameManager : MonoBehaviourPunCallbacks
                 {JLGame.PLAYER_LOADED_LEVEL, true}
             };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        spawnPoints = GameObject.FindWithTag("SpawnPoint");
+        for(int i = 0; i < spawnPoints.transform.childCount; i++)
+        {
+            spawnPositions.Add(spawnPoints.transform.GetChild(i).transform.position);
+        }
     }
 
     public override void OnDisable()
@@ -142,7 +149,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         
-        GameObject player = PhotonNetwork.Instantiate("JohnLemon", position, rotation, 0);
+        GameObject player = PhotonNetwork.Instantiate("HumanMale_Character_FREE", position, rotation, 0);
 
         if (player.GetComponent<PhotonView>().IsMine)
         {
