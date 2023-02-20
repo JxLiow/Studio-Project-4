@@ -8,7 +8,6 @@ using Photon.Pun.UtilityScripts;
 public class PlayerAction : MonoBehaviour
 {
     Animator m_Animator;
-
     private Rigidbody rigidbody;
     private PhotonView photonView;
 
@@ -42,8 +41,7 @@ public class PlayerAction : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         rigidbody = GetComponent<Rigidbody>();
-        m_Animator = GetComponent<Animator>();
-        playerID = photonView.ViewID;
+
         Up = new Vector3(0, 1, 0);
 
     }
@@ -51,7 +49,6 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.P) && photonView.IsMine)
         {
             temp += 1;
@@ -122,7 +119,6 @@ public class PlayerAction : MonoBehaviour
    
 
         }
-
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
             photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
@@ -147,16 +143,6 @@ public class PlayerAction : MonoBehaviour
     {
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-
-        //Ray ray = new Ray(bulletPrefab.position, bulletSpawnPoint.forward);
-        //if(Physics.Raycast(ray, out RaycastHit hit, 100f))
-        //{
-        //    var enemyHealth = hit.collider.GetComponent<PlayerHealth>();
-        //    if(enemyHealth)
-        //    {
-        //        enemyHealth.TakeDamage(10);
-        //    }
-        //}
     }
 
     [PunRPC]

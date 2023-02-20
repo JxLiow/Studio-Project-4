@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (photonView.IsMine)
             GetComponent<AudioListener>().enabled = true;
-        transform.position = JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
     }
 
     void Update ()

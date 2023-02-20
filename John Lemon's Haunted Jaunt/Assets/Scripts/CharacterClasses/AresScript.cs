@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AresScript : CharacterScript
 {
-    public AresScript()
+    public void AresClass()
     {
         CharacterName = "Ares";
         CharacterDescription = "God of War";

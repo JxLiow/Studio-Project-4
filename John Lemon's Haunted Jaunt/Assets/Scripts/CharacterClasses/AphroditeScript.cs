@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AphroditeScript : CharacterScript
 {
-    public AphroditeScript()
+    public void AphroditeClass()
     {
         CharacterName = "Aphrodite";
         CharacterDescription = "Goddess of Love and Beauty";
@@ -14,6 +14,5 @@ public class AphroditeScript : CharacterScript
         CharacterHealth = 100;
         CharacterFireRate = 0.5f;
         CharacterDamage = 5;
-        CharacterSpeed = 1.0f;
     }
 }

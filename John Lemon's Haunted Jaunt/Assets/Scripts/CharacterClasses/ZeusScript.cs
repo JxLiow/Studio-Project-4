@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ZeusScript : CharacterScript
 {
-   public ZeusScript()
+   public void ZeusClass()
     {
         CharacterName = "Zeus";
         CharacterDescription = "God of Thunder and Lightning";

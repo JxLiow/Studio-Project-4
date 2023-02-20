@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PoseidonScript : CharacterScript
 {
-    public PoseidonScript()
+    public void PoseidonClass()
     {
         CharacterName = "Poseidon";
         CharacterDescription = "God of the Sea";

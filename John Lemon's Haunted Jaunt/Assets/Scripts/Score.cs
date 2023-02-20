@@ -1,17 +1,42 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[Serializable]
 public class Score : MonoBehaviour
 {
-    public string playerName;
-    public float playerScore;
+    public Text score;
+    public Text highscore;
 
-    public Score(string playerName, float playerScore)
+    public int number;
+
+    void Start()
     {
-        this.playerName = playerName;
-        this.playerScore = playerScore;
+        score.text = PlayerPrefs.GetInt("Score", 0).ToString();
+        highscore.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            ResetScore();
+        }
+    }
+
+    public void UpdateScore()
+    {
+        number = Random.Range(1, 10);
+        score.text = number.ToString();
+
+        if (number > PlayerPrefs.GetInt("Highscore", 0))
+        {
+            PlayerPrefs.SetInt("Highscore", number);
+            highscore.text = number.ToString();
+        }
+    }
+
+    public void ResetScore()
+    {
+        PlayerPrefs.DeleteKey("Highscore");
+        highscore.text = "0";
     }
 }

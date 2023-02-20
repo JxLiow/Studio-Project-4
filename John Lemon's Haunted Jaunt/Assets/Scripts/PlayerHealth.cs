@@ -58,14 +58,4 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
            
         }
     }
-
-    public int getHealth()
-    {
-        return health;
-    }
-
-    public int getMaxHealth()
-    {
-        return maxhealth;
-    }
 }

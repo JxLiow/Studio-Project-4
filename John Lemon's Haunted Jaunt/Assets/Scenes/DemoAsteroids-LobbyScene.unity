@@ -1474,8 +1474,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1115892800}
-  - {fileID: 1619825566}
   - {fileID: 1844975823}
+  - {fileID: 1619825566}
   m_Father: {fileID: 1310044696}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5772,8 +5772,8 @@ MonoBehaviour:
   PlayerListEntryPrefab: {fileID: 195212, guid: d68bf8413681d9b4aa7328277e632e3f,
     type: 3}
   OptionsPanel: {fileID: 315756616}
-  SFXToggle: {fileID: 0}
-  musicToggle: {fileID: 0}
+  SFXToggle: {fileID: 1619825567}
+  musicToggle: {fileID: 1844975824}
   H2PPanel: {fileID: 391084450}
 --- !u!222 &1310044698
 CanvasRenderer:
@@ -7178,7 +7178,7 @@ RectTransform:
   - {fileID: 893555799}
   - {fileID: 2004523822}
   m_Father: {fileID: 315756617}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -7692,7 +7692,7 @@ RectTransform:
   - {fileID: 361941063}
   - {fileID: 257398722}
   m_Father: {fileID: 315756617}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

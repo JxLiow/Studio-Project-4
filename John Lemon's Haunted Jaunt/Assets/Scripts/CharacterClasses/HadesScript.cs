@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HadesScript : CharacterScript
 {
-   public HadesScript()
+   public void HadesClass()
     {
         CharacterName = "Hades";
         CharacterDescription = "God of the Underworld";
