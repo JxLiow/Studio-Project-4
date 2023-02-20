@@ -3,19 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CooldownUpScript : MonoBehaviour
+public class HealthUpScript : MonoBehaviour
 {
-    private PhotonView photonView;
-    public float timeRemaining = 25;
+    public float timeRemaining = 30;
     bool runTimer = false;
-
+    private PhotonView photonView;
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
     }
     void Start()
     {
-        //transform.position = new Vector3(-3.0f, 6.0f, 3.0f);
+        //transform.position = new Vector3(3.0f, 6.0f, -3.0f);
     }
     [PunRPC]
     public void powerupPickedUp()
@@ -42,9 +41,9 @@ public class CooldownUpScript : MonoBehaviour
         //    }
         //    else if (timeRemaining <= 0)
         //    {
-        //        transform.position = new Vector3(-3.0f, 6.0f, 3.0f);
+        //        transform.position = new Vector3(3.0f, 6.0f, -3.0f);
         //        runTimer = false;
-        //        timeRemaining = 25;
+        //        timeRemaining = 30;
         //    }
         //}
 
