@@ -8,6 +8,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 {
     public int maxhealth = 100;
     public int health = 100;
+    Animator m_Animator;
+
+    void Awake()
+    {
+        m_Animator = GetComponent<Animator>();
+    }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //sync health
@@ -30,10 +36,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     IEnumerator Respawn()
     {
         health = maxhealth;
-        GetComponent<CharacterController>().enabled = false;
+        //GetComponent<CharacterController>().enabled = false;
         transform.position = new Vector3(16, 1, 16);
         yield return new WaitForSeconds(5); //wait for 5 seconds
-        GetComponent<CharacterController>().enabled = true;
+        //GetComponent<CharacterController>().enabled = true;
+        m_Animator.SetBool("Death", false);
     }
     // Start is called before the first frame update
     void Start()
@@ -46,7 +53,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     {
         if(health <= 0)
         {
+            m_Animator.SetBool("Death", true);
             StartCoroutine(Respawn());
+           
         }
     }
 

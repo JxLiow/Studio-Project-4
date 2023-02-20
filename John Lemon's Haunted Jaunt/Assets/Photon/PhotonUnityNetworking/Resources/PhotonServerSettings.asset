@@ -49,6 +49,11 @@ MonoBehaviour:
   - shootBullet1
   - shootBullet2
   - shootBullet3
+  - shootBullet4
+  - shootBullet5
+  - shootBullet6
+  - shootBullet7
+  - shootBullet8
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

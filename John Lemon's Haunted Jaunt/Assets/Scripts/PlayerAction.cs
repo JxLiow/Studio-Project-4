@@ -23,6 +23,12 @@ public class PlayerAction : MonoBehaviour
     public GameObject lightningPrefab;
     public GameObject skullPrefab;
     public GameObject featherPrefab;
+    public GameObject heartPrefab;
+    public GameObject spearPrefab;
+    public GameObject shieldPrefab;
+    public GameObject tridentPrefab;
+    public GameObject arrowPrefab;
+
     public int playerID;
 
     bool isGrounded;
@@ -39,6 +45,7 @@ public class PlayerAction : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
+
     }
 
     // Update is called once per frame
@@ -54,28 +61,65 @@ public class PlayerAction : MonoBehaviour
             temp -= 1;
         }
 
-        
         if (Input.GetMouseButtonDown(0) && photonView.IsMine)
         {
-            if(temp == 1)
+            //look at
+            RaycastHit _hit;
+            Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(_ray, out _hit))
+            {
+                transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+            }
+
+            m_Animator.SetBool("IsAttacking", true);
+            if(m_Animator.GetBool("IsWalking") == true)
+            {
+                m_Animator.SetBool("IsWalking", false);
+            }
+            if(m_Animator.GetBool("IsWalking") == false)
+            {
+                Attacking();
+            }
+
+            if (temp == 1)
             {
                 photonView.RPC("shootBullet1", RpcTarget.AllViaServer, rigidbody.position);
-
             }
             else if (temp == 2)
             {
                 photonView.RPC("shootBullet2", RpcTarget.AllViaServer, rigidbody.position);
-
             }
             else if (temp == 3)
             {
-
                 photonView.RPC("shootBullet3", RpcTarget.AllViaServer, rigidbody.position);
+            }
+            else if (temp == 4)
+            {
+                photonView.RPC("shootBullet4", RpcTarget.AllViaServer, rigidbody.position);
+            }
+            else if (temp == 5)
+            {
+                photonView.RPC("shootBullet5", RpcTarget.AllViaServer, rigidbody.position);
+            }
+            else if (temp == 6)
+            {
+                photonView.RPC("shootBullet6", RpcTarget.AllViaServer, rigidbody.position);
+            }
+            else if (temp == 7)
+            {
+                photonView.RPC("shootBullet7", RpcTarget.AllViaServer, rigidbody.position);
+            }
+            else if (temp == 8)
+            {
+                photonView.RPC("shootBullet8", RpcTarget.AllViaServer, rigidbody.position);
             }
             else
             {
                 photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
             }
+
+   
 
         }
 
@@ -83,7 +127,8 @@ public class PlayerAction : MonoBehaviour
         {
             photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
         }
-     
+
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && photonView.IsMine)
         {
             rigidbody.AddForce(Up * jumpforce, ForceMode.Impulse);
@@ -135,7 +180,40 @@ public class PlayerAction : MonoBehaviour
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
+    [PunRPC]
+    public void shootBullet4(Vector3 position)
+    {
+        var bullet = Instantiate(heartPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
 
+    [PunRPC]
+    public void shootBullet5(Vector3 position)
+    {
+        var bullet = Instantiate(shieldPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+
+    [PunRPC]
+    public void shootBullet6(Vector3 position)
+    {
+        var bullet = Instantiate(spearPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+
+    [PunRPC]
+    public void shootBullet7(Vector3 position)
+    {
+        var bullet = Instantiate(tridentPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+
+    [PunRPC]
+    public void shootBullet8(Vector3 position)
+    {
+        var bullet = Instantiate(arrowPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
     //ABILITIES
     [PunRPC]
     public void useAbility1(Vector3 position)
@@ -153,5 +231,21 @@ public class PlayerAction : MonoBehaviour
     {
         return playerID;
     }
+
+    void Attacking()
+    {
+        StartCoroutine(Attack());
+    }
+
+
+    IEnumerator Attack()
+    {
+        
+        m_Animator.SetBool("IsAttacking", true);
+        yield return new WaitForSeconds(0.1f);
+        m_Animator.SetBool("IsAttacking", false);
+
+    }
+
 
 }
