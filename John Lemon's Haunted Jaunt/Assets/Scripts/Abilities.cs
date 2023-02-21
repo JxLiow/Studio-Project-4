@@ -12,6 +12,8 @@ public class Abilities : MonoBehaviour
     public KeyCode ability;
     public AudioSource abilityAudio;
 
+    public Score score;
+
     void Start()
     {
         abilityImage.fillAmount = 0;
@@ -30,6 +32,7 @@ public class Abilities : MonoBehaviour
             isCooldown = true;
             abilityImage.fillAmount = 1;
             PlayAbilitySound();
+            score.UpdateScore();
         }
 
         if (isCooldown)

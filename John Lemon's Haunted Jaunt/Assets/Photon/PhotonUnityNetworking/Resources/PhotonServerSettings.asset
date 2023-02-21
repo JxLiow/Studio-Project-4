@@ -54,6 +54,10 @@ MonoBehaviour:
   - shootBullet6
   - shootBullet7
   - shootBullet8
+  - SpawnCooldownPowerup
+  - SpawnHealthPowerup
+  - SpawnSpeedPowerup
+  - powerupPickedUp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
