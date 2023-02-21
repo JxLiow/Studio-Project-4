@@ -43,20 +43,7 @@ public class CoinScript : MonoBehaviour
     void Update()
     {
 
-        if (runTimer == true)
-        {
-            if (powerupDuration > 0)
-            {
-                powerupDuration -= Time.deltaTime;
-            }
-            else if (powerupDuration <= 0)
-            {
-                playerHealth.invincible = false;
-                runTimer = false;
-                powerupDuration = 3;
-            }
-        }
-
+     
     }
 
 }

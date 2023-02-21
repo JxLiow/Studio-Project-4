@@ -131,19 +131,18 @@ public class PlayerAction : MonoBehaviour
             photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
         }
 
+        //dashing
         if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
         {
             Dashing();
             dashCooldown = 1.5f;
         }
 
+        //dash cooldown
+        if (dashCooldown > 0.0f)
+            dashCooldown -= Time.deltaTime;
 
 
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded && photonView.IsMine)
-        //{
-        //    rigidbody.AddForce(Up * jumpforce, ForceMode.Impulse);
-        //    isGrounded = false;
-        //}
     }
 
     void OnCollisionStay()
@@ -271,7 +270,6 @@ public class PlayerAction : MonoBehaviour
     }
     void Dash()
     {
-       // m_Rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
         rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
     }
 

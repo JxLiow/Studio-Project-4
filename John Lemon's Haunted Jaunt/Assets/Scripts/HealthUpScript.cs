@@ -50,19 +50,7 @@ public class HealthUpScript : MonoBehaviour
     void Update()
     {
 
-        //if (runTimer == true)
-        //{
-        //    if (timeRemaining > 0)
-        //    {
-        //        timeRemaining -= Time.deltaTime;
-        //    }
-        //    else if (timeRemaining <= 0)
-        //    {
-        //        transform.position = new Vector3(3.0f, 6.0f, -3.0f);
-        //        runTimer = false;
-        //        timeRemaining = 30;
-        //    }
-        //}
+   
 
     }
 

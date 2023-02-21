@@ -46,34 +46,8 @@ public class SpeedUpScript : MonoBehaviour
     void Update()
     {
 
-        if (runTimer)
-        {
-            //if (timeRemaining > 0) //for spawning
-            //{
-            //    timeRemaining -= Time.deltaTime;
-            //}
-            //else if (timeRemaining <= 0)
-            //{
-            //    runTimer = false;
-            //    timeRemaining = 15;
-            //}
 
-            if (hasPowerUp) //picked up powerup
-            {
-                if (powerupDuration > 0) //powerup in effect
-                {
-                    powerupDuration -= Time.deltaTime;
-                }
-                else if (powerupDuration <= 0) //powerup duration ended
-                {
-                    hasPowerUp = false;
-                    playerMovement.speedModifier = 0; //return to normal
-                    powerupDuration = 5;
-                    runTimer = false;
-                }
-            }
-
-        }
+        
     }
 
 }
