@@ -27,7 +27,7 @@ public class Score : MonoBehaviour
 
     public void UpdateScore()
     {
-        number = Random.Range(1, 10);
+        number += 1;
         score.text = number.ToString();
 
         if (number > PlayerPrefs.GetInt("Highscore", 0))
