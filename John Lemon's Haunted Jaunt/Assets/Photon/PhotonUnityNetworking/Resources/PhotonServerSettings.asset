@@ -58,6 +58,7 @@ MonoBehaviour:
   - SpawnHealthPowerup
   - SpawnSpeedPowerup
   - powerupPickedUp
+  - SpawnInvincibilityPowerup
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -11,9 +11,13 @@ public class SpeedUpScript : MonoBehaviour
     public bool hasPowerUp = false;
     private PhotonView photonView;
 
+    PlayerMovement playerMovement;
+
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
+
     }
     void Start()
     {
@@ -24,14 +28,16 @@ public class SpeedUpScript : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
+
+        playerMovement.speedModifier += 3; //increase speed
+        
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            //transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-            //runTimer = true;
-            //hasPowerUp = true;
+            runTimer = true;
+            hasPowerUp = true;
             photonView.RPC("powerupPickedUp", RpcTarget.AllViaServer);
         }
 
@@ -40,33 +46,34 @@ public class SpeedUpScript : MonoBehaviour
     void Update()
     {
 
-        //if (runTimer)
-        //{
-        //    if (timeRemaining > 0)
-        //    {
-        //        timeRemaining -= Time.deltaTime;
-        //    }
-        //    else if (timeRemaining <= 0)
-        //    {
-        //        transform.position = new Vector3(-3.0f, 6.0f, -3.0f);
-        //        runTimer = false;
-        //        timeRemaining = 15;
-        //    }
+        if (runTimer)
+        {
+            //if (timeRemaining > 0) //for spawning
+            //{
+            //    timeRemaining -= Time.deltaTime;
+            //}
+            //else if (timeRemaining <= 0)
+            //{
+            //    runTimer = false;
+            //    timeRemaining = 15;
+            //}
 
-        //    if (hasPowerUp)
-        //    {
-        //        if (powerupDuration > 0)
-        //        {
-        //            powerupDuration -= Time.deltaTime;
-        //        }
-        //        else if (powerupDuration <= 0)
-        //        {
-        //            hasPowerUp = false;
-        //            powerupDuration = 5;
-        //        }
-        //    }
+            if (hasPowerUp) //picked up powerup
+            {
+                if (powerupDuration > 0) //powerup in effect
+                {
+                    powerupDuration -= Time.deltaTime;
+                }
+                else if (powerupDuration <= 0) //powerup duration ended
+                {
+                    hasPowerUp = false;
+                    playerMovement.speedModifier = 0; //return to normal
+                    powerupDuration = 5;
+                    runTimer = false;
+                }
+            }
 
-        //}
+        }
     }
 
 }

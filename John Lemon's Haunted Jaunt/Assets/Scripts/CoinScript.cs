@@ -7,13 +7,27 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 public class CoinScript : MonoBehaviour
 {
-    public float timeRemaining = 20;
+    public float powerupDuration = 3;
     bool runTimer = false;
+    private PhotonView photonView;
+    PlayerHealth playerHealth;
 
     void Start()
     {
-        transform.position = new Vector3(3.0f, 6.0f, 3.0f);
+        photonView = GetComponent<PhotonView>();
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        //transform.position = new Vector3(3.0f, 6.0f, 3.0f);
     }
+
+    [PunRPC]
+    public void powerupPickedUp()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Destroy(gameObject);
+
+        playerHealth.invincible = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -22,6 +36,8 @@ public class CoinScript : MonoBehaviour
             runTimer = true;
         }
 
+        photonView.RPC("powerupPickedUp", RpcTarget.AllViaServer);
+
     }
 
     void Update()
@@ -29,15 +45,15 @@ public class CoinScript : MonoBehaviour
 
         if (runTimer == true)
         {
-            if (timeRemaining > 0)
+            if (powerupDuration > 0)
             {
-                timeRemaining -= Time.deltaTime;
+                powerupDuration -= Time.deltaTime;
             }
-            else if (timeRemaining <= 0)
+            else if (powerupDuration <= 0)
             {
-                transform.position = new Vector3(3.0f, 6.0f, 3.0f);
+                playerHealth.invincible = false;
                 runTimer = false;
-                timeRemaining = 20;
+                powerupDuration = 3;
             }
         }
 

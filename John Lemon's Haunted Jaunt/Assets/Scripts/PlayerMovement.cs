@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float dashCooldown;
     public float dashBoost;
+    public float speedModifier = 8;
     void Awake ()
     {
         photonView = GetComponent<PhotonView>();
@@ -55,6 +56,15 @@ public class PlayerMovement : MonoBehaviour
             m_Animator.SetBool("IsWalking", isWalking);
         }
 
+        //attack at mouse position
+        if (Input.GetMouseButtonDown(0) && photonView.IsMine)
+        {
+            if (Physics.Raycast(_ray, out _hit))
+            {
+                transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+            }
+
+        }
 
         //footstep audio
         if (isWalking)
@@ -76,16 +86,11 @@ public class PlayerMovement : MonoBehaviour
             dashCooldown = 1.5f;
         }
 
-        if (Input.GetMouseButtonDown(0) && photonView.IsMine)
-        {
-            if (Physics.Raycast(_ray, out _hit))
-            {
-                transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
-            }
-
-        }
+        //dash cooldown
         if (dashCooldown > 0.0f)
             dashCooldown -= Time.deltaTime;
+
+        //movement
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
 
@@ -96,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         if (!photonView.IsMine)
             return;
         
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * Time.deltaTime * 8);
+        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * Time.deltaTime * speedModifier);
         //m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * speedModifier);
         m_Rigidbody.MoveRotation (m_Rotation); 
     }

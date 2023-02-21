@@ -10,9 +10,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     public float health = 100;
     Animator m_Animator;
 
+    public bool invincible = false;
+
+    //private HealthUpScript healthUp;
+
+    public GameObject HealthUp;
     void Awake()
     {
         m_Animator = GetComponent<Animator>();
+        //healthUp = HealthUp.GetComponent<HealthUpScript>();
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -30,17 +36,22 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        if(invincible == false)
+        {
+            health -= damage;
+        }
+    }
+    public void Heal(float healAmt)
+    {
+        health += healAmt;
     }
 
     IEnumerator Respawn()
     {
-        health = maxhealth;
-        //GetComponent<CharacterController>().enabled = false;
-        transform.position = new Vector3(16, 1, 16);
         yield return new WaitForSeconds(5); //wait for 5 seconds
-        //GetComponent<CharacterController>().enabled = true;
+        health = maxhealth;
         m_Animator.SetBool("Death", false);
+        transform.position = new Vector3(16, 1, 16);
     }
     // Start is called before the first frame update
     void Start()
@@ -51,6 +62,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     void Update()
     {
+
+        //if (healthUp.pickedUpHealth)
+        //{
+        //    Heal(40);
+        //    healthUp.pickedUpHealth = false;
+        //}
         if(health <= 0)
         {
             m_Animator.SetBool("Death", true);

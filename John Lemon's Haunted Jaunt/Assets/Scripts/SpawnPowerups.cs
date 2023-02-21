@@ -7,10 +7,14 @@ public class SpawnPowerups : MonoBehaviour
     public PhotonView photonView;
     public JLGameManager _JLGameManager;
     public Timer timer;
+
     public GameObject healthPowerup;
     public GameObject cooldownPowerup;
     public GameObject speedPowerup;
+    public GameObject invincibilityPowerup;
+
     int powerupCount = 0;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -54,7 +58,27 @@ public class SpawnPowerups : MonoBehaviour
                 powerupCount++;
             }
         }
+        if (timer.currentTime < 260)
+        {
+            if (powerupCount < 4)
+            {
+                var position = new Vector3(3.0f, 6.0f, 3.0f);
+                if (PhotonNetwork.IsMasterClient)
+                    photonView.RPC("SpawnInvincibilityPowerup", RpcTarget.AllViaServer, position);
+                powerupCount++;
+            }
+        }
     }
+
+    [PunRPC]
+    public void SpawnInvincibilityPowerup(Vector3 pos) //the coin 
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject invincibilityPowerup = PhotonNetwork.Instantiate("Coin", pos, Quaternion.identity) as GameObject;
+        }
+    }
+
     [PunRPC]
     public void SpawnHealthPowerup(Vector3 pos)
     {
@@ -76,7 +100,7 @@ public class SpawnPowerups : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject healthPowerup = PhotonNetwork.Instantiate("speedUp", pos, Quaternion.identity) as GameObject;
+            GameObject speedPowerup = PhotonNetwork.Instantiate("speedUp", pos, Quaternion.identity) as GameObject;
         }
     }
 }

@@ -76,11 +76,11 @@ public class PlayerAction : MonoBehaviour
             }
 
             m_Animator.SetBool("IsAttacking", true);
-            if(m_Animator.GetBool("IsWalking") == true)
+            if (m_Animator.GetBool("IsWalking") == true)
             {
                 m_Animator.SetBool("IsWalking", false);
             }
-            if(m_Animator.GetBool("IsWalking") == false)
+            if (m_Animator.GetBool("IsWalking") == false)
             {
                 Attacking();
             }
@@ -122,7 +122,7 @@ public class PlayerAction : MonoBehaviour
                 photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
             }
 
-   
+
 
         }
 

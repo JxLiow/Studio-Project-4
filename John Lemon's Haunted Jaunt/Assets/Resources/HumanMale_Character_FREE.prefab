@@ -1140,9 +1140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b2cfb9174a093419d0f8db96a60eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 20
+  turnSpeed: 150
   dashCooldown: 0
   dashBoost: 0
+  speedModifier: 8
 --- !u!114 &5093171127039457392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,6 +1158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxhealth: 100
   health: 100
+  invincible: 0
+  HealthUp: {fileID: 0}
 --- !u!82 &3476636681162554429
 AudioSource:
   m_ObjectHideFlags: 0
