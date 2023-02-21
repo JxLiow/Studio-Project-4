@@ -100,6 +100,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + aphroditeScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + aphroditeScript.CharacterFireRate;
         GodDamage.text = "Damage: " + aphroditeScript.CharacterDamage;
+        newPlayer.PlayerClass = aphroditeScript;
     }
     public void changeImageHades()
     {
@@ -117,6 +118,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + hadesScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + hadesScript.CharacterFireRate;
         GodDamage.text = "Damage: " + hadesScript.CharacterDamage;
+        newPlayer.PlayerClass = hadesScript;
     }
     public void changeImageArtemis()
     {

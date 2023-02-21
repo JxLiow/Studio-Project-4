@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            health = (int)stream.ReceiveNext();    
+            health = (float)stream.ReceiveNext();    
         }
     }
 

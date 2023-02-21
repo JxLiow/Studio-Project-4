@@ -14,7 +14,7 @@ public class PlayerAction : MonoBehaviour
 
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
-    public float bulletSpeed = 10;
+    public float bulletSpeed;
 
     public Transform abilitySpawnPoint;
     public GameObject abilityPrefab;
@@ -22,12 +22,12 @@ public class PlayerAction : MonoBehaviour
 
     public GameObject lightningPrefab;
     public GameObject skullPrefab;
-    public GameObject featherPrefab;
     public GameObject heartPrefab;
-    public GameObject spearPrefab;
-    public GameObject shieldPrefab;
-    public GameObject tridentPrefab;
     public GameObject arrowPrefab;
+    public GameObject featherPrefab;
+    public GameObject tridentPrefab;
+    public GameObject swordPrefab;
+    public GameObject shieldPrefab;
 
     public int playerID;
 
@@ -37,8 +37,13 @@ public class PlayerAction : MonoBehaviour
 
     public float dashCooldown;
     Vector3 m_Movement;
-
+    
     int temp = 1;
+
+    bool shoot = false;
+    string godName;
+    float fRate;
+    float time = 0, pElapsedTime = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -48,23 +53,23 @@ public class PlayerAction : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
-
+        godName = PlayerPrefs.GetString("godname", "Zeus");
+        Debug.Log("god = "+godName);
+        fRate = PlayerPrefs.GetFloat("firerate", 1);
+        Debug.Log("firerate = "+fRate);
+        bulletSpeed = 15f;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.P) && photonView.IsMine)
-        {
-            temp += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.O) && photonView.IsMine)
-        {
-            temp -= 1;
-        }
-
+        time += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && photonView.IsMine)
+            shoot = true;
+        else if(Input.GetMouseButtonUp(0) && photonView.IsMine)
+            shoot = false;
+        
+        if(shoot)
         {
             //look at
             RaycastHit _hit;
@@ -74,7 +79,6 @@ public class PlayerAction : MonoBehaviour
             {
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
             }
-
             m_Animator.SetBool("IsAttacking", true);
             if (m_Animator.GetBool("IsWalking") == true)
             {
@@ -84,42 +88,47 @@ public class PlayerAction : MonoBehaviour
             {
                 Attacking();
             }
-
-            if (temp == 1)
+            float diff = time - pElapsedTime;
+            if (diff > fRate)
             {
-                photonView.RPC("shootBullet1", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 2)
-            {
-                photonView.RPC("shootBullet2", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 3)
-            {
-                photonView.RPC("shootBullet3", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 4)
-            {
-                photonView.RPC("shootBullet4", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 5)
-            {
-                photonView.RPC("shootBullet5", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 6)
-            {
-                photonView.RPC("shootBullet6", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 7)
-            {
-                photonView.RPC("shootBullet7", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if (temp == 8)
-            {
-                photonView.RPC("shootBullet8", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else
-            {
-                photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
+                
+                if (godName == "Zeus")
+                {
+                    photonView.RPC("shootBullet1", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Hades")
+                {
+                    photonView.RPC("shootBullet2", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Aphrodite")
+                {
+                    photonView.RPC("shootBullet3", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Artemis")
+                {
+                    photonView.RPC("shootBullet4", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Hermes")
+                {
+                    photonView.RPC("shootBullet5", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Poseidon")
+                {
+                    photonView.RPC("shootBullet6", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Ares")
+                {
+                    photonView.RPC("shootBullet7", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else if (godName == "Athena")
+                {
+                    photonView.RPC("shootBullet8", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                else
+                {
+                    photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
+                }
+                pElapsedTime = time;
             }
 
 
@@ -185,42 +194,42 @@ public class PlayerAction : MonoBehaviour
     [PunRPC]
     public void shootBullet3(Vector3 position)
     {
-        var bullet = Instantiate(featherPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(heartPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [PunRPC]
     public void shootBullet4(Vector3 position)
     {
-        var bullet = Instantiate(heartPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(arrowPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [PunRPC]
     public void shootBullet5(Vector3 position)
     {
-        var bullet = Instantiate(shieldPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(featherPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [PunRPC]
     public void shootBullet6(Vector3 position)
     {
-        var bullet = Instantiate(spearPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(tridentPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [PunRPC]
     public void shootBullet7(Vector3 position)
     {
-        var bullet = Instantiate(tridentPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(swordPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [PunRPC]
     public void shootBullet8(Vector3 position)
     {
-        var bullet = Instantiate(arrowPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(shieldPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
     //ABILITIES
