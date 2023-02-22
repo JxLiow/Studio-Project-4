@@ -1027,6 +1027,7 @@ GameObject:
   - component: {fileID: 8615342550433255614}
   - component: {fileID: 1547345606090526605}
   - component: {fileID: 8871221974647169918}
+  - component: {fileID: -945482300220125278}
   m_Layer: 0
   m_Name: HumanMale_Character_FREE
   m_TagString: Player
@@ -1104,26 +1105,26 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 3546297782231627070}
   bulletPrefab: {fileID: 1810989591824762341, guid: eafaeaed93cc8b443bbd49c7e05e4573,
     type: 3}
-  bulletSpeed: 10
+  bulletSpeed: 15
   abilitySpawnPoint: {fileID: 5019822319339430467}
   abilityPrefab: {fileID: 1810989591824762341, guid: 455e6bad9d3911340a751935f7e1cfc1,
     type: 3}
   abilitySpeed: 0.1
   lightningPrefab: {fileID: 3506170369924269827, guid: adb5321db2fef094a995697a6beea77a,
     type: 3}
-  skullPrefab: {fileID: 800784558702670677, guid: 48e116c141ebceb48a2a1a74b78f6662,
-    type: 3}
-  featherPrefab: {fileID: 4696935024985980897, guid: 9cc1c407ff9ab4549b29b22b38aacb2d,
+  skullPrefab: {fileID: 7921418598876871535, guid: d101e35e910f44b4ebb64e4f514e808c,
     type: 3}
   heartPrefab: {fileID: 7274159732572193231, guid: 86ee3a6fa349aed41b6ce7cb4ae725bf,
     type: 3}
-  spearPrefab: {fileID: 6548149095361907484, guid: 65e195846d1aad740adac43ff0b1e559,
+  arrowPrefab: {fileID: 6172034954922813461, guid: 7b6cc71f10aab0b49a3f717f6f5f9083,
+    type: 3}
+  featherPrefab: {fileID: 4696935024985980897, guid: 9cc1c407ff9ab4549b29b22b38aacb2d,
+    type: 3}
+  tridentPrefab: {fileID: 7389637941957276418, guid: 0f858ee6e9fc75e43a5e23aa4fddbd15,
+    type: 3}
+  swordPrefab: {fileID: 8037694326161841637, guid: b75a39a514efec14693e9179a4e0e2fa,
     type: 3}
   shieldPrefab: {fileID: 4808270084110877647, guid: 2293419ebbb2cc74fbb196a825fa52dd,
-    type: 3}
-  tridentPrefab: {fileID: 3972440587897282533, guid: da539726c9444444b9951473732379af,
-    type: 3}
-  arrowPrefab: {fileID: 5489909866489247199, guid: 03d75b35a68f6144da0e4f70241a94b1,
     type: 3}
   playerID: 0
   jumpforce: 1
@@ -1320,6 +1321,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &-945482300220125278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7482a03f5cf0204996c5d5532be42a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1789272960074739661
 GameObject:
   m_ObjectHideFlags: 0
@@ -5704,7 +5717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7915153434218337951}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.009, y: 1.22, z: 0.67}
+  m_LocalPosition: {x: -0.033, y: 1.22, z: 1.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

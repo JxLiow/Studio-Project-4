@@ -52,16 +52,19 @@ public class changeGodImage : MonoBehaviour
         newPlayer.PlayerHealth = newPlayer.PlayerClass.CharacterHealth;
         newPlayer.PlayerFireRate = newPlayer.PlayerClass.CharacterFireRate;
         newPlayer.PlayerSpeed = newPlayer.PlayerClass.CharacterSpeed;
+        newPlayer.PlayerGodID = newPlayer.PlayerClass.CharacterID;
         //Debug.Log("Player class: " + newPlayer.PlayerClass);
         ////Debug.Log("Player damage: " + newPlayer.PlayerDamage);
         ////Debug.Log("Player speed: " + newPlayer.PlayerSpeed);
         ////Debug.Log("Player fire rate: " + newPlayer.PlayerFireRate);
+        Debug.Log("Player god ID: " + newPlayer.PlayerGodID);
         if (_TimerScript.TimeLeft < 0)
         {
             PlayerPrefs.SetString("godname", newPlayer.PlayerGodName);
             PlayerPrefs.SetFloat("damage", newPlayer.PlayerDamage);
             PlayerPrefs.SetFloat("firerate", newPlayer.PlayerFireRate);
             PlayerPrefs.SetFloat("speed", newPlayer.PlayerSpeed);
+            PlayerPrefs.SetInt("id", newPlayer.PlayerGodID);
             PlayerPrefs.Save();
             PhotonNetwork.LoadLevel("MainScene");
         }
@@ -100,6 +103,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + aphroditeScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + aphroditeScript.CharacterFireRate;
         GodDamage.text = "Damage: " + aphroditeScript.CharacterDamage;
+        newPlayer.PlayerClass = aphroditeScript;
     }
     public void changeImageHades()
     {
@@ -117,6 +121,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + hadesScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + hadesScript.CharacterFireRate;
         GodDamage.text = "Damage: " + hadesScript.CharacterDamage;
+        newPlayer.PlayerClass = hadesScript;
     }
     public void changeImageArtemis()
     {
@@ -134,7 +139,7 @@ public class changeGodImage : MonoBehaviour
         GodAbility.text = "Skill: " + artemisScript.CharacterSecondary;
         GodFireRate.text = "Fire rate: " + artemisScript.CharacterFireRate;
         GodDamage.text = "Damage: " + artemisScript.CharacterDamage;
-        newPlayer.PlayerClass = artemisScript;
+        newPlayer.PlayerClass = artemisScript;    
     }
     public void changeImageHermes()
     {

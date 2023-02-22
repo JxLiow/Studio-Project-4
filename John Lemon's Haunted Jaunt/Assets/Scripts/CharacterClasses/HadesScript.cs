@@ -15,5 +15,6 @@ public class HadesScript : CharacterScript
         CharacterFireRate = 1.0f;
         CharacterDamage = 10;
         CharacterSpeed = 1.0f;
+        CharacterID = 2;
     }
 }

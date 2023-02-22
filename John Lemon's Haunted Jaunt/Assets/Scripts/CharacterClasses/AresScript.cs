@@ -15,5 +15,6 @@ public class AresScript : CharacterScript
         CharacterFireRate = 1.0f;
         CharacterDamage = 10.0f;
         CharacterSpeed = 1.0f;
+        CharacterID = 6;
     }
 }

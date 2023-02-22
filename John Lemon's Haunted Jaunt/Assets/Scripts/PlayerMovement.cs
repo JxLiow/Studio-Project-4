@@ -17,7 +17,17 @@ public class PlayerMovement : MonoBehaviour
 
     public float dashCooldown;
     public float dashBoost;
+
+    SpeedUpScript speedUpScript;
     public float speedModifier = 8;
+<<<<<<< HEAD
+    JLGameManager _JLGameManager;
+=======
+    float speedUpDuration = 5;
+
+
+
+>>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     void Awake ()
     {
         photonView = GetComponent<PhotonView>();
@@ -25,8 +35,11 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody> ();
         m_AudioSource = GetComponent<AudioSource> ();
 
+        speedUpScript = FindObjectOfType<SpeedUpScript>();
+
         if (photonView.IsMine)
             GetComponent<AudioListener>().enabled = true;
+        transform.position = _JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
     }
 
     void Update ()
@@ -79,20 +92,35 @@ public class PlayerMovement : MonoBehaviour
             m_AudioSource.Stop();
         }
 
-        //dashing animation
-        if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
-        {
-            Dashing();
-            dashCooldown = 1.5f;
-        }
+        ////dashing animation
+        //if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
+        //{
+        //    Dashing();
+        //    dashCooldown = 1.5f;
+        //}
 
-        //dash cooldown
-        if (dashCooldown > 0.0f)
-            dashCooldown -= Time.deltaTime;
+        ////dash cooldown
+        //if (dashCooldown > 0.0f)
+        //    dashCooldown -= Time.deltaTime;
 
         //movement
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
+
+
+        //speedup timer
+        if(speedModifier != 8)
+        {
+            if(speedUpDuration > 0)
+            {
+                speedUpDuration -= Time.deltaTime;
+            }
+            else if(speedUpDuration <= 0)
+            {
+                speedUpDuration = 5;
+                speedModifier = 8;
+            }
+        }
 
     }
 
@@ -106,20 +134,20 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MoveRotation (m_Rotation); 
     }
 
-    void Dashing()
-    {
-        StartCoroutine(DashAnimation());
-        Dash();
-    }
+    //void Dashing()
+    //{
+    //    StartCoroutine(DashAnimation());
+    //    Dash();
+    //}
   
-    IEnumerator DashAnimation()
-    {
-        m_Animator.SetBool("IsDashing", true);
-        yield return new WaitForSeconds(1.25f);
-        m_Animator.SetBool("IsDashing", false);
-    }
-    void Dash()
-    {
-        m_Rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
-    }
+    //IEnumerator DashAnimation()
+    //{
+    //    m_Animator.SetBool("IsDashing", true);
+    //    yield return new WaitForSeconds(1.25f);
+    //    m_Animator.SetBool("IsDashing", false);
+    //}
+    //void Dash()
+    //{
+    //    m_Rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
+    //}
 }

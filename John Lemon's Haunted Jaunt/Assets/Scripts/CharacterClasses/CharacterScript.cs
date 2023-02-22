@@ -13,6 +13,7 @@ public class CharacterScript
     private float characterFireRate;
     private float characterDamage;
     private float characterSpeed;
+    private int characterID;
 
     public string CharacterName
     {
@@ -53,5 +54,10 @@ public class CharacterScript
     {
         get { return characterSpeed; }
         set { characterSpeed = value; }
+    }
+    public int CharacterID
+    {
+        get { return characterID; }
+        set { characterID = value; }
     }
 }

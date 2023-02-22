@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     public float health = 100;
     Animator m_Animator;
 
+    CoinScript coinScript;
+    float invincibleDuration = 3;
     public bool invincible = false;
 
     //private HealthUpScript healthUp;
@@ -18,6 +20,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     void Awake()
     {
         m_Animator = GetComponent<Animator>();
+        coinScript = FindObjectOfType<CoinScript>();
+
         //healthUp = HealthUp.GetComponent<HealthUpScript>();
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -30,7 +34,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            health = (int)stream.ReceiveNext();    
+            health = (float)stream.ReceiveNext();    
         }
     }
 
@@ -62,13 +66,21 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     void Update()
     {
+        //invincible/coin powerup
+        if (invincible)
+        {
+            if (invincibleDuration > 0)
+            {
+                invincibleDuration -= Time.deltaTime;
+            }
+            else if (invincibleDuration <= 0)
+            {
+                invincibleDuration = 3;
+                invincible = false;
+            }
+        }
 
-        //if (healthUp.pickedUpHealth)
-        //{
-        //    Heal(40);
-        //    healthUp.pickedUpHealth = false;
-        //}
-        if(health <= 0)
+        if (health <= 0)
         {
             m_Animator.SetBool("Death", true);
             StartCoroutine(Respawn());

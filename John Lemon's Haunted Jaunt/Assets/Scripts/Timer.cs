@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,6 +6,11 @@ public class Timer : MonoBehaviour
 {
     [Header("Component")]
     public TextMeshProUGUI timerText;
+    public GameObject timerTextObj;
+    public GameObject playerinfocanvas;
+    public GameObject abilitycanvas;
+    public GameObject scoreboardcanvas;
+    public GameObject scoretext;
 
     [Header("Timer settings")]
     public float currentTime;
@@ -16,7 +19,11 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        float minutes = Mathf.FloorToInt(currentTime / 60);
+        timerTextObj.SetActive(false);
+        playerinfocanvas.SetActive(false);
+        abilitycanvas.SetActive(false);
+        scoreboardcanvas.SetActive(false);
+        scoretext.SetActive(false);
     }
 
     // Update is called once per frame
@@ -24,18 +31,28 @@ public class Timer : MonoBehaviour
     {
         if (isCountdownTimerExpired == true)
         {
-            StartCountdown();   
+            timerTextObj.SetActive(true);
+            playerinfocanvas.SetActive(true);
+            abilitycanvas.SetActive(true);
+            scoreboardcanvas.SetActive(true);
+            scoretext.SetActive(true);
+            StartCountdown();
         }
         SetTimerText();
     }
 
     private void SetTimerText()
     {
-        timerText.text = currentTime.ToString("0.00");
+        timerText.text = currentTime.ToString("0.0");
     }
 
     public void StartCountdown()
     {
         currentTime = countDown ? currentTime -= Time.deltaTime : currentTime += Time.deltaTime;
+
+        if (currentTime <= 0)
+        {
+            currentTime = 0;
+        }
     }
 }

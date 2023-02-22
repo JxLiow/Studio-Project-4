@@ -15,5 +15,6 @@ public class PoseidonScript : CharacterScript
         CharacterFireRate = 0.5f;
         CharacterDamage = 5;
         CharacterSpeed = 1.0f;
+        CharacterID = 5;
     }
 }

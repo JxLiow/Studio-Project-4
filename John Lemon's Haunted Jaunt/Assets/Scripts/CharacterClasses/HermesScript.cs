@@ -15,5 +15,6 @@ public class HermesScript : CharacterScript
         CharacterFireRate = 0.25f;
         CharacterDamage = 2.5f;
         CharacterSpeed = 1.25f;
+        CharacterID = 4;
     }
 }

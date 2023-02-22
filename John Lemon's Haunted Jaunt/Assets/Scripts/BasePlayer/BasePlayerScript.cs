@@ -12,7 +12,7 @@ public class BasePlayerScript
     private float playerFireRate;
     private float playerDamage;
     private float playerSpeed;
-
+    private int playerGodID;
     public string PlayerName
     {
         get { return playerName; }
@@ -47,5 +47,10 @@ public class BasePlayerScript
     {
         get { return playerSpeed; }
         set { playerSpeed = value; }
+    }
+    public int PlayerGodID
+    {
+        get { return playerGodID; }
+        set { playerGodID = value; }
     }
 }

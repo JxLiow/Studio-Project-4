@@ -8,13 +8,13 @@ using Photon.Pun.UtilityScripts;
 public class BulletScript : MonoBehaviour
 {
     public float life = 3;
-    float damage = 5;
+    float damage;
 
     // Start is called before the first frame update
     void Awake()
     {
         Destroy(gameObject, life);
-        //damage = PlayerPrefs.GetFloat("damage", 10);
+        damage = PlayerPrefs.GetFloat("damage", 10);
     }
 
     void OnCollisionEnter(Collision collision)

@@ -21,7 +21,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
     public CinemachineFreeLook freeCamera;
     public Timer timer;
     public GameObject spawnPoints;
-    public static List<Vector3> spawnPositions = new List<Vector3>();
+    public List<Vector3> spawnPositions = new List<Vector3>();
     public void Awake()
     {
         Instance = this;

@@ -15,5 +15,6 @@ public class AthenaScript : CharacterScript
         CharacterFireRate = 0.5f;
         CharacterDamage = 5.0f;
         CharacterSpeed = 1.0f;
+        CharacterID = 7 ;
     }
 }

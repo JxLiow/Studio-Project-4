@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\WaypointPatrol.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\Scripts\JLGameManager.cs" />
+    <Compile Include="Assets\Scripts\Powerups\PlayerPickedUpPowerup.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\CharacterClasses\CharacterScript.cs" />
     <Compile Include="Assets\Scripts\CharacterClasses\HermesScript.cs" />
@@ -82,14 +83,18 @@
     <Compile Include="Assets\Scripts\PlayerAction.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
-    <Compile Include="Assets\Scripts\HealthUpScript - Copy.cs" />
+<<<<<<< HEAD
+    <Compile Include="Assets\Scripts\Powerups\HealthUpScript.cs" />
+=======
+    <Compile Include="Assets\Scripts\HealthUpScript.cs" />
+>>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\Scripts\GodSkills.cs" />
     <Compile Include="Assets\Scripts\Abilities.cs" />
-    <Compile Include="Assets\Scripts\CooldownUpScript.cs" />
+    <Compile Include="Assets\Scripts\Powerups\CooldownUpScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-    <Compile Include="Assets\Scripts\SpeedUpScript.cs" />
-    <Compile Include="Assets\Scripts\BasePlayer\CreateNewPlayer.cs" />
+    <Compile Include="Assets\Scripts\Powerups\SpeedUpScript.cs" />
     <Compile Include="Assets\Scripts\CharacterClasses\AresScript.cs" />
     <Compile Include="Assets\Scripts\changeGodImage.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -101,6 +106,11 @@
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+<<<<<<< HEAD
+    <Compile Include="Assets\Scripts\Powerups\SpawnPowerups.cs" />
+=======
+    <Compile Include="Assets\Scripts\SpawnPowerups.cs" />
+>>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     <Compile Include="Assets\Scripts\RaiseEvents.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
