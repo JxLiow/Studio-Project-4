@@ -20,14 +20,10 @@ public class PlayerMovement : MonoBehaviour
 
     SpeedUpScript speedUpScript;
     public float speedModifier = 8;
-<<<<<<< HEAD
-    JLGameManager _JLGameManager;
-=======
     float speedUpDuration = 5;
 
 
 
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     void Awake ()
     {
         photonView = GetComponent<PhotonView>();
@@ -39,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (photonView.IsMine)
             GetComponent<AudioListener>().enabled = true;
-        transform.position = _JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
     }
 
     void Update ()

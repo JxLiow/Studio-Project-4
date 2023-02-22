@@ -24,15 +24,11 @@ public class PlayerAction : MonoBehaviour
     public GameObject skullPrefab;
     public GameObject heartPrefab;
     public GameObject arrowPrefab;
-<<<<<<< HEAD
-    List<GameObject> projectileList = new List<GameObject>();
-=======
     public GameObject featherPrefab;
     public GameObject tridentPrefab;
     public GameObject swordPrefab;
     public GameObject shieldPrefab;
 
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     public int playerID;
 
     bool isGrounded;
@@ -57,23 +53,11 @@ public class PlayerAction : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
-<<<<<<< HEAD
-        projectileList.Add(lightningPrefab);
-        projectileList.Add(heartPrefab);
-        projectileList.Add(skullPrefab);
-        projectileList.Add(arrowPrefab);
-        projectileList.Add(featherPrefab);
-        projectileList.Add(tridentPrefab);
-        projectileList.Add(spearPrefab);
-        projectileList.Add(shieldPrefab);
-
-=======
         godName = PlayerPrefs.GetString("godname", "Zeus");
         Debug.Log("god = "+godName);
         fRate = PlayerPrefs.GetFloat("firerate", 1);
         Debug.Log("firerate = "+fRate);
         bulletSpeed = 15f;
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     }
 
     // Update is called once per frame
@@ -104,12 +88,6 @@ public class PlayerAction : MonoBehaviour
             {
                 Attacking();
             }
-<<<<<<< HEAD
-
-            
-            photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
-           
-=======
             float diff = time - pElapsedTime;
             if (diff > fRate)
             {
@@ -152,11 +130,11 @@ public class PlayerAction : MonoBehaviour
                 }
                 pElapsedTime = time;
             }
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
 
 
 
         }
+
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
             photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
@@ -168,44 +146,10 @@ public class PlayerAction : MonoBehaviour
             Dashing();
             dashCooldown = 1.5f;
         }
-        //skills
-        if (Input.GetKeyDown(KeyCode.E) && photonView.IsMine)
-        {
-            switch (PlayerPrefs.GetString("godname"))
-            {
-                case "Zeus":
-                    
-                    break;
-                case "Aphrodite":
 
-<<<<<<< HEAD
-                    break;
-                case "Hades":
-                    photonView.RPC("useHadesAbility", RpcTarget.AllViaServer, rigidbody.position);
-                    break;
-                case "Artemis":
-                    
-                    break;
-                case "Poseidon":
-
-                    break;
-                case "Hermes":
-
-                    break;
-                case "Ares":
-
-                    break;
-                case "Athena":
-
-                    break;
-
-            }
-        }
-=======
         //dash cooldown
         if (dashCooldown > 0.0f)
             dashCooldown -= Time.deltaTime;
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
 
 
     }
@@ -219,7 +163,7 @@ public class PlayerAction : MonoBehaviour
     [PunRPC]
     public void shootBullet (Vector3 position)
     {
-        var bullet = Instantiate(projectileList[PlayerPrefs.GetInt("id")], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
         //Ray ray = new Ray(bulletPrefab.position, bulletSpawnPoint.forward);
@@ -233,9 +177,6 @@ public class PlayerAction : MonoBehaviour
         //}
     }
 
-<<<<<<< HEAD
-   
-=======
     [PunRPC]
     public void shootBullet1(Vector3 position)
     {
@@ -291,7 +232,6 @@ public class PlayerAction : MonoBehaviour
         var bullet = Instantiate(shieldPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8
     //ABILITIES
     [PunRPC]
     public void useAbility1(Vector3 position)
@@ -299,12 +239,7 @@ public class PlayerAction : MonoBehaviour
         var ability = Instantiate(abilityPrefab, abilitySpawnPoint.position, abilitySpawnPoint.rotation);
         ability.GetComponent<Rigidbody>().velocity = abilitySpawnPoint.forward * abilitySpeed;
     }
-    [PunRPC]
-    public void useHadesAbility(Vector3 position)
-    {
-        position.y = position.y + 0.3f;
-        GameObject hadesAbility = PhotonNetwork.Instantiate("HadesSkill", position, Quaternion.identity) as GameObject;
-    }
+
     public PhotonView getView()
     {
         return photonView;
