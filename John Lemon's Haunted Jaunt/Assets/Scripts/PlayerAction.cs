@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 
@@ -32,11 +31,17 @@ public class PlayerAction : MonoBehaviour
     public Transform PoseidonPassiveSpawnPoint;
     public GameObject abilityPrefab;
 
-    public GameObject HadesAOEPrefab;
     public GameObject PoseidonAbilityPrefab;
     public GameObject PoseidonPassivePrefab;
-    public float abilitySpeed = 0f;
-    public float PoseidonAbilitySpeed = 8f;
+
+    public GameObject zeusImage;
+    public GameObject hadesImage;
+    public GameObject aphroditeImage;
+    public GameObject artemisImage;
+    public GameObject hermesImage;
+    public GameObject poseidonImage;
+    public GameObject aresImage;
+    public GameObject athenaImage;
 
     public int playerID;
 
@@ -51,7 +56,15 @@ public class PlayerAction : MonoBehaviour
     bool shoot = false;
     public string godName;
     float fRate;
+    float damage;
     float time = 0, pElapsedTime = 0;
+
+    // ability stuff
+    public bool isActivated;
+    public bool isOnCooldown;
+    public float abilityDuration;
+    public float abilityCooldown;
+    public float PoseidonAbilitySpeed;
 
     Timer timer;
 
@@ -78,6 +91,12 @@ public class PlayerAction : MonoBehaviour
         projectileList.Add(tridentPrefab);
         projectileList.Add(swordPrefab);
         projectileList.Add(shieldPrefab);
+
+        abilityDuration = 5f;
+        abilityCooldown = 10f;
+        isActivated = false;
+        isOnCooldown = false;
+        damage = PlayerPrefs.GetFloat("damage", 1);
     }
 
     // Update is called once per frame
@@ -100,13 +119,10 @@ public class PlayerAction : MonoBehaviour
             RaycastHit _hit;
             Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-
             if (Physics.Raycast(_ray, out _hit))
             {
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
             }
-
-            //attack animation
             m_Animator.SetBool("IsAttacking", true);
             if (m_Animator.GetBool("IsWalking") == true)
             {
@@ -116,14 +132,14 @@ public class PlayerAction : MonoBehaviour
             {
                 Attacking();
             }
-
-            //PRIMARY FIRE
             float diff = time - pElapsedTime;
             if (diff > fRate)
             {
                 photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
                 pElapsedTime = time;
             }
+
+
 
         }
        
@@ -159,32 +175,59 @@ public class PlayerAction : MonoBehaviour
                 photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
                 //photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
             }
-
-        }
-        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
-        //{
-        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
-        //}
-
-        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
-        //{
-        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
-        //}
-
-        
-       
-        if((godName == "Poseidon") && (photonView.IsMine))
-        {
-            //PoseidonPassivePrefab.transform.parent = rigidbody.transform;
-            if(timer.currentTime < 299.5)
+            else if (godName == "Ares")
             {
-                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
-            }       
+                if (Input.GetMouseButtonDown(1) && photonView.IsMine && isActivated == false)
+                {
+                    isActivated = true;
+                }
+
+                if (isActivated == false)
+                {
+                    damage = 10f;
+                }
+            }
+            else if (godName == "Hermes")
+            {
+                if (Input.GetMouseButtonDown(1) && photonView.IsMine && isActivated == false)
+                {
+                    isActivated = true;
+                }
+
+                if (isActivated == false)
+                {
+                    fRate = 0.25f;
+                }
+            }
+
+        }
+        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
+        //{
+        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
+        //}
+
+        if (isActivated == true)
+        {
+            abilityDuration -= Time.deltaTime;
         }
 
-        //dash cooldown
-        if (dashCooldown > 0.0f)
-            dashCooldown -= Time.deltaTime;
+        if (abilityDuration <= 0f)
+        {
+            isActivated = false;
+            isOnCooldown = true;
+
+            if (isOnCooldown == true)
+            {
+                abilityCooldown -= Time.deltaTime;
+            }
+        }
+
+        if (abilityCooldown <= 0f)
+        {
+            abilityDuration = 5f;
+            isOnCooldown = false;
+            abilityCooldown = 10f;
+        }
 
         //skills
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
@@ -208,10 +251,10 @@ public class PlayerAction : MonoBehaviour
 
                     break;
                 case "Hermes":
-
+                    photonView.RPC("useHermesAbility", RpcTarget.AllViaServer, rigidbody.position);
                     break;
                 case "Ares":
-
+                    photonView.RPC("useAresAbility", RpcTarget.AllViaServer, rigidbody.position);
                     break;
                 case "Athena":
 
@@ -261,6 +304,113 @@ public class PlayerAction : MonoBehaviour
 
     }
 
+    [PunRPC]
+    public void useAresAbility(Vector3 position)
+    {
+        damage *= 1.5f;
+    }
+
+    [PunRPC]
+    public void useHermesAbility(Vector3 position)
+    {
+        fRate /= 2f;
+    }
+
+    public void changePIconZeus()
+    {
+        zeusImage.SetActive(true);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(false);
+    }
+    public void changePIconHades()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(true);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(false);
+    }
+
+    public void changePIconAphrodite()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(true);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(false);
+    }
+
+    public void changePIconArtemis()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(true);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(false);
+    }
+
+    public void changePIconHermes()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(true);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(false);
+    }
+
+    public void changePIconPoseidon()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(true);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(false);
+    }
+
+    public void changePIconAres()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(true);
+        athenaImage.SetActive(false);
+    }
+
+    public void changePIconAthena()
+    {
+        zeusImage.SetActive(false);
+        hadesImage.SetActive(false);
+        aphroditeImage.SetActive(false);
+        artemisImage.SetActive(false);
+        hermesImage.SetActive(false);
+        poseidonImage.SetActive(false);
+        aresImage.SetActive(false);
+        athenaImage.SetActive(true);
+    }
+
     public PhotonView getView()
     {
         return photonView;
@@ -281,7 +431,7 @@ public class PlayerAction : MonoBehaviour
     {
         
         m_Animator.SetBool("IsAttacking", true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         m_Animator.SetBool("IsAttacking", false);
 
     }

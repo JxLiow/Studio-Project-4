@@ -9,6 +9,7 @@ public class BulletScript : MonoBehaviour
 {
     public float life = 3;
     float damage;
+    PlayerHealth playerHealth;
 
     // Start is called before the first frame update
     void Awake()
@@ -23,7 +24,17 @@ public class BulletScript : MonoBehaviour
         
         if (enemyHealth)
         {
-            enemyHealth.TakeDamage(damage);
+            if (PlayerPrefs.GetString("godname", "") == "Ares")
+            {
+                if (playerHealth.getHealth() <= 25)
+                {
+                    enemyHealth.TakeDamage(damage * 2);
+                }
+            }
+            else
+            {
+                enemyHealth.TakeDamage(damage);
+            }
             Destroy(gameObject);
         }
         Destroy(gameObject);

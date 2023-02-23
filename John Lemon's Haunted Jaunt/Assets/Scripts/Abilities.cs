@@ -7,7 +7,7 @@ public class Abilities : MonoBehaviour
 {
     [Header("Abilities")]
     public Image abilityImage;
-    public float cooldown = 5.0f;
+    public float cooldown = 15.0f;
     bool isCooldown = false;
     public KeyCode ability;
     public AudioSource abilityAudio;
@@ -51,4 +51,10 @@ public class Abilities : MonoBehaviour
     {
         abilityAudio.Play();
     }
+
+    public bool GetCooldown()
+    {
+        return isCooldown;
+    }
+        
 }

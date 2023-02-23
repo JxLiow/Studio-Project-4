@@ -60,6 +60,14 @@ MonoBehaviour:
   - powerupPickedUp
   - SpawnInvincibilityPowerup
   - useHadesAbility
+  - playAprhoditeAudio
+  - playArtemisAudio
+  - playHadesAudio
+  - playHermesAudio
+  - useAresAbility
+  - useHermesAbility
+  - usePoseidonAbility
+  - usePoseidonPassive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
