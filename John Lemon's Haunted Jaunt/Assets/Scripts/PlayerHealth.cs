@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     Animator m_Animator;
 
     CoinScript coinScript;
-    float invincibleDuration = 3;
+    float invincibleDuration = 0.5f;
     public bool invincible = false;
 
     //private HealthUpScript healthUp;
@@ -75,7 +75,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (invincibleDuration <= 0)
             {
-                invincibleDuration = 3;
+                invincibleDuration = 0.5f;
                 invincible = false;
             }
         }

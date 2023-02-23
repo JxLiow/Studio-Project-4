@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8846197504821344478}
   - component: {fileID: 8846197504821344479}
   - component: {fileID: -8136558787788190285}
+  - component: {fileID: -4222014357913224817}
   m_Layer: 0
   m_Name: HadesSkill
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8846197504821344476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.890838, y: 0.04, z: 9.265379}
-  m_LocalScale: {x: 4.222593, y: 0.012778963, z: 4.222593}
+  m_LocalScale: {x: 7.2981596, y: 4.6312007e-10, z: 7.2981596}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -95,7 +96,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -121,3 +122,15 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-4222014357913224817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8846197504821344476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3aaa7216210a345a3884fbf50062cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -47,26 +47,9 @@ public class SpeedUpScript : MonoBehaviour
     {
 
 
-<<<<<<< HEAD:John Lemon's Haunted Jaunt/Assets/Scripts/Powerups/SpeedUpScript.cs
-            
-            
-             //if (powerupDuration > 0) //powerup in effect
-             //{
-             //    powerupDuration -= Time.deltaTime;
-             //}
-             //else if (powerupDuration <= 0) //powerup duration ended
-             //{
-             //   // hasPowerUp = false;
-             //    playerMovement.speedModifier = 0; //return to normal
-             //    //powerupDuration = 5;
-             //    runTimer = false;
-             //}
             
 
-        }
-=======
         
->>>>>>> c75c28deb3a34f3d7d94bb887b0ba01587c829f8:John Lemon's Haunted Jaunt/Assets/Scripts/SpeedUpScript.cs
     }
 
 }

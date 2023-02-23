@@ -7851,7 +7851,7 @@ MonoBehaviour:
   abilitycanvas: {fileID: 435831057}
   scoreboardcanvas: {fileID: 1101514769}
   scoretext: {fileID: 1754054508}
-  currentTime: 10
+  currentTime: 300
   countDown: 1
   isCountdownTimerExpired: 0
 --- !u!4 &2119280839

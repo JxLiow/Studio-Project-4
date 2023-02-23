@@ -25,6 +25,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
         {
             speedUpDuration -= Time.deltaTime;
         }
+        Debug.Log("player movement: " + playerMovement.speedModifier);
     }
     private void OnTriggerEnter(Collider other)
     {

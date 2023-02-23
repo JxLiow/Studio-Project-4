@@ -7,6 +7,9 @@ TagManager:
   - SpawnPoint
   - Bullet
   - Enemy
+  - Cooldown
+  - Health
+  - Speed
   layers:
   - Default
   - TransparentFX
