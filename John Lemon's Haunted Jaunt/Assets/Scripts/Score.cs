@@ -3,43 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class Score : MonoBehaviour
+public class Score : MonoBehaviourPunCallbacks
 {
-    public TextMeshProUGUI score;
-    public TextMeshProUGUI highscore;
+    public TMP_Text username;
+    public TMP_Text score;
 
-    public int number;
+    Player player;
 
-    void Start()
+    public void Initialize(Player player)
     {
-        score.text = PlayerPrefs.GetInt("Score", 0).ToString();
-        highscore.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
+        this.player = player;
+
+        username.text = player.NickName;
+        UpdateStats();
     }
 
-    private void Update()
+    void UpdateStats()
     {
-        if (Input.GetKey(KeyCode.R))
+        if(player.CustomProperties.TryGetValue("kills", out object kills))
         {
-            ResetScore();
+            score.text = kills.ToString();
         }
     }
 
-    public void UpdateScore()
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        number += 1;
-        score.text = number.ToString();
-
-        if (number > PlayerPrefs.GetInt("Highscore", 0))
+        if(targetPlayer == player)
         {
-            PlayerPrefs.SetInt("Highscore", number);
-            highscore.text = number.ToString();
+            if(changedProps.ContainsKey("kills"))
+            {
+                UpdateStats();
+            }
         }
-    }
-
-    public void ResetScore()
-    {
-        PlayerPrefs.DeleteKey("Highscore");
-        highscore.text = "0";
     }
 }

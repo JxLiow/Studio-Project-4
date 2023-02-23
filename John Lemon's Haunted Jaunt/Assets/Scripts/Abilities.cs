@@ -32,7 +32,6 @@ public class Abilities : MonoBehaviour
             isCooldown = true;
             abilityImage.fillAmount = 1;
             PlayAbilitySound();
-            score.UpdateScore();
         }
 
         if (isCooldown)

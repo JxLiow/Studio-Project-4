@@ -14,7 +14,7 @@ public class PlayerAction : MonoBehaviour
     //primary fire
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
-    public float bulletSpeed;
+    public float bulletSpeed = 15f;
 
     public GameObject lightningPrefab;
     public GameObject skullPrefab;
@@ -58,6 +58,7 @@ public class PlayerAction : MonoBehaviour
     float fRate;
     float damage;
     float time = 0, pElapsedTime = 0;
+    public int score = 0;
 
     // ability stuff
     public bool isActivated;
@@ -79,7 +80,9 @@ public class PlayerAction : MonoBehaviour
         playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
         godName = PlayerPrefs.GetString("godname", "Zeus");
-        //Debug.Log("god = "+godName);
+        Debug.Log("god = "+godName);
+        name = PlayerPrefs.GetString("name", "");
+        Debug.Log("name = "+name);
         fRate = PlayerPrefs.GetFloat("firerate", 1);
         //Debug.Log("firerate = "+fRate);
         bulletSpeed = 15f;
@@ -409,16 +412,6 @@ public class PlayerAction : MonoBehaviour
         poseidonImage.SetActive(false);
         aresImage.SetActive(false);
         athenaImage.SetActive(true);
-    }
-
-    public PhotonView getView()
-    {
-        return photonView;
-    }
-
-    public int getID()
-    {
-        return playerID;
     }
 
     void Attacking()

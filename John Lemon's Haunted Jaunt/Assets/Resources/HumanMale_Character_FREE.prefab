@@ -1378,6 +1378,7 @@ MonoBehaviour:
   jumpforce: 1
   dashCooldown: 0
   godName: 
+  score: 0
   isActivated: 0
   isOnCooldown: 0
   abilityDuration: 0
@@ -1399,6 +1400,7 @@ MonoBehaviour:
   health: 100
   spawnPoints: {fileID: 0}
   invincible: 0
+  pName: 
   HealthUp: {fileID: 0}
 --- !u!114 &5531468495482184383
 MonoBehaviour:

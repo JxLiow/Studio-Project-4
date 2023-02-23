@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
     }
 
-    void Update ()
+    void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
             return;
         }
-        else if(m_Animator.GetBool("IsAttacking") == false)
+        else if (m_Animator.GetBool("IsAttacking") == false)
         {
             m_Animator.SetBool("IsWalking", isWalking);
         }
@@ -110,11 +110,11 @@ public class PlayerMovement : MonoBehaviour
         //speedup timer
         if (speedModifier != 8)
         {
-            if(speedUpDuration > 0)
+            if (speedUpDuration > 0)
             {
                 speedUpDuration -= Time.deltaTime;
             }
-            else if(speedUpDuration <= 0)
+            else if (speedUpDuration <= 0)
             {
                 speedUpDuration = 5;
                 speedModifier = 8;
@@ -131,8 +131,6 @@ public class PlayerMovement : MonoBehaviour
         //dash cooldown
         if (dashCooldown > 0.0f)
             dashCooldown -= Time.deltaTime;
-
-
 
     }
 
