@@ -6,12 +6,14 @@ using UnityEngine;
 public class CooldownUpScript : MonoBehaviour
 {
     private PhotonView photonView;
-    public float timeRemaining = 25;
-    bool runTimer = false;
+    SpawnPowerups spawnPowerUp;
+
 
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
+        spawnPowerUp = FindObjectOfType<SpawnPowerups>();
+
     }
     void Start()
     {
@@ -22,6 +24,9 @@ public class CooldownUpScript : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
+
+        spawnPowerUp.CooldownCount = 0;
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -34,19 +39,6 @@ public class CooldownUpScript : MonoBehaviour
     void Update()
     {
 
-        //if (runTimer == true)
-        //{
-        //    if (timeRemaining > 0)
-        //    {
-        //        timeRemaining -= Time.deltaTime;
-        //    }
-        //    else if (timeRemaining <= 0)
-        //    {
-        //        transform.position = new Vector3(-3.0f, 6.0f, 3.0f);
-        //        runTimer = false;
-        //        timeRemaining = 25;
-        //    }
-        //}
 
     }
 

@@ -836,7 +836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d581da19b0c39a4da6c9d59f4c33f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 30
   pickedUpHealth: 0
 --- !u!114 &6476665347430773449
 MonoBehaviour:

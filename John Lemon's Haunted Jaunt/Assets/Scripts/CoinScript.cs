@@ -11,12 +11,15 @@ public class CoinScript : MonoBehaviour
     bool runTimer = false;
     private PhotonView photonView;
     PlayerHealth playerHealth;
+    SpawnPowerups spawnPowerUp;
+
 
     void Start()
     {
         photonView = GetComponent<PhotonView>();
         playerHealth = FindObjectOfType<PlayerHealth>();
-        //transform.position = new Vector3(3.0f, 6.0f, 3.0f);
+        spawnPowerUp = FindObjectOfType<SpawnPowerups>();
+
     }
 
     [PunRPC]
@@ -26,6 +29,8 @@ public class CoinScript : MonoBehaviour
             PhotonNetwork.Destroy(gameObject);
 
         playerHealth.invincible = true;
+        spawnPowerUp.CoinCount = 0;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,9 +39,8 @@ public class CoinScript : MonoBehaviour
         {
             transform.position = new Vector3(0.0f, 0.0f, 0.0f);
             runTimer = true;
+            photonView.RPC("powerupPickedUp", RpcTarget.AllViaServer);
         }
-
-        photonView.RPC("powerupPickedUp", RpcTarget.AllViaServer);
 
     }
 

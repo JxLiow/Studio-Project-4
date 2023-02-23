@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class SpeedUpScript : MonoBehaviour
 {
+    public float powerupDuration = 5; //timer for duration of powerup when player pick it ups
     public float timeRemaining = 15; //timer for item respawn
-    public float powerupDuration = 0; //timer for duration of powerup when player pick it ups
     bool runTimer = false;
     //public bool hasPowerUp = false;
     private PhotonView photonView;
 
     PlayerMovement playerMovement;
+    SpawnPowerups spawnPowerUp;
 
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        spawnPowerUp = FindObjectOfType<SpawnPowerups>();
 
     }
     void Start()
@@ -29,8 +31,9 @@ public class SpeedUpScript : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
 
-        
-        
+        playerMovement.speedModifier += 3; //increase speed
+
+        spawnPowerUp.SpeedCount = 0;
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -7,11 +7,12 @@ using Photon.Pun;
 public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 20f;
+    PlayerAction playerAction;
 
     Animator m_Animator;
-    Rigidbody m_Rigidbody;
+    public Rigidbody m_Rigidbody;
     AudioSource m_AudioSource;
-    Vector3 m_Movement;
+    public Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
     private PhotonView photonView;
 
@@ -21,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     SpeedUpScript speedUpScript;
     public float speedModifier = 8;
     float speedUpDuration = 5;
-
+    public bool slowed = false;
     void Awake ()
     {
         photonView = GetComponent<PhotonView>();
@@ -29,7 +30,10 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody> ();
         m_AudioSource = GetComponent<AudioSource> ();
 
+
+
         speedUpScript = FindObjectOfType<SpeedUpScript>();
+        playerAction = FindObjectOfType<PlayerAction>();
 
         if (photonView.IsMine)
             GetComponent<AudioListener>().enabled = true;
@@ -63,6 +67,12 @@ public class PlayerMovement : MonoBehaviour
             m_Animator.SetBool("IsWalking", isWalking);
         }
 
+        if(m_Animator.GetBool("IsDashing") == true)
+        {
+            m_Animator.SetBool("IsWalking", false);
+            m_Animator.SetBool("IsAttacking", false);
+        }
+
         //attack at mouse position
         if (Input.GetMouseButtonDown(0) && photonView.IsMine)
         {
@@ -86,24 +96,19 @@ public class PlayerMovement : MonoBehaviour
             m_AudioSource.Stop();
         }
 
-        ////dashing animation
-        //if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
-        //{
-        //    Dashing();
-        //    dashCooldown = 1.5f;
-        //}
-
-        ////dash cooldown
-        //if (dashCooldown > 0.0f)
-        //    dashCooldown -= Time.deltaTime;
-
         //movement
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
 
 
+        if ((playerAction.godName == "Poseidon") && (photonView.IsMine)) //slow dont affect poseidon
+        {
+            speedModifier = 8;
+        }
+
+
         //speedup timer
-        if(speedModifier != 8)
+        if (speedModifier != 8)
         {
             if(speedUpDuration > 0)
             {
@@ -115,6 +120,19 @@ public class PlayerMovement : MonoBehaviour
                 speedModifier = 8;
             }
         }
+
+        //dashing
+        if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
+        {
+            Dashing();
+            dashCooldown = 1.5f;
+        }
+
+        //dash cooldown
+        if (dashCooldown > 0.0f)
+            dashCooldown -= Time.deltaTime;
+
+
 
     }
 
@@ -128,20 +146,21 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MoveRotation (m_Rotation); 
     }
 
-    //void Dashing()
-    //{
-    //    StartCoroutine(DashAnimation());
-    //    Dash();
-    //}
-  
-    //IEnumerator DashAnimation()
-    //{
-    //    m_Animator.SetBool("IsDashing", true);
-    //    yield return new WaitForSeconds(1.25f);
-    //    m_Animator.SetBool("IsDashing", false);
-    //}
-    //void Dash()
-    //{
-    //    m_Rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
-    //}
+
+    void Dashing()
+    {
+        StartCoroutine(DashAnimation());
+        Dash();
+    }
+
+    IEnumerator DashAnimation()
+    {
+        m_Animator.SetBool("IsDashing", true);
+        yield return new WaitForSeconds(1.25f);
+        m_Animator.SetBool("IsDashing", false);
+    }
+    void Dash()
+    {
+        GetComponent<Rigidbody>().AddForce(m_Movement * 10, ForceMode.Impulse);
+    }
 }

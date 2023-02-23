@@ -20,6 +20,7 @@ public class BulletScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         var enemyHealth = collision.gameObject.GetComponent<PlayerHealth>();
+        
         if (enemyHealth)
         {
             enemyHealth.TakeDamage(damage);

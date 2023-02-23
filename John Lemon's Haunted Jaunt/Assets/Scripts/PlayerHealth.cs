@@ -7,8 +7,11 @@ using Photon.Pun;
 public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float maxhealth = 100;
-    public float health = 100;
+    public float health = 10;
     Animator m_Animator;
+    public GameObject spawnPoints;
+
+    PlayerAction playerAction;
 
     CoinScript coinScript;
     float invincibleDuration = 0.5f;
@@ -21,6 +24,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     {
         m_Animator = GetComponent<Animator>();
         coinScript = FindObjectOfType<CoinScript>();
+        playerAction = FindObjectOfType<PlayerAction>();
+        spawnPoints = GameObject.FindWithTag("SpawnPoint");
 
         //healthUp = HealthUp.GetComponent<HealthUpScript>();
     }
@@ -56,6 +61,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         health = maxhealth;
         m_Animator.SetBool("Death", false);
         transform.position = new Vector3(16, 1, 16);
+        //transform.position = spawnPoints.transform.GetChild(playerAction.playerID - 1000).transform.position;
     }
     // Start is called before the first frame update
     void Start()
@@ -85,6 +91,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             m_Animator.SetBool("Death", true);
             StartCoroutine(Respawn());
         }
+
     }
 
     public float getHealth()

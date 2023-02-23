@@ -12,13 +12,10 @@ public class PlayerAction : MonoBehaviour
     private Rigidbody rigidbody;
     private PhotonView photonView;
 
+    //primary fire
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed;
-
-    public Transform abilitySpawnPoint;
-    public GameObject abilityPrefab;
-    public float abilitySpeed = 0.1f;
 
     public GameObject lightningPrefab;
     public GameObject skullPrefab;
@@ -29,6 +26,18 @@ public class PlayerAction : MonoBehaviour
     public GameObject swordPrefab;
     public GameObject shieldPrefab;
     List<GameObject> projectileList = new List<GameObject>();
+    //ability
+    public Transform abilitySpawnPoint;
+    public Transform PoseidonAbilitySpawnPoint;
+    public Transform PoseidonPassiveSpawnPoint;
+    public GameObject abilityPrefab;
+
+    public GameObject HadesAOEPrefab;
+    public GameObject PoseidonAbilityPrefab;
+    public GameObject PoseidonPassivePrefab;
+    public float abilitySpeed = 0f;
+    public float PoseidonAbilitySpeed = 8f;
+
     public int playerID;
 
     bool isGrounded;
@@ -38,12 +47,13 @@ public class PlayerAction : MonoBehaviour
     public float dashCooldown;
     Vector3 m_Movement;
     
-    int temp = 1;
 
     bool shoot = false;
-    string godName;
+    public string godName;
     float fRate;
     float time = 0, pElapsedTime = 0;
+
+    Timer timer;
 
     // Start is called before the first frame update
     void Awake()
@@ -51,12 +61,14 @@ public class PlayerAction : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         rigidbody = GetComponent<Rigidbody>();
         m_Animator = GetComponent<Animator>();
+        timer = FindObjectOfType<Timer>();
+
         playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
         godName = PlayerPrefs.GetString("godname", "Zeus");
-        Debug.Log("god = "+godName);
+        //Debug.Log("god = "+godName);
         fRate = PlayerPrefs.GetFloat("firerate", 1);
-        Debug.Log("firerate = "+fRate);
+        //Debug.Log("firerate = "+fRate);
         bulletSpeed = 15f;
         projectileList.Add(lightningPrefab);
         projectileList.Add(heartPrefab);
@@ -73,9 +85,14 @@ public class PlayerAction : MonoBehaviour
     {
         time += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && photonView.IsMine)
+        {
+            m_Animator.SetBool("IsAttacking", true);
             shoot = true;
+        }
         else if(Input.GetMouseButtonUp(0) && photonView.IsMine)
+        {
             shoot = false;
+        }
         
         if(shoot)
         {
@@ -83,10 +100,13 @@ public class PlayerAction : MonoBehaviour
             RaycastHit _hit;
             Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+
             if (Physics.Raycast(_ray, out _hit))
             {
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
             }
+
+            //attack animation
             m_Animator.SetBool("IsAttacking", true);
             if (m_Animator.GetBool("IsWalking") == true)
             {
@@ -96,6 +116,8 @@ public class PlayerAction : MonoBehaviour
             {
                 Attacking();
             }
+
+            //PRIMARY FIRE
             float diff = time - pElapsedTime;
             if (diff > fRate)
             {
@@ -103,20 +125,61 @@ public class PlayerAction : MonoBehaviour
                 pElapsedTime = time;
             }
 
+        }
+       
+        //ABILITY
+        if (Input.GetMouseButtonDown(1) && photonView.IsMine)
+        {
+            //attack animation
+            m_Animator.SetBool("IsAttacking", true);
+            if (m_Animator.GetBool("IsWalking") == true)
+            {
+                m_Animator.SetBool("IsWalking", false);
+            }
+            if (m_Animator.GetBool("IsWalking") == false)
+            {
+                Attacking();
+            }
 
+            if (godName == "Hades")
+            {
+                photonView.RPC("useHadesAbility", RpcTarget.AllViaServer, rigidbody.position);
+            }
+            else if(godName == "Poseidon")
+            {
+                //look at
+                RaycastHit _hit;
+                Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(_ray, out _hit))
+                {
+                    transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+                }
+
+                photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
+                //photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
+            }
 
         }
+        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
+        //{
+        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
+        //}
 
         //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         //{
         //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
         //}
 
-        //dashing
-        if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
+        
+       
+        if((godName == "Poseidon") && (photonView.IsMine))
         {
-            Dashing();
-            dashCooldown = 1.5f;
+            //PoseidonPassivePrefab.transform.parent = rigidbody.transform;
+            if(timer.currentTime < 299.5)
+            {
+                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
+            }       
         }
 
         //dash cooldown
@@ -156,7 +219,6 @@ public class PlayerAction : MonoBehaviour
 
             }
         }
-
     }
 
     void OnCollisionStay()
@@ -171,15 +233,6 @@ public class PlayerAction : MonoBehaviour
         var bullet = Instantiate(projectileList[PlayerPrefs.GetInt("id")], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
-        //Ray ray = new Ray(bulletPrefab.position, bulletSpawnPoint.forward);
-        //if(Physics.Raycast(ray, out RaycastHit hit, 100f))
-        //{
-        //    var enemyHealth = hit.collider.GetComponent<PlayerHealth>();
-        //    if(enemyHealth)
-        //    {
-        //        enemyHealth.TakeDamage(10);
-        //    }
-        //}
     }
 
     [PunRPC]
@@ -193,6 +246,20 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void usePoseidonAbility(Vector3 position)
+    {
+        var PoseidonAbility = Instantiate(PoseidonAbilityPrefab, PoseidonAbilitySpawnPoint.position, PoseidonAbilitySpawnPoint.rotation);
+        PoseidonAbility.GetComponent<Rigidbody>().velocity = PoseidonAbilitySpawnPoint.forward * PoseidonAbilitySpeed;
+
+    }
+
+    [PunRPC]
+    public void usePoseidonPassive(Vector3 position)
+    {
+        var PoseidonPassive = Instantiate(PoseidonPassivePrefab, PoseidonPassiveSpawnPoint.position, PoseidonPassiveSpawnPoint.rotation);
+
+    }
 
     public PhotonView getView()
     {
@@ -219,22 +286,7 @@ public class PlayerAction : MonoBehaviour
 
     }
 
-    void Dashing()
-    {
-        StartCoroutine(DashAnimation());
-        Dash();
-    }
 
-    IEnumerator DashAnimation()
-    {
-        m_Animator.SetBool("IsDashing", true);
-        yield return new WaitForSeconds(1.25f);
-        m_Animator.SetBool("IsDashing", false);
-    }
-    void Dash()
-    {
-        rigidbody.AddForce(m_Movement * 10, ForceMode.Impulse);
-    }
 
 
 }

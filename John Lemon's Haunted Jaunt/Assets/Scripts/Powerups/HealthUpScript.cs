@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class HealthUpScript : MonoBehaviour
 {
-    public float timeRemaining = 30;
     bool runTimer = false;
     private PhotonView photonView;
 
     public bool pickedUpHealth = false;
     
+    SpawnPowerups spawnPowerUp;
+
+
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
@@ -18,7 +20,7 @@ public class HealthUpScript : MonoBehaviour
     }
     void Start()
     {
-        //transform.position = new Vector3(3.0f, 6.0f, -3.0f);
+
     }
     [PunRPC]
     public void powerupPickedUp()
@@ -26,9 +28,7 @@ public class HealthUpScript : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
 
-       
-      
-
+        spawnPowerUp.HealthCount = 0;
     }
     private void OnTriggerEnter(Collider other)
     {
