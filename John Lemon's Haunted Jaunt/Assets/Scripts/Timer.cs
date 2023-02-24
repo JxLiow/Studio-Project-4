@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
     string player;
     int count;
     string[] pName = new string[4];
-    int[] pDeaths = new int[4] { 99, 99, 99, 99 };
+    int[] pScore = new int[4] { 99, 99, 99, 99 };
     int lowest;
 
     void Start()
@@ -54,20 +54,20 @@ public class Timer : MonoBehaviour
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             pName[count] = p.NickName;
-            pDeaths[count] = p.Deaths;
-            Debug.Log(pDeaths[count]);
+            pScore[count] = p.Score;
+            Debug.Log(pScore[count]);
             count++;
         }
 
-        lowest = Mathf.Min(pDeaths[0], pDeaths[1], pDeaths[2], pDeaths[3]);
+        lowest = Mathf.Max(pScore[0], pScore[1], pScore[2], pScore[3]);
 
-        if (lowest == pDeaths[0])
+        if (lowest == pScore[0])
             winner.SetText("Winner is " + pName[0]);
-        else if (lowest == pDeaths[1])
+        else if (lowest == pScore[1])
             winner.SetText("Winner is " + pName[1]);
-        else if (lowest == pDeaths[2])
+        else if (lowest == pScore[2])
             winner.SetText("Winner is " + pName[2]);
-        else if (lowest == pDeaths[3])
+        else if (lowest == pScore[3])
             winner.SetText("Winner is " + pName[3]);
     }
 

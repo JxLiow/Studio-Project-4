@@ -30,7 +30,7 @@ public class HadesAbility : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if (this.gameObject.transform.parent != other)
+            if (this.gameObject.transform.parent != other.transform.parent)
             {
                 var enemyHealth = other.gameObject.GetComponent<PlayerHealth>();
                 if (enemyHealth.getHealth() > 0)

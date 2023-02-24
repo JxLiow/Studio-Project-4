@@ -32,16 +32,14 @@ public class BulletScript : MonoBehaviour
         
         if (enemyHealth)
         {
+            enemyHealth.TakeDamage(damage);
             if (PlayerPrefs.GetString("godname", "") == "Ares")
             {
                 if (playerHealth.getHealth() <= 25)
                 {
-                    enemyHealth.TakeDamage(damage * 2);
+                    enemyHealth.TakeDamage(damage);
+                    Destroy(gameObject);
                 }
-            }
-            else
-            {
-                enemyHealth.TakeDamage(damage);
             }
             Destroy(gameObject);
             //if (enemyHealth.getHealth() <= 0)

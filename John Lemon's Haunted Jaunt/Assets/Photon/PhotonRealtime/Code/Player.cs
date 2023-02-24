@@ -98,22 +98,22 @@ namespace Photon.Realtime
         }
 
         /// <summary>Background field for nickName.</summary>
-        private int deaths = 99;
+        private int score = 0;
 
         /// <summary>Non-unique nickname of this player. Synced automatically in a room.</summary>
         /// <remarks>
         /// A player might change his own playername in a room (it's only a property).
         /// Setting this value updates the server and other players (using an operation).
         /// </remarks>
-        public int Deaths
+        public int Score
         {
             get
             {
-                return this.deaths;
+                return this.score;
             }
             set
             {
-                this.deaths = value;
+                this.score = value;
 
                 // update a room, if we changed our deaths locally
                 if (this.IsLocal)

@@ -12,28 +12,23 @@ public class PlayerManager : MonoBehaviour
 	PhotonView PV;
 
 	int kills;
+	string name;
 
 	void Awake()
 	{
 		PV = GetComponent<PhotonView>();
+		kills = 0;
+		name = PlayerPrefs.GetString("name", "");
 	}
 
     void Update()
     {
-		foreach (Player p in PhotonNetwork.PlayerList)
-		{
-			if(p.IsLocal)
-            {
-				p.Deaths = kills;
-            }
-		}
+		
 	}
 
-    [PunRPC]
     public void getKill()
 	{
-		if(PV.IsMine)
-			PV.RPC(nameof(RPC_getKill), PV.Owner);
+		PV.RPC(nameof(RPC_getKill), PV.Owner);
 	}
 
 	[PunRPC]
@@ -45,6 +40,13 @@ public class PlayerManager : MonoBehaviour
 		hash.Add("kills", kills);
 		PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 	}
+
+
+
+	public int showKills()
+    {
+		return kills;
+    }
 
 	public static PlayerManager Find(Player player)
 	{

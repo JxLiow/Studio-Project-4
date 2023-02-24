@@ -261,7 +261,12 @@ public class PlayerAction : MonoBehaviour
                         transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
                     }
 
-                    photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
+                    if (isActivated == false && isOnCooldown == false)
+                    {
+                        isActivated = true;
+                        photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
+                    }
+
                     break;
                 case "Hermes":
                     isActivated = true;

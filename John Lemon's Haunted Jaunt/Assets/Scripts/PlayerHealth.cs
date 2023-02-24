@@ -134,7 +134,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             {
                 if(health < 100)
                 {
-                    Heal(10 * Time.deltaTime);
+                    Heal(5 * Time.deltaTime);
                 }
             }
         }
