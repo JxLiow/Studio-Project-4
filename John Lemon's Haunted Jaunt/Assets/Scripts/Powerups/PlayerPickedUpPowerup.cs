@@ -6,6 +6,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
 {
     PlayerHealth playerHealth;
     PlayerMovement playerMovement;
+    PlayerAction playerAction;
     float speedUpDuration = 0.0f;
     bool pickedUpSpeed = false;
 
@@ -13,6 +14,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        playerAction = FindObjectOfType<PlayerAction>();
     }
 
     // Update is called once per frame
@@ -54,7 +56,10 @@ public class PlayerPickedUpPowerup : MonoBehaviour
         }
         else if(other.tag == "Cooldown")
         {
-
+            if (playerAction.isOnCooldown == true || playerAction.isActivated == true)
+            {
+                playerAction.abilityCooldown -= 3f;
+            }
         }
         else if(other.tag == "Coin")
         {

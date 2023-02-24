@@ -1207,6 +1207,8 @@ MonoBehaviour:
   jumpforce: 1
   dashCooldown: 0
   godName: 
+  fRate: 0
+  damage: 0
   score: 0
   isActivated: 0
   isOnCooldown: 0

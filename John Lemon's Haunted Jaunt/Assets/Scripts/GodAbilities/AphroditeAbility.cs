@@ -10,7 +10,7 @@ public class AphroditeAbility : MonoBehaviour
     bool takeDamage;
     private float damageRate = 0.5f; // adjust this value to change the rate of damage
     private float timeSinceLastDamage = 0f;
-    private float destroyTimer = 8f;
+    private float destroyTimer = 5f;
 
     void Awake()
     {

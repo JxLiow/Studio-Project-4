@@ -56,11 +56,10 @@ public class PlayerAction : MonoBehaviour
 
     bool shoot = false;
     public string godName;
-    float fRate;
-    float damage;
+    public float fRate;
+    public float damage;
     float time = 0, pElapsedTime = 0;
     public int score = 0;
-
 
     // ability stuff
     public bool isActivated;
@@ -90,7 +89,6 @@ public class PlayerAction : MonoBehaviour
         Debug.Log("name = "+name);
         fRate = PlayerPrefs.GetFloat("firerate", 1);
         //Debug.Log("firerate = "+fRate);
-        bulletSpeed = 15f;
         projectileList.Add(lightningPrefab);
         projectileList.Add(heartPrefab);
         projectileList.Add(skullPrefab);
@@ -100,6 +98,7 @@ public class PlayerAction : MonoBehaviour
         projectileList.Add(swordPrefab);
         projectileList.Add(shieldPrefab);
 
+        bulletSpeed = 15f;
         abilityDuration = 5f;
         abilityCooldown = 10f;
         isActivated = false;
@@ -112,7 +111,10 @@ public class PlayerAction : MonoBehaviour
                 isPassiveZeus = true;
         }
 
+        PoseidonAbilitySpeed = 8f;
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -153,42 +155,7 @@ public class PlayerAction : MonoBehaviour
                 photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
                 pElapsedTime = time;
             }
-
-
-
         }
-
-        if (isActivated == true)
-        {
-            abilityDuration -= Time.deltaTime;
-        }
-
-        if (abilityDuration <= 0f)
-        {
-            isActivated = false;
-            isOnCooldown = true;
-
-            if (isOnCooldown == true)
-            {
-                abilityCooldown -= Time.deltaTime;
-            }
-        }
-
-        if (abilityCooldown <= 0f)
-        {
-            abilityDuration = 5f;
-            isOnCooldown = false;
-            abilityCooldown = 10f;
-        }
-
-        if ((godName == "Poseidon") && (photonView.IsMine))
-        {
-            if(timer.currentTime < 299.5)
-            {
-                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
-            }       
-        }
-
         //skills
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
@@ -203,12 +170,7 @@ public class PlayerAction : MonoBehaviour
                 Attacking();
             }
 
-
         }
-        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
-        //{
-        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
-        //}
 
         if (isActivated == true)
         {
@@ -225,13 +187,13 @@ public class PlayerAction : MonoBehaviour
                 abilityCooldown -= Time.deltaTime;
             }
         }
-
         if (abilityCooldown <= 0f)
         {
             abilityDuration = 5f;
             isOnCooldown = false;
             abilityCooldown = 10f;
         }
+
         //dash cooldown
         if (dashCooldown > 0.0f)
             dashCooldown -= Time.deltaTime;
@@ -249,15 +211,21 @@ public class PlayerAction : MonoBehaviour
         {
             if (photonView.IsMine)
             {
-
                 photonView.RPC("ZeusPassive", RpcTarget.AllViaServer, rigidbody.position);
                 isPassiveZeus = false;
+            }
+        }
+
+        if ((godName == "Poseidon") && (photonView.IsMine))
+        {
+            if (timer.currentTime < 299.5)
+            {
+                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
             }
         }
         //skills
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
-
             switch (godName)
             {
                 case "Zeus":
@@ -272,6 +240,7 @@ public class PlayerAction : MonoBehaviour
                     }
                     break;
                 case "Aphrodite":
+                    isActivated = true;
                     photonView.RPC("useAphroditeAbility", RpcTarget.AllViaServer, rigidbody.position);
 
                     break;
@@ -295,9 +264,11 @@ public class PlayerAction : MonoBehaviour
                     photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
                     break;
                 case "Hermes":
+                    isActivated = true;
                     photonView.RPC("useHermesAbility", RpcTarget.AllViaServer, rigidbody.position);
                     break;
                 case "Ares":
+                    isActivated = true;
                     photonView.RPC("useAresAbility", RpcTarget.AllViaServer, rigidbody.position);
                     break;
                 case "Athena":
@@ -305,6 +276,16 @@ public class PlayerAction : MonoBehaviour
                     break;
 
             }
+        }
+        // reset hermes fire rate
+        else if (abilityDuration <= 0f && fRate <= 0.125f)
+        {
+            fRate = 0.25f;
+        }
+        // reset ares damage
+        else if (abilityDuration <= 0f && damage >= 15f)
+        {
+            damage = 10f;
         }
     }
 
@@ -340,12 +321,12 @@ public class PlayerAction : MonoBehaviour
                 bullet = Instantiate(projectileList[3], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
                 bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
                 break;
-            case "Poseidon":
-                bullet = Instantiate(projectileList[5], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
             case "Hermes":
                 bullet = Instantiate(projectileList[4], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Poseidon":
+                bullet = Instantiate(projectileList[5], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
                 bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
                 break;
             case "Ares":
@@ -393,14 +374,16 @@ public class PlayerAction : MonoBehaviour
     [PunRPC]
     public void useAphroditeAbility(Vector3 position)
     {
-        position.y = position.y + 0.25f;
-        if (photonView.IsMine)
+        if (isActivated == true)
         {
-            GameObject aphroditeAbility = PhotonNetwork.Instantiate("AphroditeSkill", position, Quaternion.identity) as GameObject;
-            aphroditeAbility.transform.parent = rigidbody.transform;
+            position.y = position.y + 0.25f;
+            if (photonView.IsMine)
+            {
+                GameObject aphroditeAbility = PhotonNetwork.Instantiate("AphroditeSkill", position, Quaternion.identity) as GameObject;
+                aphroditeAbility.transform.parent = rigidbody.transform;
+            }
         }
     }
-
     [PunRPC]
     public void usePoseidonAbility(Vector3 position)
     {
@@ -419,13 +402,19 @@ public class PlayerAction : MonoBehaviour
     [PunRPC]
     public void useAresAbility(Vector3 position)
     {
-        damage *= 1.5f;
+        if (isActivated == true)
+        {
+            damage *= 1.5f;
+        }
     }
 
     [PunRPC]
     public void useHermesAbility(Vector3 position)
     {
-        fRate /= 2f;
+        if (isActivated == true)
+        {
+            fRate /= 2f;
+        }
     }
 
     public void changePIconZeus()
@@ -522,12 +511,11 @@ public class PlayerAction : MonoBehaviour
         aresImage.SetActive(false);
         athenaImage.SetActive(true);
     }
+
     public PhotonView getView()
     {
         return photonView;
-
     }
-
 
     void Attacking()
     {
@@ -543,8 +531,4 @@ public class PlayerAction : MonoBehaviour
         m_Animator.SetBool("IsAttacking", false);
 
     }
-
-
-
-
 }

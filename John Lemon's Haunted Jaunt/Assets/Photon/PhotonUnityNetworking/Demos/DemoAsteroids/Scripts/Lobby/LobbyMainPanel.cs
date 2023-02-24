@@ -8,6 +8,10 @@ namespace Photon.Pun.Demo.Asteroids
 {
     public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
+        [Header("Header Elements")]
+        public GameObject ConnectionStatus;
+        public GameObject TitleText;
+
         [Header("Login Panel")]
         public GameObject LoginPanel;
 
@@ -257,6 +261,9 @@ namespace Photon.Pun.Demo.Asteroids
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
 
             PhotonNetwork.CreateRoom(roomName, options, null);
+
+            ConnectionStatus.SetActive(false);
+            TitleText.SetActive(false);
         }
 
         public void OnJoinRandomRoomButtonClicked()

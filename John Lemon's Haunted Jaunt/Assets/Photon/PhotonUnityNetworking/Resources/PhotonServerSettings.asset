@@ -68,6 +68,8 @@ MonoBehaviour:
   - useAresAbility
   - useHermesAbility
   - useAphroditeAbility
+  - useZeusAbility
+  - ZeusPassive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
