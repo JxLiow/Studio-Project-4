@@ -1195,11 +1195,6 @@ MonoBehaviour:
     type: 3}
   PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
     type: 3}
-<<<<<<< Updated upstream
-=======
-  abilitySpeed: 0.1
-  PoseidonAbilitySpeed: 8
->>>>>>> Stashed changes
   zeusImage: {fileID: 0}
   hadesImage: {fileID: 0}
   aphroditeImage: {fileID: 0}
@@ -1217,11 +1212,8 @@ MonoBehaviour:
   isOnCooldown: 0
   abilityDuration: 0
   abilityCooldown: 0
-<<<<<<< Updated upstream
   PoseidonAbilitySpeed: 8
   respawnZeusPassive: 0
-=======
->>>>>>> Stashed changes
 --- !u!114 &4106906426770643332
 MonoBehaviour:
   m_ObjectHideFlags: 0
