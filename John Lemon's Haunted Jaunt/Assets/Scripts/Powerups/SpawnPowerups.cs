@@ -110,7 +110,7 @@ public class SpawnPowerups : MonoBehaviour
                 SpeedCount++;
             }
         }
-        if (timer.currentTime < 270)
+        if (timer.currentTime < 300)
         {
             if ((CooldownCount == 0) && (CooldownTimer <= 0))
             {

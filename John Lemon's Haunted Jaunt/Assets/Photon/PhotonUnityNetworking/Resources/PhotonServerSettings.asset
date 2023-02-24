@@ -62,6 +62,12 @@ MonoBehaviour:
   - useHadesAbility
   - usePoseidonAbility
   - usePoseidonPassive
+  - getKill
+  - RPC_getKill
+  - RPC_TakeDamage
+  - useAresAbility
+  - useHermesAbility
+  - useAphroditeAbility
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

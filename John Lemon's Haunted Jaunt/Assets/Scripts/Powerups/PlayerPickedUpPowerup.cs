@@ -8,7 +8,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     PlayerMovement playerMovement;
     float speedUpDuration = 0.0f;
     bool pickedUpSpeed = false;
-    // Start is called before the first frame update
+
     void Awake()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();

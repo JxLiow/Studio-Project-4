@@ -20,11 +20,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     public string pName;
     bool takeDmg;
 
+    bool isTakingDamage;
+
     PhotonView photonView;
 
-    //private HealthUpScript healthUp;
-
     PlayerManager playerManager;
+
+    float aphroditeTimer = 5.0f;
 
     public GameObject HealthUp;
     void Awake()
@@ -35,15 +37,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         playerAction = FindObjectOfType<PlayerAction>();
         spawnPoints = GameObject.FindWithTag("SpawnPoint");
 
-        //healthUp = HealthUp.GetComponent<HealthUpScript>();
-
         playerManager = GetComponent<PlayerManager>();
         takeDmg = true;
+
+        isTakingDamage = false;
+
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //sync health
-        //throw new System.NotImplementedException();
         if(stream.IsWriting)
         {
             stream.SendNext(health);
@@ -65,6 +67,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         if (invincible == false)
         {
             health -= damage;
+            isTakingDamage = true;
         }
         if (health <= 0 && takeDmg)
         {
@@ -95,6 +98,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q) && photonView.IsMine)
+        {
+            TakeDamage(20);
+        }
         //invincible/coin powerup
         if (invincible)
         {
@@ -114,6 +121,25 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
             m_Animator.SetBool("Death", true);
             StartCoroutine(Respawn());
         }
+
+        //for aphrodite passive - heal when out of combat
+        if(playerAction.godName == "Aphrodite")
+        {
+            aphroditeTimer -= Time.deltaTime;
+            if(isTakingDamage)
+            {
+                aphroditeTimer = 5.0f;
+            }
+            if(aphroditeTimer <= 0)
+            {
+                if(health < 100)
+                {
+                    Heal(10 * Time.deltaTime);
+                }
+            }
+        }
+        isTakingDamage = false;
+
 
     }
 
