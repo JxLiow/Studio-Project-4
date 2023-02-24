@@ -533,8 +533,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752051637886152489}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1195,12 +1195,25 @@ MonoBehaviour:
     type: 3}
   PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
     type: 3}
-  abilitySpeed: 0.1
-  PoseidonAbilitySpeed: 8
+  zeusImage: {fileID: 0}
+  hadesImage: {fileID: 0}
+  aphroditeImage: {fileID: 0}
+  artemisImage: {fileID: 0}
+  hermesImage: {fileID: 0}
+  poseidonImage: {fileID: 0}
+  aresImage: {fileID: 0}
+  athenaImage: {fileID: 0}
   playerID: 0
   jumpforce: 1
   dashCooldown: 0
   godName: 
+  score: 0
+  isActivated: 0
+  isOnCooldown: 0
+  abilityDuration: 0
+  abilityCooldown: 0
+  PoseidonAbilitySpeed: 8
+  respawnZeusPassive: 0
 --- !u!114 &4106906426770643332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,9 +1245,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxhealth: 100
-  health: 10
+  health: 100
   spawnPoints: {fileID: 0}
   invincible: 0
+  pName: 
   HealthUp: {fileID: 0}
 --- !u!82 &3476636681162554429
 AudioSource:
@@ -1613,7 +1627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6812150161636325689
 Transform:
   m_ObjectHideFlags: 0
@@ -3164,7 +3178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4235932638492477303
 Transform:
   m_ObjectHideFlags: 0
@@ -3439,8 +3453,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4948122169982268793}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4645,7 +4659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3130100439478385262
 Transform:
   m_ObjectHideFlags: 0

@@ -17,7 +17,6 @@ public class HealthUpScript : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         spawnPowerUp = FindObjectOfType<SpawnPowerups>();
-
     }
     void Start()
     {

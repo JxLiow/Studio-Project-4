@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
     }
 
-    void Update ()
+    void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
             return;
         }
-        else if(m_Animator.GetBool("IsAttacking") == false)
+        else if (m_Animator.GetBool("IsAttacking") == false)
         {
             m_Animator.SetBool("IsWalking", isWalking);
         }
@@ -116,8 +116,6 @@ public class PlayerMovement : MonoBehaviour
         if (dashCooldown > 0.0f)
             dashCooldown -= Time.deltaTime;
 
-
-
     }
 
     void OnAnimatorMove ()
@@ -125,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         if (!photonView.IsMine)
             return;
         
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * Time.deltaTime * speedModifier);
+        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * Time.deltaTime * speedModifier * PlayerPrefs.GetFloat("speed"));
         //m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * speedModifier);
         m_Rigidbody.MoveRotation (m_Rotation); 
     }
