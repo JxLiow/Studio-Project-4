@@ -1191,8 +1191,6 @@ MonoBehaviour:
   PoseidonPassiveSpawnPoint: {fileID: 2606547464568116615}
   abilityPrefab: {fileID: 1810989591824762341, guid: 455e6bad9d3911340a751935f7e1cfc1,
     type: 3}
-  HadesAOEPrefab: {fileID: 1810989591824762341, guid: b6560153c8f8abb41bb27f7cfae7672f,
-    type: 3}
   PoseidonAbilityPrefab: {fileID: 7359896901333045608, guid: 4e5d6543121db1a4e904a3c9c3aa9180,
     type: 3}
   PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
@@ -1221,7 +1219,6 @@ MonoBehaviour:
   dashCooldown: 0
   dashBoost: 0
   speedModifier: 8
-  slowed: 0
 --- !u!114 &5093171127039457392
 MonoBehaviour:
   m_ObjectHideFlags: 0

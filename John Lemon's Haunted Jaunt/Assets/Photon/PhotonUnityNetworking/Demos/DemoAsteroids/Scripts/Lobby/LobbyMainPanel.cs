@@ -16,6 +16,9 @@ namespace Photon.Pun.Demo.Asteroids
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
 
+        [Header("Rooms Panel")]
+        public GameObject RoomsPanel;
+
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
 
@@ -41,14 +44,10 @@ namespace Photon.Pun.Demo.Asteroids
         public GameObject OptionsPanel;
 
         public Toggle SFXToggle;
-        //public Slider SFXSlider;
         public Toggle musicToggle;
-        //public Slider musicSlider;
-        //public GameObject OptionsPanelPrefab;
 
         [Header("How To Play Panel")]
         public GameObject H2PPanel;
-        //public GameObject H2PPrefab;
 
         private Dictionary<string, RoomInfo> cachedRoomList;
         private Dictionary<string, GameObject> roomListEntries;
@@ -221,6 +220,11 @@ namespace Photon.Pun.Demo.Asteroids
 
         #region UI CALLBACKS
 
+        public void OnStartButtonClicked()
+        {
+            SetActivePanel(RoomsPanel.name);
+        }
+
         public void OnBackButtonClicked()
         {
             if (PhotonNetwork.InLobby)
@@ -229,6 +233,16 @@ namespace Photon.Pun.Demo.Asteroids
             }
 
             SetActivePanel(SelectionPanel.name);
+        }
+
+        public void OnBackButton2Clicked()
+        {
+            if (PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.LeaveLobby();
+            }
+
+            SetActivePanel(RoomsPanel.name);
         }
 
         public void OnCreateRoomButtonClicked()
@@ -309,12 +323,6 @@ namespace Photon.Pun.Demo.Asteroids
             SetActivePanel(H2PPanel.name);
         }
 
-        public void OnSaveButtonClicked()
-        {
-            // save options or whatever
-            SetActivePanel(SelectionPanel.name);
-        }
-
         #endregion
 
         private bool CheckPlayersReady()
@@ -360,6 +368,7 @@ namespace Photon.Pun.Demo.Asteroids
         private void SetActivePanel(string activePanel)
         {
             LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
+            RoomsPanel.SetActive(activePanel.Equals(RoomsPanel.name));
             SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
             CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));

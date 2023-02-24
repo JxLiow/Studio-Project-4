@@ -33,9 +33,6 @@ public class EntityHPScript : MonoBehaviour
 
             image.fillAmount = CalculateHealth();
 
-            if (health <= 0)
-                Destroy(gameObject);
-
             if (health > maxHealth)
                 health = maxHealth;
         }

@@ -97,6 +97,32 @@ namespace Photon.Realtime
             }
         }
 
+        /// <summary>Background field for nickName.</summary>
+        private int deaths = 99;
+
+        /// <summary>Non-unique nickname of this player. Synced automatically in a room.</summary>
+        /// <remarks>
+        /// A player might change his own playername in a room (it's only a property).
+        /// Setting this value updates the server and other players (using an operation).
+        /// </remarks>
+        public int Deaths
+        {
+            get
+            {
+                return this.deaths;
+            }
+            set
+            {
+                this.deaths = value;
+
+                // update a room, if we changed our deaths locally
+                if (this.IsLocal)
+                {
+                    this.SetPlayerNameProperty();
+                }
+            }
+        }
+
         /// <summary>UserId of the player, available when the room got created with RoomOptions.PublishUserId = true.</summary>
         /// <remarks>Useful for <see cref="LoadBalancingClient.OpFindFriends"/> and blocking slots in a room for expected players (e.g. in <see cref="LoadBalancingClient.OpCreateRoom"/>).</remarks>
         public string UserId { get; internal set; }

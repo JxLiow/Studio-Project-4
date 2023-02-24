@@ -7,6 +7,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     PlayerHealth playerHealth;
     PlayerMovement playerMovement;
     float speedUpDuration = 0.0f;
+    bool pickedUpSpeed = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,15 +18,20 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(speedUpDuration <= 0)
+        if(pickedUpSpeed)
         {
-            playerMovement.speedModifier = 8;
+            if (speedUpDuration > 0)
+            {
+                speedUpDuration -= Time.deltaTime;
+            }
+            else if (speedUpDuration <= 0)
+            {
+                playerMovement.speedModifier = 8;
+                pickedUpSpeed = false;
+            }
         }
-        if (speedUpDuration > 0)
-        {
-            speedUpDuration -= Time.deltaTime;
-        }
-        Debug.Log("player movement: " + playerMovement.speedModifier);
+        
+        //Debug.Log("player movement: " + playerMovement.speedModifier);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -44,10 +50,15 @@ public class PlayerPickedUpPowerup : MonoBehaviour
         {
             speedUpDuration = 5.0f;
             playerMovement.speedModifier += 3; //increase speed
+            pickedUpSpeed = true;
         }
         else if(other.tag == "Cooldown")
         {
 
+        }
+        else if(other.tag == "Coin")
+        {
+            playerHealth.invincible = true;
         }
     }
 }

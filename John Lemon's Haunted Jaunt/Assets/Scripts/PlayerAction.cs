@@ -32,7 +32,6 @@ public class PlayerAction : MonoBehaviour
     public Transform PoseidonPassiveSpawnPoint;
     public GameObject abilityPrefab;
 
-    public GameObject HadesAOEPrefab;
     public GameObject PoseidonAbilityPrefab;
     public GameObject PoseidonPassivePrefab;
     public float abilitySpeed = 0f;
@@ -127,7 +126,16 @@ public class PlayerAction : MonoBehaviour
 
         }
        
-        //ABILITY
+       
+        if((godName == "Poseidon") && (photonView.IsMine))
+        {
+            if(timer.currentTime < 299.5)
+            {
+                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
+            }       
+        }
+
+        //skills
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
             //attack animation
@@ -141,54 +149,6 @@ public class PlayerAction : MonoBehaviour
                 Attacking();
             }
 
-            if (godName == "Hades")
-            {
-                photonView.RPC("useHadesAbility", RpcTarget.AllViaServer, rigidbody.position);
-            }
-            else if(godName == "Poseidon")
-            {
-                //look at
-                RaycastHit _hit;
-                Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(_ray, out _hit))
-                {
-                    transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
-                }
-
-                photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
-                //photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
-            }
-
-        }
-        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
-        //{
-        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
-        //}
-
-        //if (Input.GetMouseButtonDown(1) && photonView.IsMine)
-        //{
-        //    photonView.RPC("useAbility1", RpcTarget.AllViaServer, rigidbody.position);
-        //}
-
-        
-       
-        if((godName == "Poseidon") && (photonView.IsMine))
-        {
-            //PoseidonPassivePrefab.transform.parent = rigidbody.transform;
-            if(timer.currentTime < 299.5)
-            {
-                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
-            }       
-        }
-
-        //dash cooldown
-        if (dashCooldown > 0.0f)
-            dashCooldown -= Time.deltaTime;
-
-        //skills
-        if (Input.GetMouseButtonDown(1) && photonView.IsMine)
-        {
             switch (godName)
             {
                 case "Zeus":
@@ -205,7 +165,16 @@ public class PlayerAction : MonoBehaviour
 
                     break;
                 case "Poseidon":
+                    //look at
+                    RaycastHit _hit;
+                    Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+                    if (Physics.Raycast(_ray, out _hit))
+                    {
+                        transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+                    }
+
+                    photonView.RPC("usePoseidonAbility", RpcTarget.AllViaServer, rigidbody.position);
                     break;
                 case "Hermes":
 

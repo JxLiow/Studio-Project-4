@@ -28,7 +28,7 @@ public class CoinScript : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
 
-        playerHealth.invincible = true;
+
         spawnPowerUp.CoinCount = 0;
 
     }

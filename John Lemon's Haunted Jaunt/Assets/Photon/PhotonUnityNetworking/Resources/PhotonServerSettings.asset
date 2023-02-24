@@ -60,6 +60,8 @@ MonoBehaviour:
   - powerupPickedUp
   - SpawnInvincibilityPowerup
   - useHadesAbility
+  - usePoseidonAbility
+  - usePoseidonPassive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

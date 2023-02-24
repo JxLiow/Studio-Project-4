@@ -26,9 +26,15 @@ public class PoseidonPassiveScript : MonoBehaviour
         var enemy = other.gameObject.GetComponent<PlayerMovement>();
 
         if (other.gameObject.tag == "Player")
-        {
-            
+        {  
             enemy.speedModifier = 2;
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        var enemy = other.gameObject.GetComponent<PlayerMovement>();
+
+        enemy.speedModifier = 8;
     }
 }

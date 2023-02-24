@@ -17,17 +17,28 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
     float invincibleDuration = 0.5f;
     public bool invincible = false;
 
+    public string pName;
+    bool takeDmg;
+
+    PhotonView photonView;
+
     //private HealthUpScript healthUp;
+
+    PlayerManager playerManager;
 
     public GameObject HealthUp;
     void Awake()
     {
+        photonView = GetComponent<PhotonView>();
         m_Animator = GetComponent<Animator>();
         coinScript = FindObjectOfType<CoinScript>();
         playerAction = FindObjectOfType<PlayerAction>();
         spawnPoints = GameObject.FindWithTag("SpawnPoint");
 
         //healthUp = HealthUp.GetComponent<HealthUpScript>();
+
+        playerManager = GetComponent<PlayerManager>();
+        takeDmg = true;
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -45,11 +56,23 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(float damage)
     {
-        if(invincible == false)
+        photonView.RPC(nameof(RPC_TakeDamage), photonView.Owner, damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage, PhotonMessageInfo info)
+    {
+        if (invincible == false)
         {
             health -= damage;
         }
+        if (health <= 0 && takeDmg)
+        {
+            PlayerManager.Find(info.Sender).getKill();
+            takeDmg = false;
+        }
     }
+
     public void Heal(float healAmt)
     {
         health += healAmt;
@@ -61,7 +84,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         health = maxhealth;
         m_Animator.SetBool("Death", false);
         transform.position = new Vector3(16, 1, 16);
-        //transform.position = spawnPoints.transform.GetChild(playerAction.playerID - 1000).transform.position;
+        takeDmg = true;
     }
     // Start is called before the first frame update
     void Start()

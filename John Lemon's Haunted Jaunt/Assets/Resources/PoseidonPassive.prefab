@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4612013214286448221}
   - component: {fileID: 8870002935872452624}
   - component: {fileID: 1709782672293576023}
-  - component: {fileID: 5753662465563114714}
-  - component: {fileID: 896295764954709384}
+  - component: {fileID: 1489413018376125680}
+  - component: {fileID: -5945561429768362323}
   m_Layer: 0
   m_Name: PoseidonPassive
   m_TagString: Bullet
@@ -102,7 +102,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 64
   m_CollisionDetection: 0
---- !u!136 &5753662465563114714
+--- !u!114 &1489413018376125680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810989591824762341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ae92e93b5b9464ea959acd8f77bfb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 2
+--- !u!136 &-5945561429768362323
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,16 +129,3 @@ CapsuleCollider:
   m_Height: 30
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &896295764954709384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810989591824762341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5ae92e93b5b9464ea959acd8f77bfb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life: 2

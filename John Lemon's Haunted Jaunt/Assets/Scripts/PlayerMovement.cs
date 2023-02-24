@@ -19,10 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashCooldown;
     public float dashBoost;
 
-    SpeedUpScript speedUpScript;
     public float speedModifier = 8;
-    float speedUpDuration = 5;
-    public bool slowed = false;
+
     void Awake ()
     {
         photonView = GetComponent<PhotonView>();
@@ -31,8 +29,6 @@ public class PlayerMovement : MonoBehaviour
         m_AudioSource = GetComponent<AudioSource> ();
 
 
-
-        speedUpScript = FindObjectOfType<SpeedUpScript>();
         playerAction = FindObjectOfType<PlayerAction>();
 
         if (photonView.IsMine)
@@ -103,20 +99,8 @@ public class PlayerMovement : MonoBehaviour
 
         if ((playerAction.godName == "Poseidon") && (photonView.IsMine)) //slow dont affect poseidon
         {
-            speedModifier = 8;
-        }
-
-
-        //speedup timer
-        if (speedModifier != 8)
-        {
-            if(speedUpDuration > 0)
+            if (speedModifier < 8)
             {
-                speedUpDuration -= Time.deltaTime;
-            }
-            else if(speedUpDuration <= 0)
-            {
-                speedUpDuration = 5;
                 speedModifier = 8;
             }
         }
