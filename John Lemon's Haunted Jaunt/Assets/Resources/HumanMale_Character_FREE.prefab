@@ -533,8 +533,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752051637886152489}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1081,15 +1081,15 @@ GameObject:
   - component: {fileID: 1438546959266459337}
   - component: {fileID: 4540229000190281644}
   - component: {fileID: 5381338168532323753}
+  - component: {fileID: 5433084195543563201}
+  - component: {fileID: 4106906426770643332}
+  - component: {fileID: 5093171127039457392}
   - component: {fileID: 3476636681162554429}
   - component: {fileID: 2217104822867126335}
   - component: {fileID: 8615342550433255614}
   - component: {fileID: 1547345606090526605}
   - component: {fileID: 8871221974647169918}
   - component: {fileID: -945482300220125278}
-  - component: {fileID: 3517650795079526637}
-  - component: {fileID: 5348486859008635917}
-  - component: {fileID: 5531468495482184383}
   m_Layer: 0
   m_Name: HumanMale_Character_FREE
   m_TagString: Player
@@ -1154,6 +1154,103 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.87, z: 0}
+--- !u!114 &5433084195543563201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc1e8bbb0d1d3646a6a3fd46d2743e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawnPoint: {fileID: 3546297782231627070}
+  bulletPrefab: {fileID: 1810989591824762341, guid: eafaeaed93cc8b443bbd49c7e05e4573,
+    type: 3}
+  bulletSpeed: 15
+  lightningPrefab: {fileID: 3506170369924269827, guid: adb5321db2fef094a995697a6beea77a,
+    type: 3}
+  skullPrefab: {fileID: 7921418598876871535, guid: d101e35e910f44b4ebb64e4f514e808c,
+    type: 3}
+  heartPrefab: {fileID: 7274159732572193231, guid: 86ee3a6fa349aed41b6ce7cb4ae725bf,
+    type: 3}
+  arrowPrefab: {fileID: 6172034954922813461, guid: 7b6cc71f10aab0b49a3f717f6f5f9083,
+    type: 3}
+  featherPrefab: {fileID: 4696935024985980897, guid: 9cc1c407ff9ab4549b29b22b38aacb2d,
+    type: 3}
+  tridentPrefab: {fileID: 7389637941957276418, guid: 0f858ee6e9fc75e43a5e23aa4fddbd15,
+    type: 3}
+  swordPrefab: {fileID: 8037694326161841637, guid: b75a39a514efec14693e9179a4e0e2fa,
+    type: 3}
+  shieldPrefab: {fileID: 4808270084110877647, guid: 2293419ebbb2cc74fbb196a825fa52dd,
+    type: 3}
+  abilitySpawnPoint: {fileID: 5019822319339430467}
+  PoseidonAbilitySpawnPoint: {fileID: 6329453593250723687}
+  PoseidonPassiveSpawnPoint: {fileID: 2606547464568116615}
+  abilityPrefab: {fileID: 1810989591824762341, guid: 455e6bad9d3911340a751935f7e1cfc1,
+    type: 3}
+  PoseidonAbilityPrefab: {fileID: 7359896901333045608, guid: 4e5d6543121db1a4e904a3c9c3aa9180,
+    type: 3}
+  PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
+    type: 3}
+  zeusImage: {fileID: 0}
+  hadesImage: {fileID: 0}
+  aphroditeImage: {fileID: 0}
+  artemisImage: {fileID: 0}
+  hermesImage: {fileID: 0}
+  poseidonImage: {fileID: 0}
+  aresImage: {fileID: 0}
+  athenaImage: {fileID: 0}
+  playerID: 0
+  jumpforce: 1
+  dashCooldown: 0
+  godName: 
+  score: 0
+  isActivated: 0
+  isOnCooldown: 0
+  abilityDuration: 0
+  abilityCooldown: 0
+  PoseidonAbilitySpeed: 8
+  respawnZeusPassive: 0
+--- !u!114 &4106906426770643332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b2cfb9174a093419d0f8db96a60eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSpeed: 150
+  m_Rigidbody: {fileID: 0}
+  m_Movement: {x: 0, y: 0, z: 0}
+  dashCooldown: 0
+  dashBoost: 0
+  speedModifier: 8
+  slowed: 0
+--- !u!114 &5093171127039457392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d39c587fefcdbf45b491c206db77fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxhealth: 100
+  health: 100
+  spawnPoints: {fileID: 0}
+  invincible: 0
+  pName: 
+  HealthUp: {fileID: 0}
 --- !u!82 &3476636681162554429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1293,8 +1390,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 5093171127039457392}
   - {fileID: 8615342550433255614}
-  - {fileID: 5348486859008635917}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1326,101 +1423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7482a03f5cf0204996c5d5532be42a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3517650795079526637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782702501690864755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cc1e8bbb0d1d3646a6a3fd46d2743e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 3546297782231627070}
-  bulletPrefab: {fileID: 1810989591824762341, guid: eafaeaed93cc8b443bbd49c7e05e4573,
-    type: 3}
-  bulletSpeed: 15
-  lightningPrefab: {fileID: 3506170369924269827, guid: adb5321db2fef094a995697a6beea77a,
-    type: 3}
-  skullPrefab: {fileID: 7921418598876871535, guid: d101e35e910f44b4ebb64e4f514e808c,
-    type: 3}
-  heartPrefab: {fileID: 7274159732572193231, guid: 86ee3a6fa349aed41b6ce7cb4ae725bf,
-    type: 3}
-  arrowPrefab: {fileID: 6172034954922813461, guid: 7b6cc71f10aab0b49a3f717f6f5f9083,
-    type: 3}
-  featherPrefab: {fileID: 4696935024985980897, guid: 9cc1c407ff9ab4549b29b22b38aacb2d,
-    type: 3}
-  tridentPrefab: {fileID: 7389637941957276418, guid: 0f858ee6e9fc75e43a5e23aa4fddbd15,
-    type: 3}
-  swordPrefab: {fileID: 8037694326161841637, guid: b75a39a514efec14693e9179a4e0e2fa,
-    type: 3}
-  shieldPrefab: {fileID: 4808270084110877647, guid: 2293419ebbb2cc74fbb196a825fa52dd,
-    type: 3}
-  abilitySpawnPoint: {fileID: 5019822319339430467}
-  PoseidonAbilitySpawnPoint: {fileID: 6329453593250723687}
-  PoseidonPassiveSpawnPoint: {fileID: 2606547464568116615}
-  abilityPrefab: {fileID: 0}
-  PoseidonAbilityPrefab: {fileID: 7359896901333045608, guid: 4e5d6543121db1a4e904a3c9c3aa9180,
-    type: 3}
-  PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
-    type: 3}
-  zeusImage: {fileID: 0}
-  hadesImage: {fileID: 0}
-  aphroditeImage: {fileID: 0}
-  artemisImage: {fileID: 0}
-  hermesImage: {fileID: 0}
-  poseidonImage: {fileID: 0}
-  aresImage: {fileID: 0}
-  athenaImage: {fileID: 0}
-  playerID: 0
-  jumpforce: 1
-  dashCooldown: 0
-  godName: 
-  score: 0
-  isActivated: 0
-  isOnCooldown: 0
-  abilityDuration: 0
-  abilityCooldown: 0
-  PoseidonAbilitySpeed: 0
---- !u!114 &5348486859008635917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782702501690864755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d39c587fefcdbf45b491c206db77fa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxhealth: 100
-  health: 100
-  spawnPoints: {fileID: 0}
-  invincible: 0
-  pName: 
-  HealthUp: {fileID: 0}
---- !u!114 &5531468495482184383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782702501690864755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b2cfb9174a093419d0f8db96a60eda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSpeed: 150
-  m_Rigidbody: {fileID: 0}
-  m_Movement: {x: 0, y: 0, z: 0}
-  dashCooldown: 0
-  dashBoost: 0
-  speedModifier: 8
-  slowed: 0
 --- !u!1 &1789272960074739661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,7 +1628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6812150161636325689
 Transform:
   m_ObjectHideFlags: 0
@@ -3177,7 +3179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4235932638492477303
 Transform:
   m_ObjectHideFlags: 0
@@ -3452,8 +3454,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4948122169982268793}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4658,7 +4660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3130100439478385262
 Transform:
   m_ObjectHideFlags: 0

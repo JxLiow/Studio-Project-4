@@ -67,6 +67,9 @@ public class PlayerAction : MonoBehaviour
     public float abilityCooldown;
     public float PoseidonAbilitySpeed;
 
+    bool isPassiveZeus = false;
+    public bool respawnZeusPassive = false;
+    float respawnZeusPassiveTimer = 0f;
     Timer timer;
 
     // Start is called before the first frame update
@@ -100,6 +103,12 @@ public class PlayerAction : MonoBehaviour
         isActivated = false;
         isOnCooldown = false;
         damage = PlayerPrefs.GetFloat("damage", 1);
+    
+        if (PlayerPrefs.GetString("godname") == "Zeus")
+        {
+            if(photonView.IsMine)
+                isPassiveZeus = true;
+        }
     }
 
     // Update is called once per frame
@@ -218,6 +227,22 @@ public class PlayerAction : MonoBehaviour
         {
             isActivated = false;
             isOnCooldown = true;
+        //dash cooldown
+        if (dashCooldown > 0.0f)
+            dashCooldown -= Time.deltaTime;
+        //PASSIVE
+        if (respawnZeusPassive)
+            respawnZeusPassiveTimer += Time.deltaTime;
+        if (respawnZeusPassiveTimer > 5f)
+        {
+            isPassiveZeus = true;
+            respawnZeusPassive = false;
+            respawnZeusPassiveTimer = 0f;
+        }
+        if(isPassiveZeus)
+        {
+            if (photonView.IsMine)
+            {
 
             if (isOnCooldown == true)
             {
@@ -232,13 +257,25 @@ public class PlayerAction : MonoBehaviour
             abilityCooldown = 10f;
         }
 
+            photonView.RPC("ZeusPassive", RpcTarget.AllViaServer, rigidbody.position);
+            isPassiveZeus = false;
+            }
+        }
         //skills
         if (Input.GetMouseButtonDown(1) && photonView.IsMine)
         {
             switch (godName)
             {
                 case "Zeus":
-
+                    //Vector3 mousePosition = Input.mousePosition;
+                    //mousePosition.z = transform.position.z; // Set the z coordinate to the camera's z position
+                    //Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        Vector3 worldPoint = hit.point;
+                        photonView.RPC("useZeusAbility", RpcTarget.AllViaServer, worldPoint);
+                    }
                     break;
                 case "Aphrodite":
 
@@ -276,9 +313,47 @@ public class PlayerAction : MonoBehaviour
     [PunRPC]
     public void shootBullet (Vector3 position)
     {
-        var bullet = Instantiate(projectileList[PlayerPrefs.GetInt("id")], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+        switch (godName)
+        {
+            default:
+                var bullet = Instantiate(projectileList[0], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Zeus":
+                bullet = Instantiate(projectileList[0], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Aphrodite":
+                bullet = Instantiate(projectileList[1], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Hades":
+                bullet = Instantiate(projectileList[2], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
 
+                break;
+            case "Artemis":
+                bullet = Instantiate(projectileList[3], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Poseidon":
+                bullet = Instantiate(projectileList[4], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Hermes":
+                bullet = Instantiate(projectileList[5], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Ares":
+                bullet = Instantiate(projectileList[6], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+            case "Athena":
+                bullet = Instantiate(projectileList[7], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+                break;
+
+        }
     }
 
     [PunRPC]
@@ -290,6 +365,25 @@ public class PlayerAction : MonoBehaviour
         GameObject hadesAbility = PhotonNetwork.Instantiate("HadesSkill", position, Quaternion.identity) as GameObject;
         hadesAbility.transform.parent = rigidbody.transform;
         }
+    }
+    [PunRPC]
+    public void useZeusAbility(Vector3 position)
+    {
+        //position.y = rigidbody.position.y;
+        if (photonView.IsMine)
+        {
+            GameObject zeusAbility = PhotonNetwork.Instantiate("ZeusSkill", position, Quaternion.identity) as GameObject;
+            zeusAbility.transform.SetParent(rigidbody.transform, true);
+        }
+    }
+    [PunRPC] // Zeus passive
+    public void ZeusPassive(Vector3 position)
+    {
+      
+            position.y = position.y + 0.2f;
+            GameObject zeusPassive = PhotonNetwork.Instantiate("ZeusPassive", position, Quaternion.identity) as GameObject;
+            zeusPassive.transform.parent = rigidbody.transform;
+        
     }
 
     [PunRPC]
