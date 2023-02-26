@@ -1218,6 +1218,7 @@ MonoBehaviour:
   fRate: 0
   damage: 0
   score: 0
+  isPoisoned: 0
   isActivated: 0
   isOnCooldown: 0
   abilityDuration: 0

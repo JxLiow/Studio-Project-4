@@ -9,7 +9,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     PlayerAction playerAction;
     float speedUpDuration = 0.0f;
     bool pickedUpSpeed = false;
-
+    GameObject gm;
     public AudioSource pickedPowerupAudio;
 
     void Awake()
@@ -17,6 +17,8 @@ public class PlayerPickedUpPowerup : MonoBehaviour
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         playerAction = FindObjectOfType<PlayerAction>();
+
+        gm = GameObject.FindWithTag("GM");
     }
 
     // Update is called once per frame
@@ -71,5 +73,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
             playerHealth.invincible = true;
             pickedPowerupAudio.Play();
         }
+        gm.GetComponent<SpawnPowerups>().powerupCount--;
+        gm.GetComponent<SpawnPowerups>().powerupTimer = 15f;
     }
 }

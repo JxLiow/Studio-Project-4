@@ -60,6 +60,7 @@ public class PlayerAction : MonoBehaviour
     public float damage;
     float time = 0, pElapsedTime = 0;
     public int score = 0;
+    public bool isPoisoned;
 
     // ability stuff
     [Header("Ability Stuff")]
@@ -218,7 +219,13 @@ public class PlayerAction : MonoBehaviour
                 isPassiveZeus = false;
             }
         }
-
+        if (isPoisoned)
+        {
+          
+                photonView.RPC("HadesPassive", RpcTarget.AllViaServer, rigidbody.position);
+                isPoisoned = false;
+            
+        }
         if ((godName == "Poseidon") && (photonView.IsMine))
         {
             if (timer.currentTime < 299.5)
@@ -370,6 +377,16 @@ public class PlayerAction : MonoBehaviour
         hadesAbility.transform.parent = rigidbody.transform;
         }
     }
+    [PunRPC] // Hades passive
+    public void HadesPassive(Vector3 position)
+    {
+        position.y = position.y + 0.2f;
+        if (photonView.IsMine && PlayerPrefs.GetString("godname") != "Hades")
+        {
+            GameObject hadesPassive = PhotonNetwork.Instantiate("HadesPassive", position, Quaternion.identity) as GameObject;
+            hadesPassive.transform.parent = rigidbody.transform;
+        }
+    }
     [PunRPC]
     public void useZeusAbility(Vector3 position)
     {
@@ -389,7 +406,7 @@ public class PlayerAction : MonoBehaviour
             zeusPassive.transform.parent = rigidbody.transform;
         
     }
-
+    
     [PunRPC]
     public void useAphroditeAbility(Vector3 position)
     {

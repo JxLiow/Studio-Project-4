@@ -1502,7 +1502,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2113384250}
         m_TargetAssemblyTypeName: changeGodImage, Assembly-CSharp
-        m_MethodName: changeImageArtemis
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1608,7 +1608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Athena
+  m_text: Athena(DLC)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f2453c1bcc50de488f7a6ef4a17539f, type: 2}
   m_sharedMaterial: {fileID: 2686113171003794011, guid: 6f2453c1bcc50de488f7a6ef4a17539f,
@@ -3815,7 +3815,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2113384250}
         m_TargetAssemblyTypeName: changeGodImage, Assembly-CSharp
-        m_MethodName: changeImageAthena
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4015,7 +4015,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Artemis
+  m_text: Artemis(DLC)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f2453c1bcc50de488f7a6ef4a17539f, type: 2}
   m_sharedMaterial: {fileID: 2686113171003794011, guid: 6f2453c1bcc50de488f7a6ef4a17539f,
@@ -4526,7 +4526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d80f05a10bbde964fa2052d599cb755d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeLeft: 5
+  TimeLeft: 15
   TimerOn: 0
   TimerText: {fileID: 1768105040}
 --- !u!114 &2113384252

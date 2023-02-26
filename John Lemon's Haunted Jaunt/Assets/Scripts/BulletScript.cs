@@ -14,7 +14,9 @@ public class BulletScript : MonoBehaviour
     PlayerHealth playerHealth;
     Score score;
     string owner;
-
+    int randomNumber = 101;
+    PlayerAction playerAction;
+    private PhotonView photonView;
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,9 +25,18 @@ public class BulletScript : MonoBehaviour
         //pAction = GetComponent<PlayerAction>();
         //pHealth = GetComponent<PlayerHealth>();
         //owner = pHealth.getName();
+        photonView = GetComponent<PhotonView>();
         score = GetComponent<Score>();
+        if (PlayerPrefs.GetString("godname") == "Hades")
+        {
+            randomNumber = Random.Range(0, 100);
+           // playerAction
+        }
     }
-
+    private void Update()
+    {
+        Debug.Log("rand: " + randomNumber);
+    }
     void OnCollisionEnter(Collision collision)
     {
         var enemyHealth = collision.gameObject.GetComponent<PlayerHealth>();
@@ -40,6 +51,15 @@ public class BulletScript : MonoBehaviour
                     enemyHealth.TakeDamage(damage);
                     Destroy(gameObject);
                 }
+            }
+            else
+            {
+                if (randomNumber < 100 && PlayerPrefs.GetString("godname") == "Hades")
+                {
+                    var enemyAction = collision.gameObject.GetComponent<PlayerAction>();
+                    enemyAction.isPoisoned = true; 
+                }
+                enemyHealth.TakeDamage(damage);
             }
             Destroy(gameObject);
             //if (enemyHealth.getHealth() <= 0)

@@ -76,6 +76,18 @@ MonoBehaviour:
   - setKills
   - updateKills
   - CallPlayerManager
+  - shootAphroditeBullet
+  - shootAresBullet
+  - shootArtemisBullet
+  - shootAthenaBullet
+  - shootHadesBullet
+  - shootHermesBullet
+  - shootPoseidonBullet
+  - shootZeusBullet
+  - UpdateKills
+  - updateScore
+  - setAnimation
+  - HadesPassive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

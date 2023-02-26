@@ -86,7 +86,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(5); //wait for 5 seconds
         health = maxhealth;
         m_Animator.SetBool("Death", false);
-        transform.position = new Vector3(16, 1, 16);
+        transform.position = JLGameManager.spawnPositions[photonView.Owner.ActorNumber - 1];
         takeDmg = true;
     }
     // Start is called before the first frame update

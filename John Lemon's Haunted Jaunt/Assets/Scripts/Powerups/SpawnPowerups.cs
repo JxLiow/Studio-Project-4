@@ -23,6 +23,12 @@ public class SpawnPowerups : MonoBehaviour
     public float CooldownTimer = 20f;
     public float CoinTimer = 30f;
 
+    int randomNumber;
+    public bool spawnPowerup = false;
+    Vector3 powerupPosition = new Vector3(0f, 6f, 0f);
+    public float powerupTimer = 15f;
+    public int powerupCount = 0;
+
     //public bool HealthPickedUp = false;
     //public bool SpeedPickedUp = false;
     //public bool CooldownPickedUp = false;
@@ -42,94 +48,36 @@ public class SpawnPowerups : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(HealthCount == 0)
+        if (spawnPowerup)
         {
-            if (HealthTimer > 0)
+            randomNumber = Random.Range(1, 5);
+            switch (randomNumber)
             {
-                HealthTimer -= Time.deltaTime;
-            }
-            else if (HealthTimer <= 0)
-            {
-                HealthTimer = 10f;
-            }
-        }
+                case 1:
+                    if (PhotonNetwork.IsMasterClient)
+                        photonView.RPC("SpawnHealthPowerup", RpcTarget.AllViaServer, powerupPosition);
+                    break;
+                case 2:
+                    if (PhotonNetwork.IsMasterClient)
+                        photonView.RPC("SpawnSpeedPowerup", RpcTarget.AllViaServer, powerupPosition);
+                    break;
+                case 3:
+                    if (PhotonNetwork.IsMasterClient)
+                        photonView.RPC("SpawnCooldownPowerup", RpcTarget.AllViaServer, powerupPosition);
+                    break;
+                case 4:
+                    if (PhotonNetwork.IsMasterClient)
+                        photonView.RPC("SpawnInvincibilityPowerup", RpcTarget.AllViaServer, powerupPosition);
+                    break;
 
-        if (SpeedCount == 0)
-        {
-            if (SpeedTimer > 0)
-            {
-                SpeedTimer -= Time.deltaTime;
             }
-            else if (SpeedTimer <= 0)
-            {
-                SpeedTimer = 15f;
-            }
+            spawnPowerup = false;
+            powerupCount++;
         }
-
-        if (CooldownCount == 0)
-        {
-            if (CooldownTimer > 0)
-            {
-                CooldownTimer -= Time.deltaTime;
-            }
-            else if (CooldownTimer <= 0)
-            {
-                CooldownTimer = 20f;
-            }
-        }
-
-        if (CoinCount == 0)
-        {
-            if (CoinTimer > 0)
-            {
-                CoinTimer -= Time.deltaTime;
-            }
-            else if (CoinTimer <= 0)
-            {
-                CoinTimer = 30f;
-            }
-        }
-
-        if (timer.currentTime < 280)
-        {
-            if((HealthCount == 0) && (HealthTimer <= 0))
-            {
-                var position = new Vector3(3.0f, 6.0f, -3.0f);
-                if (PhotonNetwork.IsMasterClient)
-                    photonView.RPC("SpawnHealthPowerup", RpcTarget.AllViaServer, position);
-                HealthCount++;
-            }
-        }
-        if (timer.currentTime < 275)
-        {
-            if ((SpeedCount == 0) && (SpeedTimer <= 0))
-            {
-                var position = new Vector3(-3.0f, 6.0f, 3.0f);
-                if (PhotonNetwork.IsMasterClient)
-                    photonView.RPC("SpawnSpeedPowerup", RpcTarget.AllViaServer, position);
-                SpeedCount++;
-            }
-        }
-        if (timer.currentTime < 300)
-        {
-            if ((CooldownCount == 0) && (CooldownTimer <= 0))
-            {
-                var position = new Vector3(-3.0f, 6.0f, -3.0f);
-                if (PhotonNetwork.IsMasterClient)
-                    photonView.RPC("SpawnCooldownPowerup", RpcTarget.AllViaServer, position);
-                CooldownCount++;
-            }
-        }
-        if (timer.currentTime < 260)
-        {
-            if ((CoinCount == 0) && (CoinTimer <= 0))
-            {
-                var position = new Vector3(3.0f, 6.0f, 3.0f);
-                if (PhotonNetwork.IsMasterClient)
-                    photonView.RPC("SpawnInvincibilityPowerup", RpcTarget.AllViaServer, position);
-                CoinCount++;
-            }
-        }
+        if (powerupTimer > 0)
+            powerupTimer -= Time.deltaTime;
+        if (powerupTimer <= 0 && powerupCount < 1)
+            spawnPowerup = true;
     }
 
     [PunRPC]

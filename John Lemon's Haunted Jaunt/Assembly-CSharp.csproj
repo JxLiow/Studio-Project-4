@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\GodAbilities\ZeusAbility.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\GodSkills.cs" />
+    <Compile Include="Assets\Scripts\GodAbilities\HadesPassive.cs" />
     <Compile Include="Assets\Scripts\Abilities.cs" />
     <Compile Include="Assets\Scripts\Powerups\CooldownUpScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
