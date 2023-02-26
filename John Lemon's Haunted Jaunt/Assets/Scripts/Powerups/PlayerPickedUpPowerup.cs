@@ -10,6 +10,8 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     float speedUpDuration = 0.0f;
     bool pickedUpSpeed = false;
 
+    public AudioSource pickedPowerupAudio;
+
     void Awake()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -47,12 +49,14 @@ public class PlayerPickedUpPowerup : MonoBehaviour
             {
                 playerHealth.health = playerHealth.maxhealth;
             }
+            pickedPowerupAudio.Play();
         }
         else if(other.tag == "Speed")
         {
             speedUpDuration = 5.0f;
             playerMovement.speedModifier += 3; //increase speed
             pickedUpSpeed = true;
+            pickedPowerupAudio.Play();
         }
         else if(other.tag == "Cooldown")
         {
@@ -60,10 +64,12 @@ public class PlayerPickedUpPowerup : MonoBehaviour
             {
                 playerAction.abilityCooldown -= 3f;
             }
+            pickedPowerupAudio.Play();
         }
         else if(other.tag == "Coin")
         {
             playerHealth.invincible = true;
+            pickedPowerupAudio.Play();
         }
     }
 }

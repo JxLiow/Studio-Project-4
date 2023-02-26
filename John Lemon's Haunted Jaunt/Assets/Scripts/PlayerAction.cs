@@ -62,11 +62,14 @@ public class PlayerAction : MonoBehaviour
     public int score = 0;
 
     // ability stuff
+    [Header("Ability Stuff")]
     public bool isActivated;
     public bool isOnCooldown;
     public float abilityDuration;
     public float abilityCooldown;
     public float PoseidonAbilitySpeed;
+    public AudioSource AresAbilityAudio;
+    public AudioSource ZeusAbilityAudio;
 
     bool isPassiveZeus = false;
     public bool respawnZeusPassive = false;
@@ -236,17 +239,27 @@ public class PlayerAction : MonoBehaviour
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
                         Vector3 worldPoint = hit.point;
-                        photonView.RPC("useZeusAbility", RpcTarget.AllViaServer, worldPoint);
+                        if (isActivated == false && isOnCooldown == false)
+                        {
+                            isActivated = true;
+                            photonView.RPC("useZeusAbility", RpcTarget.AllViaServer, worldPoint);
+                        }
                     }
+                    ZeusAbilityAudio.Play();
                     break;
                 case "Aphrodite":
-                    isActivated = true;
-                    photonView.RPC("useAphroditeAbility", RpcTarget.AllViaServer, rigidbody.position);
-
+                    if (isActivated == false && isOnCooldown == false)
+                    {
+                        isActivated = true;
+                        photonView.RPC("useAphroditeAbility", RpcTarget.AllViaServer, rigidbody.position);
+                    }
                     break;
                 case "Hades":
-             
-                    photonView.RPC("useHadesAbility", RpcTarget.AllViaServer, rigidbody.position);
+                    if (isActivated == false && isOnCooldown == false)
+                    {
+                        isActivated = true;
+                        photonView.RPC("useHadesAbility", RpcTarget.AllViaServer, rigidbody.position);
+                    }
                     break;
                 case "Artemis":
 
@@ -275,6 +288,7 @@ public class PlayerAction : MonoBehaviour
                 case "Ares":
                     isActivated = true;
                     photonView.RPC("useAresAbility", RpcTarget.AllViaServer, rigidbody.position);
+                    AresAbilityAudio.Play();
                     break;
                 case "Athena":
 

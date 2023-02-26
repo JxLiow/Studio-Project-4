@@ -1195,14 +1195,22 @@ MonoBehaviour:
     type: 3}
   PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
     type: 3}
-  zeusImage: {fileID: 0}
-  hadesImage: {fileID: 0}
-  aphroditeImage: {fileID: 0}
-  artemisImage: {fileID: 0}
-  hermesImage: {fileID: 0}
-  poseidonImage: {fileID: 0}
-  aresImage: {fileID: 0}
-  athenaImage: {fileID: 0}
+  zeusImage: {fileID: 5948630894556226582, guid: 5e5696a65f1a0674ebe0a0a10922d446,
+    type: 3}
+  hadesImage: {fileID: 1285939462654389076, guid: e4d729ae2a66cd0438f61f2820d1538e,
+    type: 3}
+  aphroditeImage: {fileID: 2356112404216462521, guid: 965cfa5488084944485392802d8c1409,
+    type: 3}
+  artemisImage: {fileID: 6807500927927583778, guid: c8b00543caa324343bbc852f64c1761f,
+    type: 3}
+  hermesImage: {fileID: 4103576660106292668, guid: ab0be6de277f8e04db77c4801f7b20fc,
+    type: 3}
+  poseidonImage: {fileID: 8880424836388072859, guid: 053dc6a8085bba8499a8c8ac125e73d5,
+    type: 3}
+  aresImage: {fileID: 2087828770121187504, guid: 9733447fbd911254eb1ac865bc41af61,
+    type: 3}
+  athenaImage: {fileID: 1195107269908932302, guid: 21bd079a06e86a745b776d9592caec2d,
+    type: 3}
   playerID: 0
   jumpforce: 1
   dashCooldown: 0
@@ -1215,6 +1223,10 @@ MonoBehaviour:
   abilityDuration: 0
   abilityCooldown: 0
   PoseidonAbilitySpeed: 8
+  AresAbilityAudio: {fileID: 8718483523953421896, guid: 7db59dd036fa17a48b7aee5e8d45a4aa,
+    type: 3}
+  ZeusAbilityAudio: {fileID: 6734263099872891963, guid: abd5d4059a19fff4bbf44089bef30ce7,
+    type: 3}
   respawnZeusPassive: 0
 --- !u!114 &4106906426770643332
 MonoBehaviour:
@@ -1424,6 +1436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7482a03f5cf0204996c5d5532be42a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickedPowerupAudio: {fileID: 7712195818397952468, guid: 624d599d7fe46b943814cb63ad561787,
+    type: 3}
 --- !u!1 &1789272960074739661
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class Abilities : MonoBehaviour
 {
+    PlayerAction playerAction;
+
+
     [Header("Abilities")]
     public Image abilityImage;
-    public float cooldown = 15.0f;
+    public float cooldown;
     bool isCooldown = false;
     public KeyCode ability;
     public AudioSource abilityAudio;
@@ -22,6 +25,17 @@ public class Abilities : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!FindObjectOfType<PlayerAction>())
+        {
+            return;
+        }
+        else
+        {
+            playerAction = FindObjectOfType<PlayerAction>();
+        }
+        cooldown = (playerAction.abilityDuration + playerAction.abilityCooldown);
+        
+
         Ability();
     }
 
@@ -36,7 +50,7 @@ public class Abilities : MonoBehaviour
 
         if (isCooldown)
         {
-            abilityImage.fillAmount -= 1 / cooldown * Time.deltaTime;
+            abilityImage.fillAmount -= 1 / 15f * Time.deltaTime;
 
             if (abilityImage.fillAmount <= 0)
             {
