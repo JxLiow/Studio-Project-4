@@ -26,7 +26,7 @@ public class SpawnPowerups : MonoBehaviour
     int randomNumber;
     public bool spawnPowerup = false;
     Vector3 powerupPosition = new Vector3(0f, 6f, 0f);
-    public float powerupTimer = 15f;
+    public float powerupTimer = 5f;
     public int powerupCount = 0;
 
     //public bool HealthPickedUp = false;
@@ -48,36 +48,40 @@ public class SpawnPowerups : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (spawnPowerup)
+        if (PhotonNetwork.IsMasterClient)
         {
-            randomNumber = Random.Range(1, 5);
-            switch (randomNumber)
+            if (spawnPowerup)
             {
-                case 1:
-                    if (PhotonNetwork.IsMasterClient)
-                        photonView.RPC("SpawnHealthPowerup", RpcTarget.AllViaServer, powerupPosition);
-                    break;
-                case 2:
-                    if (PhotonNetwork.IsMasterClient)
-                        photonView.RPC("SpawnSpeedPowerup", RpcTarget.AllViaServer, powerupPosition);
-                    break;
-                case 3:
-                    if (PhotonNetwork.IsMasterClient)
-                        photonView.RPC("SpawnCooldownPowerup", RpcTarget.AllViaServer, powerupPosition);
-                    break;
-                case 4:
-                    if (PhotonNetwork.IsMasterClient)
-                        photonView.RPC("SpawnInvincibilityPowerup", RpcTarget.AllViaServer, powerupPosition);
-                    break;
+                randomNumber = Random.Range(1, 5);
+                switch (randomNumber)
+                {
+                    case 1:
+                        if (PhotonNetwork.IsMasterClient)
+                            photonView.RPC("SpawnHealthPowerup", RpcTarget.AllViaServer, powerupPosition);
+                        break;
+                    case 2:
+                        if (PhotonNetwork.IsMasterClient)
+                            photonView.RPC("SpawnSpeedPowerup", RpcTarget.AllViaServer, powerupPosition);
+                        break;
+                    case 3:
+                        if (PhotonNetwork.IsMasterClient)
+                            photonView.RPC("SpawnCooldownPowerup", RpcTarget.AllViaServer, powerupPosition);
+                        break;
+                    case 4:
+                        if (PhotonNetwork.IsMasterClient)
+                            photonView.RPC("SpawnInvincibilityPowerup", RpcTarget.AllViaServer, powerupPosition);
+                        break;
 
+                }
+                spawnPowerup = false;
+                powerupCount++;
             }
-            spawnPowerup = false;
-            powerupCount++;
+            if (powerupTimer > 0 && PhotonNetwork.IsMasterClient)
+                powerupTimer -= Time.deltaTime;
+            if (powerupTimer <= 0 && powerupCount < 1 && PhotonNetwork.IsMasterClient)
+                spawnPowerup = true;
+            Debug.Log(powerupTimer);
         }
-        if (powerupTimer > 0)
-            powerupTimer -= Time.deltaTime;
-        if (powerupTimer <= 0 && powerupCount < 1)
-            spawnPowerup = true;
     }
 
     [PunRPC]

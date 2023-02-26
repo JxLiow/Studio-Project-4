@@ -30,6 +30,21 @@ public class Score : MonoBehaviourPunCallbacks
         }
     }
 
+    public int ReturnKills()
+    {
+        if (player.CustomProperties.TryGetValue("kills", out object kills))
+        {
+            return int.Parse(kills.ToString());
+        }
+        else
+            return 0;
+    }
+
+    public string ReturnName()
+    {
+        return username.text;
+    }
+
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         if(targetPlayer == player)

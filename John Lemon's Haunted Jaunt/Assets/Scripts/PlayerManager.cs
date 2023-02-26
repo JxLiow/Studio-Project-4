@@ -19,11 +19,12 @@ public class PlayerManager : MonoBehaviour
 		PV = GetComponent<PhotonView>();
 		kills = 0;
 		name = PlayerPrefs.GetString("name", "");
+		//Debug.Log("This PlayerManager belongs to " + name);
 	}
 
     void Update()
     {
-		
+		PV.RPC("UpdateKills", RpcTarget.AllViaServer);
 	}
 
     public void getKill()
@@ -41,11 +42,27 @@ public class PlayerManager : MonoBehaviour
 		PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 	}
 
-
+	[PunRPC]
+	void UpdateKills()
+    {
+		foreach (Player p in PhotonNetwork.PlayerList)
+		{
+			if (p.NickName == name)
+			{
+				p.Score = kills;
+				//Debug.Log(p.Score+" belongs to "+name);
+			}
+		}
+    }
 
 	public int showKills()
     {
 		return kills;
+    }
+
+	public string getName()
+    {
+		return name;
     }
 
 	public static PlayerManager Find(Player player)

@@ -34,15 +34,7 @@ public class PlayerAction : MonoBehaviour
     public GameObject PoseidonAbilityPrefab;
     public GameObject PoseidonPassivePrefab;
 
-    public GameObject zeusImage;
-    public GameObject hadesImage;
-    public GameObject aphroditeImage;
-    public GameObject artemisImage;
-    public GameObject hermesImage;
-    public GameObject poseidonImage;
-    public GameObject aresImage;
-    public GameObject athenaImage;
-
+    PlayerHealth playerHealth;
 
     public int playerID;
 
@@ -76,6 +68,7 @@ public class PlayerAction : MonoBehaviour
     public bool respawnZeusPassive = false;
     float respawnZeusPassiveTimer = 0f;
     Timer timer;
+    int PoseidonPassiveCount;
 
     // Start is called before the first frame update
     void Awake()
@@ -84,6 +77,7 @@ public class PlayerAction : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         m_Animator = GetComponent<Animator>();
         timer = FindObjectOfType<Timer>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         playerID = photonView.ViewID;
         Up = new Vector3(0, 1, 0);
@@ -102,7 +96,6 @@ public class PlayerAction : MonoBehaviour
         projectileList.Add(swordPrefab);
         projectileList.Add(shieldPrefab);
 
-        bulletSpeed = 15f;
         abilityDuration = 5f;
         abilityCooldown = 10f;
         isActivated = false;
@@ -116,6 +109,7 @@ public class PlayerAction : MonoBehaviour
         }
 
         PoseidonAbilitySpeed = 8f;
+        PoseidonPassiveCount = 0;
     }
 
     
@@ -124,12 +118,12 @@ public class PlayerAction : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && photonView.IsMine)
+        if (Input.GetMouseButtonDown(0) && photonView.IsMine && playerHealth.getHealth() >= 0)
         {
             m_Animator.SetBool("IsAttacking", true);
             shoot = true;
         }
-        else if(Input.GetMouseButtonUp(0) && photonView.IsMine)
+        else if(Input.GetMouseButtonUp(0) && photonView.IsMine )
         {
             shoot = false;
         }
@@ -156,12 +150,45 @@ public class PlayerAction : MonoBehaviour
             float diff = time - pElapsedTime;
             if (diff > fRate)
             {
-                photonView.RPC("shootBullet", RpcTarget.AllViaServer, rigidbody.position);
-                pElapsedTime = time;
+                switch (godName)
+                {
+                    case "Zeus":
+                        photonView.RPC("shootZeusBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Aphrodite":
+                        photonView.RPC("shootAphroditeBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Hades":
+                        photonView.RPC("shootHadesBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Artemis":
+                        photonView.RPC("shootArtemisBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Hermes":
+                        photonView.RPC("shootHermesBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Poseidon":
+                        photonView.RPC("shootPoseidonBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Ares":
+                        photonView.RPC("shootAresBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                    case "Athena":
+                        photonView.RPC("shootAthenaBullet", RpcTarget.AllViaServer, rigidbody.position);
+                        pElapsedTime = time;
+                        break;
+                }
             }
         }
         //skills
-        if (Input.GetMouseButtonDown(1) && photonView.IsMine)
+        if (Input.GetMouseButtonDown(1) && photonView.IsMine && playerHealth.getHealth() >= 0)
         {
             //attack animation
             m_Animator.SetBool("IsAttacking", true);
@@ -230,11 +257,19 @@ public class PlayerAction : MonoBehaviour
         {
             if (timer.currentTime < 299.5)
             {
-                photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
+                if (PoseidonPassiveCount < 3)
+                {
+                    PoseidonPassiveCount += 1;
+                }
+                else if (PoseidonPassiveCount == 3)
+                {
+                    photonView.RPC("usePoseidonPassive", RpcTarget.AllViaServer, rigidbody.position);
+                    PoseidonPassiveCount = 0;
+                }
             }
         }
         //skills
-        if (Input.GetMouseButtonDown(1) && photonView.IsMine)
+        if (Input.GetMouseButtonDown(1) && photonView.IsMine && playerHealth.getHealth() >= 0)
         {
             switch (godName)
             {
@@ -322,49 +357,52 @@ public class PlayerAction : MonoBehaviour
 
     //PRIMARY FIRE
     [PunRPC]
-    public void shootBullet (Vector3 position)
+    public void shootZeusBullet (Vector3 position)
     {
-        switch (godName)
-        {
-            default:
-                var bullet = Instantiate(projectileList[0], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Zeus":
-                bullet = Instantiate(projectileList[0], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Aphrodite":
-                bullet = Instantiate(projectileList[1], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Hades":
-                bullet = Instantiate(projectileList[2], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-
-                break;
-            case "Artemis":
-                bullet = Instantiate(projectileList[3], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Hermes":
-                bullet = Instantiate(projectileList[4], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Poseidon":
-                bullet = Instantiate(projectileList[5], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Ares":
-                bullet = Instantiate(projectileList[6], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-            case "Athena":
-                bullet = Instantiate(projectileList[7], bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
-                break;
-
-        }
+        var bullet = Instantiate(lightningPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootAphroditeBullet(Vector3 position)
+    {
+        var bullet = Instantiate(heartPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootHadesBullet(Vector3 position)
+    {
+        var bullet = Instantiate(skullPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootArtemisBullet(Vector3 position)
+    {
+        var bullet = Instantiate(arrowPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootHermesBullet(Vector3 position)
+    {
+        var bullet = Instantiate(featherPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootPoseidonBullet(Vector3 position)
+    {
+        var bullet = Instantiate(tridentPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootAresBullet(Vector3 position)
+    {
+        var bullet = Instantiate(swordPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+    }
+    [PunRPC]
+    public void shootAthenaBullet(Vector3 position)
+    {
+        var bullet = Instantiate(shieldPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 
     [PunRPC]
@@ -451,101 +489,6 @@ public class PlayerAction : MonoBehaviour
         {
             fRate /= 2f;
         }
-    }
-
-    public void changePIconZeus()
-    {
-        zeusImage.SetActive(true);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(false);
-    }
-    public void changePIconHades()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(true);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(false);
-    }
-
-    public void changePIconAphrodite()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(true);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(false);
-    }
-
-    public void changePIconArtemis()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(true);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(false);
-    }
-
-    public void changePIconHermes()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(true);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(false);
-    }
-
-    public void changePIconPoseidon()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(true);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(false);
-    }
-
-    public void changePIconAres()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(true);
-        athenaImage.SetActive(false);
-    }
-
-    public void changePIconAthena()
-    {
-        zeusImage.SetActive(false);
-        hadesImage.SetActive(false);
-        aphroditeImage.SetActive(false);
-        artemisImage.SetActive(false);
-        hermesImage.SetActive(false);
-        poseidonImage.SetActive(false);
-        aresImage.SetActive(false);
-        athenaImage.SetActive(true);
     }
 
     public PhotonView getView()

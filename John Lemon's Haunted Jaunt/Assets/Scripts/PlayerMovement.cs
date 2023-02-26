@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 20f;
     PlayerAction playerAction;
+    PlayerHealth playerHealth;
 
     Animator m_Animator;
     public Rigidbody m_Rigidbody;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashBoost;
 
     public float speedModifier = 8;
+    bool isWalking = false;
 
     void Awake ()
     {
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         playerAction = FindObjectOfType<PlayerAction>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         if (photonView.IsMine)
             GetComponent<AudioListener>().enabled = true;
@@ -38,15 +41,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal;
+        float vertical;
 
-        m_Movement.Set(horizontal, 0f, vertical);
-        m_Movement.Normalize();
+        if (playerHealth.getHealth() >= 0)
+        {
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
 
-        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
-        bool isWalking = hasHorizontalInput || hasVerticalInput;
+            m_Movement.Set(horizontal, 0f, vertical);
+            m_Movement.Normalize();
+
+            bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
+            bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
+            isWalking = hasHorizontalInput || hasVerticalInput;
+        }
+        else
+        {
+            m_Movement.Set(0f, 0f, 0f);
+            m_Movement.Normalize();
+        }
 
         RaycastHit _hit;
         Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -70,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //attack at mouse position
-        if (Input.GetMouseButtonDown(0) && photonView.IsMine)
+        if (Input.GetMouseButtonDown(0) && photonView.IsMine && playerHealth.getHealth() >= 0)
         {
             if (Physics.Raycast(_ray, out _hit))
             {
@@ -106,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //dashing
-        if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f)
+        if (Input.GetKey(KeyCode.Space) && photonView.IsMine && dashCooldown <= 0.0f && playerHealth.getHealth() >= 0)
         {
             Dashing();
             dashCooldown = 1.5f;

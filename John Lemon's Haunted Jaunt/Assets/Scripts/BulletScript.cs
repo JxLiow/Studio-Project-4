@@ -62,8 +62,6 @@ public class BulletScript : MonoBehaviour
                 enemyHealth.TakeDamage(damage);
             }
             Destroy(gameObject);
-            //if (enemyHealth.getHealth() <= 0)
-            //    score.addScore(10);
         }
         Destroy(gameObject);
     }

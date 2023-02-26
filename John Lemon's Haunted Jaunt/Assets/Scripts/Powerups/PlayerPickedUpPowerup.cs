@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerPickedUpPowerup : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
     bool pickedUpSpeed = false;
     GameObject gm;
     public AudioSource pickedPowerupAudio;
+    PhotonView pv;
 
     void Awake()
     {
@@ -19,6 +21,7 @@ public class PlayerPickedUpPowerup : MonoBehaviour
         playerAction = FindObjectOfType<PlayerAction>();
 
         gm = GameObject.FindWithTag("GM");
+        pv = GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -73,7 +76,11 @@ public class PlayerPickedUpPowerup : MonoBehaviour
             playerHealth.invincible = true;
             pickedPowerupAudio.Play();
         }
-        gm.GetComponent<SpawnPowerups>().powerupCount--;
-        gm.GetComponent<SpawnPowerups>().powerupTimer = 15f;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gm.GetComponent<SpawnPowerups>().powerupCount--;
+            gm.GetComponent<SpawnPowerups>().powerupTimer = 5f;
+        }
     }
 }

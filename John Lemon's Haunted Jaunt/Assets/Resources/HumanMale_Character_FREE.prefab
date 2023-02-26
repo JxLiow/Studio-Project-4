@@ -1195,22 +1195,6 @@ MonoBehaviour:
     type: 3}
   PoseidonPassivePrefab: {fileID: 1810989591824762341, guid: d0507da6f73a16d4eb5f5c2080ca23f6,
     type: 3}
-  zeusImage: {fileID: 5948630894556226582, guid: 5e5696a65f1a0674ebe0a0a10922d446,
-    type: 3}
-  hadesImage: {fileID: 1285939462654389076, guid: e4d729ae2a66cd0438f61f2820d1538e,
-    type: 3}
-  aphroditeImage: {fileID: 2356112404216462521, guid: 965cfa5488084944485392802d8c1409,
-    type: 3}
-  artemisImage: {fileID: 6807500927927583778, guid: c8b00543caa324343bbc852f64c1761f,
-    type: 3}
-  hermesImage: {fileID: 4103576660106292668, guid: ab0be6de277f8e04db77c4801f7b20fc,
-    type: 3}
-  poseidonImage: {fileID: 8880424836388072859, guid: 053dc6a8085bba8499a8c8ac125e73d5,
-    type: 3}
-  aresImage: {fileID: 2087828770121187504, guid: 9733447fbd911254eb1ac865bc41af61,
-    type: 3}
-  athenaImage: {fileID: 1195107269908932302, guid: 21bd079a06e86a745b776d9592caec2d,
-    type: 3}
   playerID: 0
   jumpforce: 1
   dashCooldown: 0
@@ -1402,9 +1386,8 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
-  - {fileID: 5093171127039457392}
   - {fileID: 8615342550433255614}
   sceneViewId: 0
   InstantiationId: 0

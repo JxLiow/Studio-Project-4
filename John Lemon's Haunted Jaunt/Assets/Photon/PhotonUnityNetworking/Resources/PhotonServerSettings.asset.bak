@@ -65,19 +65,31 @@ MonoBehaviour:
   - getKill
   - RPC_getKill
   - RPC_TakeDamage
-<<<<<<< Updated upstream
   - useAresAbility
   - useHermesAbility
   - useAphroditeAbility
   - useZeusAbility
   - ZeusPassive
-=======
   - Animation
   - UpdateScore
   - UpdateNames
   - setKills
   - updateKills
   - CallPlayerManager
+  - shootAphroditeBullet
+  - shootAresBullet
+  - shootArtemisBullet
+  - shootAthenaBullet
+  - shootHadesBullet
+  - shootHermesBullet
+  - shootPoseidonBullet
+  - shootZeusBullet
+  - UpdateKills
+  - updateScore
+  - setAnimation
+<<<<<<< Updated upstream
+  - HadesPassive
+=======
 >>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 1
